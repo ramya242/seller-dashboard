@@ -1,0 +1,151 @@
+
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">ADD PROUDCT </h6>
+                    </div>
+                    <div class="card-body">
+                        <form  [formGroup]="productForm"
+                        (ngSubmit)="onSubmit()">
+                            <div class="d-flex">
+                                <div class="col-md-4">
+                                    <h6>CHOOSE A CATEGORY</h6>
+                                    <ul>                            
+                                    <li *ngFor="let cat of categoriesList">
+                                        <a (click)="getSubCategories('level2',cat.id)"> {{cat.name}}</a>
+                                    </li> 
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>CHOOSE A SUB CATEGORY</h6>
+                                    <ul>
+                                        <li *ngFor="let cat of subCategoriesList">
+                                            <a (click)="getSubCategories('level3',cat.id)"> {{cat.name}}</a>
+                                        </li> 
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>CHOOSE A SUB SUB CATEGORY</h6>
+                                    <ul>
+                                        <li *ngFor="let cat of subSubCategoriesList">
+                                            <a (click)="getAvailabilitySizes(cat.id)"> {{cat.name}}</a>
+                                        </li> 
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="divBlk">
+                                <label for="product_sizes"> Select Availability Sizes <span class="man-star"></span></label>
+                              
+
+                                <select  id="product_sizes" name="product_sizes" class="form-control custominp" formControlName="product_sizes">
+                                    <option>Select</option>
+                                    <option *ngFor="let size of availabilitySizes">
+                                            {{size.name}}
+                                    </option>
+                                </select>
+                             </div>
+                            <div class="divBlk">
+                                <label for="subject"> Add SubjectLine<span class="man-star"></span></label>
+                                <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" value="">
+                             </div>
+                             <div class="divBlk">
+                                <label for="price"> Price<span class="man-star"></span></label>
+                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" value="">
+                             </div>
+                             <div class="divBlk">
+                                <label for="description"> Product Description<span class="man-star"></span></label>
+                                <textarea id="description" name="description" class="form-control custominp" formControlName="description" ></textarea>
+                             </div>
+                             <div class="divBlk">
+                                <label for="returnDays"> Return & Exchange Days</label>
+                                <input type="text" id="returnDays" name="returnDays" class="form-control custominp" value="">
+                             </div>
+                             <div class="divBlk">
+                                <label for="leftPieces" > Left Pieces</label>
+                                <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" value="">
+                             </div>
+                             <div class="divBlk">
+                                <label for="availabilityAreas"> Availability Areas</label>
+
+                                <select  id="availabilityAreas" formControlName="product_areas" name="availabilityAreas" class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let area of productAreas">
+                                            {{area.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <div class="divBlk">
+                                <label for="unionTerritories"> Union Territories</label>
+                                <select  id="unionTerritories" formControlName="union_territories" name="unionTerritories" class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let area of unionTerritoriesList">
+                                            {{area.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <div class="divBlk">
+                                <label for="whereToPurchase"> Where to Purchase <span class="man-star"></span></label>
+                              
+
+                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let where of whereToBuyList">
+                                            {{where.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <div class="divBlk">
+                                <label for="boostProduct"> Boost Product</label>
+                                <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
+                                <select  id="boostProduct" name="boostProduct" formControlName="product_boost"  class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let boost of productBoostList">
+                                            {{boost.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <h6 class="px-2 pt-3"> UPLOAD UP TO 10 PHOTOS</h6>
+
+                             <div class="divBlk d-flex flex-wrap">
+                                <!-- <div *ngFor="let url of urls" class="imgBlk">
+                                    <img  [src]="url" class="rounded mb-3" width="180">
+                                </div> -->
+
+
+                                    <div class="block1 img-container " *ngFor="let url of urls;let i=index">
+                                       <div class="parent2 position-relative">
+                                        <label class="snap-images ">
+                                            <img id="blah2" src="{{url.url?url.url:'assets/upload.png'}}" width="100%" height="80px" class="profilepic2 img-preview">
+                                            
+                                            <input type="file" multiple class="upload2 hide gallery-img-file accept-image d-none" (change)="detectFiles($event,i)" accept="image/*">
+                                          
+                                        </label>
+                                             <div class="child2">
+                                                <span class="fa fa-close removebt" (click)="removeImg(i)"></span>
+                                             </div>
+                                        </div>
+                                    </div>
+                                    
+                                <div class="add-image" id="add-image" (click)="addImage()">
+                                    <div class="circle-o plusSign  "><span>+</span></div>
+                                    <h6 class="text-center w-100">ADD IMAGE</h6>
+                                </div>
+
+                                <!-- <input type="file" multiple (change)="detectFiles($event)"> -->
+                             </div>
+                             <div class="divBlk pt-3">
+                                 <input type="submit" class="btn btn-primary" value="Add Product" />
+                             </div>
+                        </form>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+      </div>
+

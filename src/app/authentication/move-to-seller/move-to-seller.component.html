@@ -1,0 +1,725 @@
+<div class="signup-form">
+    <form action="/examples/actions/confirmation.php" method="post" class="form-horizontal">
+      	<div class="row">
+        	<div class="col-8 offset-4">
+				<h2>ODCET Seller Registration</h2>
+			</div>	
+      	</div>			
+        <div class="form-group row">
+			<label class="col-form-label col-4">Business Name</label>
+			<div class="col-8">
+                <input type="text" class="form-control" name="businessname" id="businessname" required="required">
+            </div>        	
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-form-label col-4">Mobile Number</label>
+			<div class="col-8">
+                <input type="text" class="form-control" name="mobile" id="mobile" required="required">
+            </div>        	
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-form-label col-4">Email</label>
+			<div class="col-8">
+				<input type="email" class="form-control" name="email" id="email" required="required">
+				<span>example@example.com</span>
+            </div>        	
+		</div>
+
+		<div class="form-group row">
+			<label class="col-form-label col-4">Brand/ Store Name</label>
+			<div class="col-8">
+                <input type="text" class="form-control" name="brandstorename" id="brandstorenames" required="required">
+            </div>        	
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-form-label col-4">Registered Office</label>
+			<div class="col-8">
+				<input type="text" class="form-control" name="registeredoffice" id="registeredoffice" required="required">
+				<span>Address</span>
+			</div> 
+
+			<label class="col-form-label col-4"></label>
+			<div class="col-8">
+				<input type="text" class="form-control" name="area" id="area" required="required">
+				<span>Area / Town / Village</span>
+			</div> 
+			
+			
+			<label class="col-form-label col-4"></label> 
+			<div class="col-4">
+                <input type="text" class="form-control" name="city" required="required">
+                <span>city</span>
+            </div>    
+            <div class="col-4">
+				<input type="text" class="form-control" name="state" required="required">
+				<span>state</span>
+			</div>  
+			<label class="col-form-label col-4"></label> 
+			<div class="col-4">
+                <input type="text" class="form-control" name="pincode" required="required">
+                <span>Pincode</span>
+            </div>          	
+		</div>
+
+
+		<div class="form-group row">
+			<label class="col-form-label col-4">Vendor/Owner/Representative</label>
+			<div class="col-4">
+                <input type="text" class="form-control" name="vendorname" required="required">
+                <span>First Name</span>
+            </div>    
+            <div class="col-4">
+				<input type="text" class="form-control" name="vendorlastname" required="required">
+				<span>Last Name</span>
+            </div>     	
+        </div>
+
+        <div class="form-group row">
+			<label class="col-form-label col-4">Vendor/Owner/Representative</label>
+			<div class="col-8">
+                <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-1">
+                   <label for="c-1">Original Manufacturer</label>
+                  </div>
+                  <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-2">
+                   <label for="c-2">Franchisee</label>
+				  </div>
+				  
+				  <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-3">
+                   <label for="c-3">Retailer /  Wholesaler</label>
+                  </div>
+                  <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-4">
+                   <label for="c-4">Non Profit / NGO</label>
+				  </div>
+				  
+				  <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-5">
+                   <label for="c-5">Distributor</label>
+                  </div>
+                  <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-6">
+                   <label for="c-6">Others</label>
+				  </div>
+				  <div class="form-check-inline py-2">
+                    <input type="checkbox" id="c-7">
+                   <label for="c-7">Reseller</label>
+                  </div>
+				      
+        </div>
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-form-label col-4">Year Of Establishment</label>
+			<div class="col-8">
+				<input type="text" class="form-control" name="yoe" id="yoe" required="required">
+				<span>Enter Year</span>
+            </div>        	
+		</div>
+
+		<div class="form-group row">
+			<label class="col-form-label col-4">Seller Major Category</label>
+			<div class="col-8">
+
+				<div class="form-check py-2 px-0">
+					<input type="checkbox" id="c-8">
+					<label for="c-8">Clothing</label>
+				  </div>
+
+				  <div class="form-check py-2 px-0">
+					<input type="checkbox" id="c-9">
+		   <label for="c-9"> Footwear </label>
+				  </div>
+
+
+		  <div class="form-check py-2 px-0">
+			<input type="checkbox" id="c-10">
+		   <label for="c-10">Accessories</label>
+		  </div>    
+		
+		  <div class="form-check py-2 px-0">
+			<input type="checkbox" id="c-11">
+		   <label for="c-11"> Grooming </label>
+		  </div>  
+		  
+		</div>
+
+		</div>
+
+
+		<div class="form-group row">
+			<label class="col-form-label col-4">Major Product Sub Categories</label>
+			<div class="col-8">
+				<table class="table table-bordered table-definition mb-1">
+					<thead class="">
+						<tr>
+							<th>Men </th>
+							<th>Women</th>
+							<th> Kids</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<!-- <td>
+								Clothing 
+							</td> -->
+				
+							<td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-42">
+								<label for="c-42"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-43">
+								<label for="c-43"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-44">
+								<label for="c-44"></label>
+							  </div></td>
+				
+							 
+						</tr>
+						<tr>
+							<!-- <td>Footwear</td> -->
+				
+							<td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-45">
+								<label for="c-45"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-46">
+								<label for="c-46"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-47">
+								<label for="c-47"></label>
+							  </div></td>
+				
+				
+							
+						</tr>
+						
+				
+						<tr>
+							<!-- <td>Accessories</td> -->
+							<td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-48">
+								<label for="c-48"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-49">
+								<label for="c-49"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-50">
+								<label for="c-50"></label>
+							  </div></td>
+				
+							
+							
+						</tr>
+				
+						<tr>
+							<!-- <td> Grooming </td> -->
+				
+							<td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-51">
+								<label for="c-51"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-52">
+								<label for="c-52"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-53">
+								<label for="c-53"></label>
+							  </div></td>
+				
+						
+							
+						</tr>
+					</tbody>
+					
+				</table>
+            </div>        	
+		</div> 
+
+
+		<div class=" row">
+			<label class="col-form-label col-8"> Delivery/ Courier Services Available</label>
+			<div class="col">
+				
+            </div>        	
+		</div>
+		<div class=" form-group row">
+		<table class="table table-bordered table-definition mb-1">
+			<thead class="">
+				<tr>
+					<th></th>
+					<th>Delhivery </th>
+					<th>Ecom Express</th>
+					<th>DTDC</th>
+					<th>BlueDart</th>
+					<th> XpressBees </th>
+					<th>Others</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						In Time Delivery    
+					</td>
+		
+					<td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-12">
+						<label for="c-12"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-13">
+						<label for="c-13"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-14">
+						<label for="c-14"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-15">
+						<label for="c-15"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-16">
+						<label for="c-16"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-17">
+						<label for="c-17"></label>
+					  </div></td>
+					
+					
+					
+					
+				
+				</tr>
+				<tr>
+					<td>Punctuality</td>
+		
+					<td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-18">
+						<label for="c-18"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-19">
+						<label for="c-19"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-20">
+						<label for="c-20"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-21">
+						<label for="c-21"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-22">
+						<label for="c-22"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-23">
+						<label for="c-23"></label>
+					  </div></td>
+					
+				</tr>
+				<tr>
+					<td>In time Pickup</td>
+		
+					<td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-24">
+						<label for="c-24"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-25">
+						<label for="c-25"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-26">
+						<label for="c-26"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-27">
+						<label for="c-27"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-28">
+						<label for="c-28"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-29">
+						<label for="c-29"></label>
+					  </div></td>
+				
+				</tr>
+		
+				<tr>
+					<td>Friendliness</td>
+					<td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-30">
+						<label for="c-30"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-31">
+						<label for="c-31"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-32">
+						<label for="c-32"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-33">
+						<label for="c-33"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-34">
+						<label for="c-34"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-35">
+						<label for="c-35"></label>
+					  </div></td>
+					
+				</tr>
+		
+				<tr>
+					<td> Responsiveness </td>
+		
+					<td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-36">
+						<label for="c-36"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-37">
+						<label for="c-37"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-38">
+						<label for="c-38"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-39">
+						<label for="c-39"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-40">
+						<label for="c-40"></label>
+					  </div></td>
+		
+					  <td><div class="form-check py-2 px-0">
+						<input type="checkbox" id="c-41">
+						<label for="c-41"></label>
+					  </div></td>
+					
+				</tr>
+			</tbody>
+			
+		</table>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-form-label col-5">Stock Quantity of Each Product</label>
+			<div class="col-7">
+				<select class="form-control" id="exampleFormControlSelect1">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				  </select>
+            </div>        	
+		</div>
+
+		
+
+		<div class="form-group row">
+			<label class="col-form-label col-12">  Bank Details </label>
+			     	
+		</div>
+
+		<table class="table table-bordered table-definition mb-1">
+			<thead class="">
+				<tr>
+					<th></th>
+					<th rowspan="2">Details </th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<label class="col-form-label col-12"> Account Holder Name   </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="ahn" id="ahn" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-12"> Account Number  </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="anu" id="anu" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-12"> IFSC Code </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="ifsc" id="ifsc" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-12"> Account Type  </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="at" id="at" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-12"> Bank & Branch </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="bb" id="bb" required="required">   
+					</td>
+		
+				</tr>
+			  
+			</tbody>
+			
+		</table>
+
+
+		<div class="form-group row">
+			<label class="col-form-label col-12">  Sales Tax Registrations </label>
+			     	
+		</div>
+
+		<table class="table table-bordered table-definition mb-1">
+			<thead class="">
+				<tr>
+					<th></th>
+					<th rowspan="2">Details </th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<label class="col-form-label col-4"> GST </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="gst" id="gst" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-4"> PAN </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="pan" id="pan" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-4"> VAT </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="vat" id="vat" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-4"> MSME </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="msme" id="msme" required="required">   
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td>
+						<label class="col-form-label col-12"> Shop & Establishment </label> 
+					</td>
+					
+					<td>
+						<input type="text" class="form-control" name="shop" id="shop" required="required">   
+					</td>
+		
+				</tr>
+			  
+			</tbody>
+			
+		</table>
+
+
+		<div class="form-group row">
+			<label class="col-form-label col-12">Major Product Sub Categories</label>
+			<div class="col-12">
+				<table class="table table-bordered table-definition mb-1">
+					<thead class="">
+						<tr>
+							<th></th>
+							<th>Local  </th>
+							<th>Regional</th>
+							<th> PAN India</th>
+							<th> Cross Boarder </th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								Product Delivery 
+							</td>
+				
+							<td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-142">
+								<label for="c-142"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-143">
+								<label for="c-143"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-144">
+								<label for="c-144"></label>
+							  </div></td>
+		
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-145">
+								<label for="c-145"></label>
+							  </div></td>
+				
+							 
+						</tr>
+						<tr>
+							<td>After Sale Service </td>
+				
+							<td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-151">
+								<label for="c-151"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-152">
+								<label for="c-152"></label>
+							  </div></td>
+				
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-153">
+								<label for="c-153"></label>
+							  </div></td>
+		
+							  <td><div class="form-check py-2 px-0">
+								<input type="checkbox" id="c-154">
+								<label for="c-154s"></label>
+							  </div></td>
+				
+				
+							
+						</tr>
+						
+				
+						
+		
+					
+					</tbody>
+					
+				</table>
+			</div>        	
+		</div> 
+		
+		
+
+		<div class="form-group row">
+			<label class="col-form-label col-4">Have you previously done business with any other Ecom sites</label>
+			<div class="col-8">
+                <input type="text" class="form-control" name="ecom" id="ecom" required="required">
+            </div>        	
+		</div>
+
+       
+		<div class="form-group row">
+			<div class="col-8 offset-4">
+			
+				<button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+			</div>  
+		</div>		      
+    </form>
+	
+</div>
+
