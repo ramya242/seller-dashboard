@@ -30,7 +30,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": ["./node_modules/jquery/dist/jquery.min.js","./node_modules/bootstrap/dist/js/bootstrap.min.js"]
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -125,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "odcet-seller-dashboard"
+  "defaultProject": "odcet-seller-dashboard",
+  "cli": {
+    "analytics": "3feb8f6a-aa67-4d1d-bff3-25713e2ceb2a"
+  }
 }
