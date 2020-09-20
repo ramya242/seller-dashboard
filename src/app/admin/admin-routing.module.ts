@@ -5,7 +5,7 @@ import {  AuthGuardService as AuthGuard } from './shared/services/auth-gaurd.ser
 import { DashboardComponent} from './components/dashboard/dashboard.component'
 import { AdminComponent} from './admin.component'
 import { AddProductComponent } from './components/products/add-product/add-product.component';
-
+import { ProductListComponent } from './components/products/product-list/product-list.component';
 
 
 const routes: Routes = [
@@ -15,6 +15,7 @@ const routes: Routes = [
       children: [
         { path: '', component: DashboardComponent,canActivate: [AuthGuard] },
         { path: 'add-product', component: AddProductComponent,canActivate: [AuthGuard] },
+        { path: 'product-list', component: ProductListComponent,canActivate: [AuthGuard] },
         
       ]
   }

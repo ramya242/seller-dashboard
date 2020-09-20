@@ -9,6 +9,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
+import { ProductListComponent } from './components/products/product-list/product-list.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -16,7 +17,8 @@ import { AddProductComponent } from './components/products/add-product/add-produ
     HeaderComponent,
     FooterComponent,
     TopBarComponent,
-    AddProductComponent
+    AddProductComponent,
+    ProductListComponent
   ],
   imports: [
     CommonModule,

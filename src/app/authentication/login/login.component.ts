@@ -42,13 +42,13 @@ export class LoginComponent implements OnInit {
       if(status=='success')
       {
         localStorage.setItem('jtoken',headers.get('token'))
-        if(data.user_role == 'USER')
-        {
-          this.router.navigate(['/seller-signup']);
-        }
-        else{
-          this.router.navigate(['/']);
-        }
+        // if(data.user_role == 'USER')
+        // {
+        //   this.router.navigate(['/seller-signup']);
+        // }
+        // else{
+        //   this.router.navigate(['/']);
+        // }
       }
       else{
        

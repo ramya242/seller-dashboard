@@ -15,6 +15,7 @@ import { CommonComponent } from './common/common.component';
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
 import { LoadingComponent } from './common/loading/loading.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { LoadingComponent } from './common/loading/loading.component';
     CommonComponent,
     PageNotFoundComponent,
     LoadingComponent,
+    
     // DashboardComponent
   ],
   imports: [

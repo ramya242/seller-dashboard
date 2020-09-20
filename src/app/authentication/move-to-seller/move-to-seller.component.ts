@@ -51,7 +51,7 @@ export class MoveToSellerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCategoriesInfo()
+    //this.getCategoriesInfo()
   }
 
 }
