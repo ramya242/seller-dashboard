@@ -6,6 +6,7 @@ import { DashboardComponent} from './components/dashboard/dashboard.component'
 import { AdminComponent} from './admin.component'
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { ProductListComponent } from './components/products/product-list/product-list.component';
+import {ProductDetailsComponent} from './components/products/product-details/product-details.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
         { path: '', component: DashboardComponent,canActivate: [AuthGuard] },
         { path: 'add-product', component: AddProductComponent,canActivate: [AuthGuard] },
         { path: 'product-list', component: ProductListComponent,canActivate: [AuthGuard] },
+        { path: 'product-details/:id',component: ProductDetailsComponent,canActivate:[AuthGuard]},
         
       ]
   }
