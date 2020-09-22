@@ -45,7 +45,7 @@ export class ProductsService {
   }
   public getAllProductList(data)
   {
-    var headers ={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvdXNlclwvbG9naW4iLCJpYXQiOjE2MDA2MDY3NjgsImV4cCI6MTYwMDYyNDc2OCwibmJmIjoxNjAwNjA2NzY4LCJqdGkiOiJDdHBZakg0ZjV3UkI4bU9HIiwic3ViIjoyMiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.KFEreiTrBnDxO2RISjMfEypvBZ2mlPalhfV1HR6o4ek', 'Content-Type': 'application/json'};
+    var headers ={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvdXNlclwvbG9naW4iLCJpYXQiOjE2MDA2MDczNDMsImV4cCI6MTYwMDYyNTM0MywibmJmIjoxNjAwNjA3MzQzLCJqdGkiOiI3Vmowb2hTaXc4QVhUSEFUIiwic3ViIjo2MzAsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.e-JBpKDlWv0qjCeZFT65TMBU2yRzOMUAWxmSf_1AB2E', 'Content-Type': 'application/json'};
 
     return this.httpClient.post(`${environment.API_URL}business_profile/products/getAll`,data,{headers:headers});
   }

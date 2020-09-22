@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getAllProductList(inputData).subscribe((data: any)=>{
       console.log(data)
   })
-  //   var headers = new HttpHeaders({'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvdXNlclwvbG9naW4iLCJpYXQiOjE2MDA1OTU0NDgsImV4cCI6MTYwMDYxMzQ0OCwibmJmIjoxNjAwNTk1NDQ4LCJqdGkiOiJodFQ4UnZXbDVueURaa2NyIiwic3ViIjoyMiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.xgdOUtcMo1FmMI_EIsoPiE-0sUoNLyRcCQR9VF7HoPw', 'Content-Type': 'application/json'});
+  //   var headers = new HttpHeaders({'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvdXNlclwvbG9naW4iLCJpYXQiOjE2MDA2MDczNDMsImV4cCI6MTYwMDYyNTM0MywibmJmIjoxNjAwNjA3MzQzLCJqdGkiOiI3Vmowb2hTaXc4QVhUSEFUIiwic3ViIjo2MzAsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.e-JBpKDlWv0qjCeZFT65TMBU2yRzOMUAWxmSf_1AB2E', 'Content-Type': 'application/json'});
             
   //       this.http.post<any>(this.URL, data, { headers: headers}).subscribe(resultData => {
   //            console.log(resultData);
