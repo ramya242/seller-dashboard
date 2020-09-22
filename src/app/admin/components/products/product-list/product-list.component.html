@@ -1,1 +1,9 @@
-<p>product-list works!</p>
+   <ul>
+        <li *ngFor="let res of productList"><a [routerLink]="['/admin/product-details/',res.id]">{{res.title}}<br/>
+            <img [src]="res.posted_user.image" alt="image" width="50px" height="50px"><br/>
+            <span>Category:{{res.product_level1_category.name}}</span><br/>
+            <span>Price:{{res.actual_price}}</span><br/>
+            <span>Offer Price:{{res.offer_price}}</span></a><br/><hr/>
+       </li>
+    </ul>
+
