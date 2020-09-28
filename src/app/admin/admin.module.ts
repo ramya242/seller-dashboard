@@ -11,6 +11,7 @@ import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -26,7 +27,8 @@ import { ProductDetailsComponent } from './components/products/product-details/p
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class AdminModule { }

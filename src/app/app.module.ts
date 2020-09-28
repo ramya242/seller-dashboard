@@ -35,8 +35,8 @@ import { LoadingComponent } from './common/loading/loading.component';
     NgbModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+   ],
   providers: [],
   bootstrap: [AppComponent]
 })
