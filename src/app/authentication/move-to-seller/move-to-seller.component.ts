@@ -15,6 +15,7 @@ export class MoveToSellerComponent implements OnInit {
   majorCategoryList:any = []
   deliveryServiceTypesList:any = []
   areaOfOperationsList:any =[]
+  submitted:boolean=false;
 
   constructor(private formBuilder: FormBuilder,private router: Router, private productService : ProductsService) { 
     this.sellerForm = this.formBuilder.group({
@@ -109,6 +110,11 @@ export class MoveToSellerComponent implements OnInit {
     }) 
   }
   submit(){
+    this.submitted = true;
+    // stop here if form is invalid
+     if (this.sellerForm.invalid) {
+            return;
+        }
     console.log(this.f)
   }
   get f(){
