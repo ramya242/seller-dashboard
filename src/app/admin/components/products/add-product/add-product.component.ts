@@ -32,18 +32,18 @@ export class AddProductComponent implements OnInit {
         product_level1_category: ['', Validators.required],
         product_level2_category: ['', Validators.required],
         product_level3_category: ['', Validators.required],
-        product_areas: [''],
-        product_sizes: [''],
-        actual_price: [''],
-        offer_price: [''],
-        exchange_days: [''],
-        left_pieces: [''],
-        where_to_buy: [''],
+        product_areas: [[]],
+        product_sizes: [[]],
+        actual_price: ['', [Validators.required,Validators.pattern("^[0-9]*$")]],
+        offer_price: ['', [Validators.required,Validators.pattern("^[0-9]*$")]],
+        exchange_days: ['', [Validators.pattern("^[0-9]*$")]],
+        left_pieces: ['', [Validators.pattern("^[0-9]*$")]],
+        where_to_buy: ['',Validators.required],
         title: [''],
-        description:[''],
+        description:['',[Validators.required, Validators.maxLength(1000)]],
         product_boost:[''],
         union_territories:[''],
-        subject_line:[]
+        subject_line:['',[Validators.required,  Validators.maxLength(150)]],
        
       })
     }
@@ -54,6 +54,7 @@ export class AddProductComponent implements OnInit {
     this.whereToBuy()
     this.unionTerritories()
     this.productBoost()
+    // this.createProduct()
   }
   public unionTerritories(){
     this.productService.subCategories('','','product_union_territories').subscribe((data: any)=>{
@@ -131,22 +132,29 @@ export class AddProductComponent implements OnInit {
 
   public createProduct(){
    const product :any= {
-      "title":"29 oct video thumbnail ratio",
-      "description":"video",
-      "product_level1_category":1,
-      "product_level2_category":2,
-      "product_level3_category":3,
-      "product_areas":[1,2],
-      "product_sizes":[1,2],
-      "actual_price":"25",
-      "offer_price":"10",
-      "exchange_days":15,
-      "left_pieces":5,
-      "where_to_buy":"1",
-      "links":"www.example.com/123"
-    }
+    "title":this.f.title.value,
+    "description":this.f.description.value,
+    "product_level1_category":this.f.product_level1_category.value,
+    "product_level2_category": this.f.product_level2_category.value,
+    "product_level3_category":this.f.product_level3_category.value,
+    "product_areas": this.f.product_areas.value,
+    "product_sizes": this.f.product_sizes.value ,
+    "actual_price":this.f.actual_price.value,
+    "offer_price": this.f.offer_price.value,
+    "exchange_days":this.f.exchange_days.value,
+    "left_pieces":this.f.left_pieces.value,
+    "where_to_buy":this.f.where_to_buy.value,
+    "links":"www.example.com/123",
+    "subject_line":this.f.subject_line.value,
+    "union_territories":this.f.union_territories.value,
+    "product_boost":this.f.product_boost.value
+  }
     this.productService.createProduct(product).subscribe((data: any)=>{
         console.log(data)
+        if(this.urls.length >0)
+        {
+          this.productFileUpload(data.productId)
+        }
     })
   }
   public getAvailabilitySizes(id){
@@ -188,5 +196,25 @@ export class AddProductComponent implements OnInit {
   }
   onSubmit(){
 
+  }
+  get f(){
+    return this.productForm.controls;
+  }
+
+  productFileUpload(id){
+    const formData = new FormData();  
+
+    let files:any = this.urls.map((url,i)=>{
+      if(i==0)
+      {
+        formData.append('thumbnail', url.file);  
+      }
+      formData.append('filesArray[]',url.file)
+    });
+    formData.append('type', 'image');  
+    formData.append('productId', id);  
+    this.productService.uploadProductFiles(formData).subscribe((data: any)=>{
+      console.log(data)
+  })    
   }
 }

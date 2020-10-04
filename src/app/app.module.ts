@@ -36,7 +36,12 @@ import { LoadingComponent } from './common/loading/loading.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+<<<<<<< HEAD
    ],
+=======
+    
+  ],
+>>>>>>> 63762ddc0adb88a395f2c222a645c71c88a70733
   providers: [],
   bootstrap: [AppComponent]
 })

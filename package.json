@@ -25,10 +25,15 @@
     "@fortawesome/fontawesome-common-types": "^0.2.30",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
+    "@ng-select/ng-select": "^5.0.3",
     "bootstrap": "^4.4.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
+<<<<<<< HEAD
     "ngx-pagination": "^5.0.0",
+=======
+    "ngx-select-dropdown": "^1.4.4",
+>>>>>>> 63762ddc0adb88a395f2c222a645c71c88a70733
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

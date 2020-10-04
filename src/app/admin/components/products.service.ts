@@ -6,16 +6,24 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProductsService {
-
-  constructor(private httpClient: HttpClient) { }
+  headers:any= {}
+  constructor(private httpClient: HttpClient) {
+     this.headers = {'Authorization': this.getToken(), 'Content-Type': 'application/json'};
+   }
   public getCategories(){
-    return this.httpClient.get(`${environment.API_URL}business_profile/metadata/`);
+    return this.httpClient.get(`${environment.API_URL}business_profile/metadata`);
   }
   public getProductAreas(){
     return this.httpClient.get(`${environment.API_URL}business_profile/meta/product_areas`);
   }
   public whereToBuy(){
     return this.httpClient.get(`${environment.API_URL}business_profile/meta/where_to_buy`);
+  }
+  public deliveryServiceTypes(){
+    return this.httpClient.get(`${environment.API_URL}business_profile/meta/delivery_service_types`);
+  }
+  public areaOfOperations(){
+    return this.httpClient.get(`${environment.API_URL}business_profile/meta/area_of_operations`);
   }
   public subCategories(level,id,name=''){
     let url:any = ""
@@ -37,7 +45,7 @@ export class ProductsService {
 
   public createProduct(product)
   {
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/create`,product);
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/create`,product,{headers:this.headers});
   }
   public getProductSizes(categoryId)
   {
@@ -45,14 +53,20 @@ export class ProductsService {
   }
   public getAllProductList(data)
   {
-    var headers ={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvdXNlclwvbG9naW4iLCJpYXQiOjE2MDEyMDA4MjgsImV4cCI6MTYwMTIxODgyOCwibmJmIjoxNjAxMjAwODI4LCJqdGkiOiJyc3QwRmFxeUFLcmc0UUc0Iiwic3ViIjoyMiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.BPBhwc9WKV8bjwZ3kZkRz_-4z_sWyWrtGHIikir_9pc', 'Content-Type': 'application/json'};
-
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/getAll`,data,{headers:headers});
+  
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/getAll`,data,{headers:this.headers});
   }
   public productDetails(productId)
   {
-    var headers ={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvdXNlclwvbG9naW4iLCJpYXQiOjE2MDEyMDA4MjgsImV4cCI6MTYwMTIxODgyOCwibmJmIjoxNjAxMjAwODI4LCJqdGkiOiJyc3QwRmFxeUFLcmc0UUc0Iiwic3ViIjoyMiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.BPBhwc9WKV8bjwZ3kZkRz_-4z_sWyWrtGHIikir_9pc', 'Content-Type': 'application/json'};
-
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/single`,productId,{headers:headers});
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/single`, productId,{headers:this.headers});
+  }
+  public uploadProductFiles(formData)
+  {
+    this.headers = {'Authorization': this.getToken()};
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/fileUpload`, formData,{headers:this.headers});
+  }
+  getToken()
+  {
+    return "Bearer "+localStorage.getItem("jtoken")
   }
 }
