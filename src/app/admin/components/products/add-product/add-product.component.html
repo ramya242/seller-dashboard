@@ -11,21 +11,35 @@
                     </div>
                     <div class="card-body">
                         <form  [formGroup]="productForm"
-                        (ngSubmit)="onSubmit()">
+                        (ngSubmit)="createProduct()">
                             <div class="d-flex">
                                 <div class="col-md-4">
                                     <h6>CHOOSE A CATEGORY</h6>
-                                    <ul>                            
+                                    <ul class="list-style-none">                            
                                     <li *ngFor="let cat of categoriesList">
-                                        <a (click)="getSubCategories('level2',cat.id)"> {{cat.name}}</a>
+                                        <a (click)="getSubCategories('level2',cat.id)"> 
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                            <input type="radio" formControlName="product_level1_category"       class="form-check-input" [value]="cat.id"
+                                                  >{{cat.name}}
+                                                </label>
+                                              </div>
+                                            </a>
                                     </li> 
                                     </ul>
                                 </div>
                                 <div class="col-md-4">
                                     <h6>CHOOSE A SUB CATEGORY</h6>
                                     <ul>
-                                        <li *ngFor="let cat of subCategoriesList">
-                                            <a (click)="getSubCategories('level3',cat.id)"> {{cat.name}}</a>
+                                        <li *ngFor="let cat of subCategoriesList;let i=index">
+                                            <a (click)="getSubCategories('level3',cat.id)"> 
+
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                      <input type="radio" formControlName="product_level2_category" class="form-check-input" [value]="cat.id">{{cat.name}}
+                                                    </label>
+                                                  </div>
+                                            </a>
                                         </li> 
                                     </ul>
                                 </div>
@@ -33,29 +47,56 @@
                                     <h6>CHOOSE A SUB SUB CATEGORY</h6>
                                     <ul>
                                         <li *ngFor="let cat of subSubCategoriesList">
-                                            <a (click)="getAvailabilitySizes(cat.id)"> {{cat.name}}</a>
+                                            <a (click)="getAvailabilitySizes(cat.id)"> <div class="form-check">
+                                                <label class="form-check-label">
+                                                  <input type="radio" class="form-check-input" formControlName="product_level3_category" [value]="cat.id">{{cat.name}}
+                                                </label>
+                                              </div></a>
                                         </li> 
                                     </ul>
                                 </div>
                             </div>
+                            
                             <div class="divBlk">
                                 <label for="product_sizes"> Select Availability Sizes <span class="man-star"></span></label>
                               
 
-                                <select  id="product_sizes" name="product_sizes" class="form-control custominp" formControlName="product_sizes">
+                                <!-- <select  id="product_sizes" name="product_sizes" class="form-control custominp" formControlName="product_sizes">
                                     <option>Select</option>
                                     <option *ngFor="let size of availabilitySizes">
                                             {{size.name}}
                                     </option>
-                                </select>
+                                </select> -->
+                             </div>
+                             <!-- <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" formControlName="product_sizes" [config]="config" [options]="availabilitySizes"></ngx-select-dropdown> -->
+                             <ng-select *ngIf="availabilitySizes.length>0"
+                                [items]="availabilitySizes"
+                                [multiple]="true"
+                                bindLabel="name"
+                                [selectableGroup]="true"
+                                [closeOnSelect]="false"
+                                bindValue="id"
+                                formControlName="product_sizes">
+                               
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                                </ng-template>
+                            </ng-select>
+                            <div class="divBlk">
+                                <label for="title"> Title<span class="man-star"></span></label>
+                                <input type="text" id="title" formControlName="title" name="title" class="form-control custominp" />
                              </div>
                             <div class="divBlk">
                                 <label for="subject"> Add SubjectLine<span class="man-star"></span></label>
-                                <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" value="">
+                                <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
                              </div>
                              <div class="divBlk">
                                 <label for="price"> Price<span class="man-star"></span></label>
-                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" value="">
+                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" />
+                             </div>
+                             <div class="divBlk">
+                                <label for="offerPrice"> Offer Price<span class="man-star"></span></label>
+                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" />
                              </div>
                              <div class="divBlk">
                                 <label for="description"> Product Description<span class="man-star"></span></label>
@@ -63,21 +104,34 @@
                              </div>
                              <div class="divBlk">
                                 <label for="returnDays"> Return & Exchange Days</label>
-                                <input type="text" id="returnDays" name="returnDays" class="form-control custominp" value="">
+                                <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
                              </div>
                              <div class="divBlk">
                                 <label for="leftPieces" > Left Pieces</label>
-                                <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" value="">
+                                <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" />
                              </div>
                              <div class="divBlk">
                                 <label for="availabilityAreas"> Availability Areas</label>
 
-                                <select  id="availabilityAreas" formControlName="product_areas" name="availabilityAreas" class="form-control custominp">
+                                <!-- <select  id="availabilityAreas" formControlName="product_areas" name="availabilityAreas" class="form-control custominp">
                                     <option>Select</option>
                                     <option *ngFor="let area of productAreas">
                                             {{area.name}}
                                     </option>
-                                </select>
+                                </select> -->
+                                <ng-select *ngIf="productAreas.length>0"
+                                    [items]="productAreas"
+                                    [multiple]="true"
+                                    bindLabel="name"
+                                    [selectableGroup]="true"
+                                    [closeOnSelect]="false"
+                                    bindValue="id"
+                                    formControlName="product_areas">
+                                   
+                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                                    </ng-template>
+                                </ng-select>
                              </div>
                              <div class="divBlk">
                                 <label for="unionTerritories"> Union Territories</label>

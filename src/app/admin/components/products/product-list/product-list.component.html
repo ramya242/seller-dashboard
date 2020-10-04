@@ -1,9 +1,156 @@
-   <ul>
-        <li *ngFor="let res of productList"><a [routerLink]="['/admin/product-details/',res.id]">{{res.title}}<br/>
-            <img [src]="res.posted_user.image" alt="image" width="50px" height="50px"><br/>
-            <span>Category:{{res.product_level1_category.name}}</span><br/>
-            <span>Price:{{res.actual_price}}</span><br/>
-            <span>Offer Price:{{res.offer_price}}</span></a><br/><hr/>
-       </li>
-    </ul>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-12">
+         <div class="card shadow mb-4">
+            <div class="card-header py-3">
+               <h6 class="m-0 font-weight-bold text-primary">Product List </h6>
+            </div>
+            <div class="card-body">
+               <!-- <ul>
+                  <li *ngFor="let res of productList"><a [routerLink]="['/admin/product-details/',res.id]">{{res.title}}<br/>
+                      <img [src]="res.posted_user.image" alt="image" width="50px" height="50px"><br/>
+                      <span>Category:{{res.product_level1_category.name}}</span><br/>
+                      <span>Price:{{res.actual_price}}</span><br/>
+                      <span>Offer Price:{{res.offer_price}}</span></a><br/><hr/>
+                  </li>
+                  </ul> -->
+               <!-- Page Heading -->
+               <!-- Types-->
+               <div class="d-flex py-3 justify-content-center">
+                  <div class="nav-item" (click)="getSubCategories('level2',category.id)" *ngFor="let category of categoriesList">
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
+                  <span> {{category.name}}  </span>
+                  </a>
+               </div>
+            </div>
+            <!-- Types-->
+            <!-- Content Row -->
+            <div class="container pt-5">
+               <div class="row">
+                  <div class="col-md-8 order-md-2 col-lg-9">
+                     <div class="container-fluid">
+                        <div class="row   mb-5">
+                           <div class="col-12">
+                              <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
+                                 <label class="mr-2">Sort by:</label>
+                                 <a class="btn btn-lg btn-light dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relevance <span class="caret"></span></a>
+                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(71px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" href="#">Relevance</a>
+                                    <a class="dropdown-item" href="#">Price Descending</a>
+                                    <a class="dropdown-item" href="#">Price Ascending</a>
+                                    <a class="dropdown-item" href="#">Best Selling</a>
+                                 </div>
+                              </div>
+                              <div class="btn-group float-md-right ml-3">
+                                 <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-left"></span> </button>
+                                 <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-right"></span> </button>
+                              </div>
+                              <div class="dropdown float-right">
+                                 <label class="mr-2">View:</label>
+                                 <a class="btn btn-lg btn-light dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">9 <span class="caret"></span></a>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" x-placement="bottom-end" style="will-change: transform; position: absolute; transform: translate3d(120px, 48px, 0px); top: 0px; left: 0px;">
+                                    <a class="dropdown-item" href="#">12</a>
+                                    <a class="dropdown-item" href="#">24</a>
+                                    <a class="dropdown-item" href="#">48</a>
+                                    <a class="dropdown-item" href="#">96</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-6 col-md-6 col-lg-4 mb-3" *ngFor="let product of productList">
+                              <div class="card h-100 border-0">
+                                 <div class="card-img-top">
+                                    <img src="{{product.product_media[0].url}}" class="img-fluid mx-auto d-block" alt="Card image cap">
+                                 </div>
+                                 <div class="card-body text-center">
+                                    <h4 class="card-title">
+                                       <a href="product-infp.php" class=" font-weight-bold text-dark text-uppercase small"> {{product.title}}</a>
+                                    </h4>
+                                    <h5 class="card-price small text-warning">
+                                       <i>
+                                       <s>₹{{product.actual_price}}</s> ₹{{product.offer_price}}</i>
+                                    </h5>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row sorting mb-5 mt-5">
+                           <div class="col-12">
+                              <a class="btn btn-light">
+                              <i class="fas fa-arrow-up mr-2"></i> Back to top</a>
+                              <div class="btn-group float-md-right ml-3">
+                                 <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-left"></span> </button>
+                                 <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-right"></span> </button>
+                              </div>
+                              <div class="dropdown float-md-right">
+                                 <label class="mr-2">View:</label>
+                                 <a class="btn btn-light btn-lg dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">12 <span class="caret"></span></a>
+                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">12</a>
+                                    <a class="dropdown-item" href="#">24</a>
+                                    <a class="dropdown-item" href="#">48</a>
+                                    <a class="dropdown-item" href="#">96</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-4 order-md-1 col-lg-3 sidebar-filter p-0">
+                     <div class="col-md-12 p-0">
+                        <div class="card mb-3">
+                           <article class="filter-group">
+                              <header class="card-header">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Categories </h6>
+                                 </a>
+                              </header>
+                              <div class="filter-content collapse" id="collapse_aside1" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       
+                                       <li class="nav-item" (click)="getSubCategories('level3',category.id)" *ngFor="let category of subCategoriesList;let i=index">
+                                          <a class="nav-link collapsed"  data-toggle="collapse" 
+                                          [attr.data-target]="'#collapseOne'+i"
+                                          aria-expanded="true" aria-controls="collapseOne">
+                                          <span> {{category.name}}  </span>
+                                          </a>
+                                          
+                                          <div id="collapseOne{{i}}"  class="collapse" aria-labelledby="headingTwo" data-parent="#accordionpiltcat">
+                                             <div class="bg-white py-2 collapse-inner rounded">
 
+                                               <a class="collapse-item" (click)="getAvailabilitySizes(cat.id)" *ngFor="let cat of subSubCategoriesList" >{{cat.name}}</a>
+                                             </div>
+                                           </div>
+                                       </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+
+                                    <div *ngFor="let data of productAreas; let i=index">
+                                       <label>
+                                         <input type="checkbox" [value]="data.value" (change)="onCheckboxChange($event)" />
+                                         {{data.name}}
+                                       </label>
+                                     </div>
+                                 </div>
+                              </div>
+                           </article>
+                           
+                        </div>
+                     </div>
+                     <div class="divider mt-5 mb-5 border-bottom border-secondary"></div>
+                  </div>
+               </div>
+               <!-- Content Row -->
+            </div>
+            <!-- /.container-fluid -->
+         </div>
+      </div>
+   </div>
+</div>
+</div>
