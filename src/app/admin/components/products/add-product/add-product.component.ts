@@ -28,7 +28,6 @@ export class AddProductComponent implements OnInit {
   constructor(private productService: ProductsService,
     private formBuilder: FormBuilder
     ) { 
-      console.log('skdffdk')
       this.productForm = this.formBuilder.group({
         product_level1_category: ['', Validators.required],
         product_level2_category: ['', Validators.required],
