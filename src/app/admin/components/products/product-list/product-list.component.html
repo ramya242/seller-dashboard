@@ -66,7 +66,7 @@
                                  </div>
                                  <div class="card-body text-center">
                                     <h4 class="card-title">
-                                       <a href="product-infp.php" class=" font-weight-bold text-dark text-uppercase small"> {{product.title}}</a>
+                                       <a [routerLink]="['/admin/product-details/',product.id]" class=" font-weight-bold text-dark text-uppercase small"> {{product.title}}</a>
                                     </h4>
                                     <h5 class="card-price small text-warning">
                                        <i>

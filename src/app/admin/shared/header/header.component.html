@@ -1,140 +1,74 @@
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fa fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3"><img class="" src="assets/logo.png" width="120px" height="60px" alt=""></div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/admin/dashboard']">
-          <i class="fa fa-fw fa-tachometer-alt"></i>
-          <span>My Mall</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-      
-
-      
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fa fa-fw fa-cog"></i>
-          <span>Add a Product  </span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" [routerLink]="['/admin/add-product']">Single Product</a>
-            <a class="collapse-item" href="">Multiple Products</a>
-            <a class="collapse-item" [routerLink]="['/admin/product-list']">Product List</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fa fa-fw fa-wrench"></i>
-          <span>Inventory </span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">Complete List</a>
-          </div>
-        </div>
-      </li>
-
-    
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fa fa-fw fa-folder"></i>
-          <span>Reach</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-           
-            <a class="collapse-item" href="">Product Likes </a>
-            <a class="collapse-item" href="">Product Save </a>
-            <a class="collapse-item" href="">Product Share </a>
-            <a class="collapse-item" href="">Product Reviews </a>
-            <a class="collapse-item" href="">Product Views </a>
-            <a class="collapse-item" href="">Product Visit</a>
-            
-          </div>
-        </div>
-      </li>  
-
-      <li class="nav-item">
-        <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapseGrowth" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fa fa-fw fa-chart-area"></i>
-          <span>Growth  </span>
-        </a>
-        <div id="collapseGrowth" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">Performance form</a>
-          </div>
-        </div>
-      </li>      
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapseAdvert" aria-expanded="true" aria-controls="collapseAdvert">
-          <i class="fa fa-fw fa-chart-area"></i>
-          <span> Advertising </span>
-        </a>
-        <div id="collapseAdvert" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href=""> Push Notifications </a>
-          </div>
-        </div>
-      </li> 
-
-      <li class="nav-item">
-        <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapsePartnership" aria-expanded="true" aria-controls="collapsePartnership">
-          <i class="fa fa-fw fa-folder"></i>
-          <span>Partnership</span>
-        </a>
-        <div id="collapsePartnership" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-           
-            <a class="collapse-item" href=""> Support </a>
-            <a class="collapse-item" href=""> Photos  </a>
-            <a class="collapse-item" href=""> Account Support </a>
-            <a class="collapse-item" href=""> Support Delivery </a>
-            <a class="collapse-item" href=""> How To Grow </a>
-            
-          </div>
-        </div>
-      </li>  
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fa fa-fw fa-chart-area"></i>
-          <span>Notification Symbol</span></a>
-      </li>
-
-     
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+<div class="menu-area menu-sticky">
+  <nav class="navbar navbar-expand-xl navbar-light fixed-top">
+     <a href="#" class="navbar-brand"><i class="fa fa-cube"></i><b>My Mall</b></a>
+     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+     <span class="navbar-toggler-icon"></span>
+     </button>
+     <!-- Collection of nav links, forms, and other content for toggling -->
+     <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+      <div class="navbar-nav">
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link" data-toggle="dropdown">Add a Product</a>
+            <div class="dropdown-menu">
+               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Single Product</a>
+               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Multiple Products</a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a  class="nav-item nav-link" data-toggle="dropdown">
+            Inventory</a>
+            <div class="dropdown-menu">
+               <a [routerLink]="['/admin/product-list']" class="dropdown-item">Complete List</a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown">Reach</a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item">Product Likes </a>
+               <a href="#" class="dropdown-item">Product Save </a>
+               <a href="#" class="dropdown-item">Product Share </a>
+               <a href="#" class="dropdown-item">Product Reviews </a>
+               <a href="#" class="dropdown-item">Product Views </a>
+               <a href="#" class="dropdown-item">Product Visit</a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown">Growth </a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item">Performance form </a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown"> Advertising </a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item"> Push Notifications </a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown">Partnership</a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item"> Support </a>
+               <a href="#" class="dropdown-item">  Photos </a>
+               <a href="#" class="dropdown-item"> Account Support </a>
+               <a href="#" class="dropdown-item"> Support Delivery </a>
+               <a href="#" class="dropdown-item"> How To Grow </a>
+            </div>
+         </div>
       </div>
-
-    <!-- End of Sidebar -->
-
-  
-
-
-
-
-  
+      <div class="navbar-nav ml-auto pt-1">
+         <a href="#" class="nav-item nav-link messages pt-1"><i class="fa fa-comment-o"></i><span class="badge">10</span></a>
+         <a href="#" class="nav-item nav-link notifications pt-1"><i class="fa fa-bell-o"></i></a>
+         <div class="nav-item dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action">
+              <img src="ny.jpg" class="avatar" alt="Avatar">  <b class="caret"></b>
+            </a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
+               <div class="dropdown-divider"></div>
+               <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a>
+            </div>
+         </div>
+      </div>
+   </div>
+  </nav>
+</div>
