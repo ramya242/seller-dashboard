@@ -30,15 +30,20 @@
             <div class="row">
                 <aside class="col-sm-5 border-right">
         <article class="gallery-wrap"> 
-        <div class="img-big-wrap">
+        <!-- <div class="img-big-wrap">
           <div> <a href="#"><img src="marketplace.jpg"></a></div>
-        </div> <!-- slider-product.// -->
+        </div>
         <div class="img-small-wrap">
           <div class="item-gallery"> <img src="marketplace.jpg"> </div>
           <div class="item-gallery"> <img src="marketplace.jpg"> </div>
           <div class="item-gallery"> <img src="marketplace.jpg"> </div>
           <div class="item-gallery"> <img src="marketplace.jpg"> </div>
-        </div> <!-- slider-nav.// -->
+        </div> -->
+        <div *ngIf="galleryImages" class="d-flex">
+          <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+
+        </div>  
+
         </article> <!-- gallery-wrap .end// -->
                 </aside>
                 <aside class="col-sm-7">

@@ -11,12 +11,18 @@
 	   <div class="col-8">
 		  <input type="text" class="form-control" formControlName="business_name" id="businessname" required="required">
 	   </div>
+	   <div *ngIf="submitted && !f.business_name.value"  class="text-danger">
+		   Business Name required
+	   </div>
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Mobile Number</label>
 	   <div class="col-8">
 		  <input type="text" class="form-control" formControlName="business_contact_no" id="mobile" required="required">
 	   </div>
+	   <div *ngIf="submitted && !f.business_contact_no.value"  class="text-danger">
+			Mobile number required
+		</div>
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Email</label>
@@ -24,12 +30,18 @@
 		  <input type="email" class="form-control" formControlName="email" id="email" required="required">
 		  <span>example@example.com</span>
 	   </div>
+	   <div *ngIf="submitted && !f.email.value"  class="text-danger">
+			Email required
+		</div>
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Brand/ Store Name</label>
 	   <div class="col-8">
 		  <input type="text" class="form-control" formControlName="brand_or_store_name" id="brandstorenames" required="required">
 	   </div>
+	   <div *ngIf="submitted && !f.brand_or_store_name.value"  class="text-danger">
+			Brand/store required
+		</div>
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Registered Office</label>
@@ -37,25 +49,40 @@
 		  <input type="text" class="form-control" formControlName="address" id="registeredoffice" required="required">
 		  <span>Address</span>
 	   </div>
+	   <div *ngIf="submitted && !f.address.value"  class="text-danger">
+			Address required
+		</div>
 	   <label class="col-form-label col-4"></label>
 	   <div class="col-8">
 		  <input type="text" class="form-control" formControlName="area_town_or_village" id="area" required="required">
 		  <span>Area / Town / Village</span>
 	   </div>
+	   <div *ngIf="submitted && !f.area_town_or_village.value"  class="text-danger">
+			Address required
+		</div>
 	   <label class="col-form-label col-4"></label> 
 	   <div class="col-4">
 		  <input type="text" class="form-control" formControlName="city" required="required">
 		  <span>city</span>
 	   </div>
+	   <div *ngIf="submitted && !f.city.value"  class="text-danger">
+		City required
+		</div>
 	   <div class="col-4">
 		  <input type="text" class="form-control" formControlName="state_id" required="required">
 		  <span>state</span>
 	   </div>
+	   <div *ngIf="submitted && !f.state_id.value"  class="text-danger">
+		State required
+		</div>
 	   <label class="col-form-label col-4"></label> 
 	   <div class="col-4">
 		  <input type="text" class="form-control" formControlName="pincode" required="required">
 		  <span>Pincode</span>
 	   </div>
+	   <div *ngIf="submitted && !f.pincode.value"  class="text-danger">
+		Pincode required
+		</div>
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Vendor/Owner/Representative</label>
@@ -92,6 +119,7 @@
 			 <label for="major-{{i}}">{{category.name}}</label>
 		  </div>
 	   </div>
+	  
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Major Product Sub Categories</label>

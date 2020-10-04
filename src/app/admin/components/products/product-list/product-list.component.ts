@@ -32,7 +32,7 @@ export class ProductListComponent implements OnInit {
       const inputData :any= {"business_userId":this.profileInfo.id,"offset":"0","limit":"20","filters":{"cat_1":[],"cat_2":[],"cat_3":[],"sizes":[],"area":[]},"sorting":"price_asc"};
 
       this.productService.getAllProductList(inputData).subscribe((data: any)=>{
-        console.log(data)
+        //console.log('veeru',data)
         if(data.status == 'success')
         {
           this.productList =  data.data

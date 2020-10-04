@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../authentication/authentication.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-forgot-password',
@@ -8,14 +9,21 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 })
 export class ForgotPasswordComponent implements OnInit {
   email:any = ""
-  constructor(private authService: AuthenticationService) { }
+  forgotPassword: FormGroup;
+  submitted:boolean = false;
+  constructor(private authService: AuthenticationService,private formBuilder: FormBuilder) 
+  {
+    this.forgotPassword = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+    })
+  }
 
   ngOnInit(): void {
   }
   submit(){
-    if(!this.email)
-    {
-      return false
+    this.submitted = true
+    if (this.forgotPassword.invalid) {
+     return
     }
     var userObject = {
       "emailOrMobile": this.email
@@ -31,5 +39,8 @@ export class ForgotPasswordComponent implements OnInit {
       }
      
     }) 
+  }
+  get f () {
+    return this.forgotPassword.controls
   }
 }
