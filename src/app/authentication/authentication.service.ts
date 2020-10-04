@@ -67,6 +67,7 @@ export class AuthenticationService {
   private stopRefreshTokenTimer() {
       clearTimeout(this.refreshTokenTimeout);
   }
+
   logout() {
     this.httpClient.post<any>(`${environment.API_URL}/users/revoke-token`, {}, { withCredentials: true }).subscribe();
       this.stopRefreshTokenTimer();
@@ -74,7 +75,14 @@ export class AuthenticationService {
       localStorage.removeItem('user');
       this.router.navigate(['/login']);
   }
+
   fogotPassword(userObj){
     return this.httpClient.post(`${environment.API_URL}user/forgotPwd`,userObj)
+  }
+
+  moveTosellerAccount(formData)
+  {
+    const headers = {'Authorization':'Bearer '+ this.getJwtToken()};
+    return this.httpClient.post(`${environment.API_URL}user/move_to_business_user`, formData,{headers:headers});
   }
 }

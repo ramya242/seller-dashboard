@@ -71,9 +71,9 @@
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Vendor/Owner/Representative</label>
 	   <div class="col-8">
-		  <div class="form-check-inline py-2" *ngFor="let business of businessTypes">
-			 <input type="checkbox" id="c-1">
-			 <label for="c-1">{{business.name}}</label>
+		  <div class="form-check-inline py-2" *ngFor="let business of businessTypes;let i=index">
+			 <input type="radio" formControlName="business_type" id="type-{{i}}" [value]="business.id" />
+			 <label for="type-{{i}}">{{business.name}}</label>
 		  </div>
 	   </div>
 	</div>
@@ -87,18 +87,18 @@
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Seller Major Category</label>
 	   <div class="col-8">
-		  <div class="form-check py-2 px-0" *ngFor="let category of categoriesList">
-			 <input type="checkbox" id="c-8">
-			 <label for="c-8">{{category.name}}</label>
+		  <div class="form-check py-2 px-0" *ngFor="let category of categoriesList;let i=index;">
+			 <input type="radio" id="major-{{i}}" formControlName="business_category" [value]="category.id">
+			 <label for="major-{{i}}">{{category.name}}</label>
 		  </div>
 	   </div>
 	</div>
 	<div class="form-group row">
 	   <label class="col-form-label col-4">Major Product Sub Categories</label>
 	   <div class="col-8">
-		  <div class="form-check py-2 px-0" *ngFor="let category of majorCategoryList">
-			 <input type="checkbox" id="c-8">
-			 <label for="c-8">{{category.name}}</label>
+		  <div class="form-check py-2 px-0" *ngFor="let category of majorCategoryList;let i=index">
+			 <input type="radio" id="category-{{i}}" formControlName="business_sub_category" [value]="category.id" />
+			 <label for="category-{{i}}">{{category.name}}</label>
 		  </div>
 	   </div>
 	</div>
@@ -120,46 +120,46 @@
 				<td>
 				   In Time Delivery    
 				</td>
-				<td *ngFor="let type of deliveryServiceTypesList">
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index" >
 				   <div class="form-check py-2 px-0">
-					  <input type="checkbox" id="c-12">
-					  <label for="c-12"></label>
+					  <input type="checkbox" id="time-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'in_time_delivery')" />
+					  <label for="time-{{i}}"></label>
 				   </div>
 				</td>
 			 </tr>
 			 <tr>
 				<td>Punctuality</td>
-				<td *ngFor="let type of deliveryServiceTypesList">
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
 				   <div class="form-check py-2 px-0">
-					  <input type="checkbox" id="c-12">
-					  <label for="c-12"></label>
+					  <input type="checkbox" id="punctuality-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'punctuality')" />
+					  <label for="punctuality-{{i}}"></label>
 				   </div>
 				</td>
 			 </tr>
 			 <tr>
 				<td>In time Pickup</td>
-				<td *ngFor="let type of deliveryServiceTypesList">
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
 				   <div class="form-check py-2 px-0">
-					  <input type="checkbox" id="c-12">
-					  <label for="c-12"></label>
+					  <input type="checkbox" id="pickup-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'in_time_pickup')" />
+					  <label for="pickup-{{i}}"></label>
 				   </div>
 				</td>
 			 </tr>
 			 <tr>
 				<td>Friendliness</td>
-				<td *ngFor="let type of deliveryServiceTypesList">
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
 				   <div class="form-check py-2 px-0">
-					  <input type="checkbox" id="c-12">
-					  <label for="c-12"></label>
+					  <input type="checkbox" id="friend-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'friendliness')" />
+					  <label for="friend-{{i}}"></label>
 				   </div>
 				</td>
 			 </tr>
 			 <tr>
 				<td> Responsiveness </td>
-				<td *ngFor="let type of deliveryServiceTypesList">
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
 				   <div class="form-check py-2 px-0">
-					  <input type="checkbox" id="c-12">
-					  <label for="c-12"></label>
+					  <input type="checkbox" id="responsive-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'service_responsiveness')" />
+					  <label for="responsive-{{i}}"></label>
 				   </div>
 				</td>
 			 </tr>
@@ -295,7 +295,7 @@
 				   </td>
 				   <td *ngFor="let area of areaOfOperationsList;let i=index;">
 					  <div class="form-check py-2 px-0">
-						 <input type="checkbox" id="parea-{{i}}">
+						 <input type="checkbox" id="parea-{{i}}"  [value]="area.id" (change)="onCheckboxChange($event,'product_delivery')" />
 						 <label for="parea-{{i}}"></label>
 					  </div>
 				   </td>
@@ -304,7 +304,7 @@
 				   <td>After Sale Service </td>
 				   <td *ngFor="let area of areaOfOperationsList;let i=index;">
 					  <div class="form-check py-2 px-0">
-						 <input type="checkbox" id="aarea-{{i}}">
+						 <input type="checkbox" id="aarea-{{i}}" [value]="area.id" (change)="onCheckboxChange($event,'after_sale_service')"   />
 						 <label for="aarea-{{i}}"></label>
 					  </div>
 				   </td>

@@ -117,6 +117,8 @@ export class ProductListComponent implements OnInit {
   }
   onCheckboxChange(e) {
 
-  }                                                                                                                                                                                                                                                                                                                                                                         
+  }      
+  
+  
 }
                                                                                                                                                                                                                                       

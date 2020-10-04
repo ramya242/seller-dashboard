@@ -214,7 +214,7 @@ export class AddProductComponent implements OnInit {
     formData.append('type', 'image');  
     formData.append('productId', id);  
     this.productService.uploadProductFiles(formData).subscribe((data: any)=>{
-      console.log(data)
+    console.log(data)
   })    
   }
 }

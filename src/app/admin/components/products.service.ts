@@ -62,7 +62,7 @@ export class ProductsService {
   }
   public uploadProductFiles(formData)
   {
-    this.headers = {'Authorization': this.getToken()};
+    this.headers = {'Authorization':  this.getToken()};
     return this.httpClient.post(`${environment.API_URL}business_profile/products/fileUpload`, formData,{headers:this.headers});
   }
   getToken()
