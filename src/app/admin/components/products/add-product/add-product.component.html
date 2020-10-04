@@ -1,5 +1,3 @@
-
-
       <!-- Begin Page Content -->
       <div class="container-fluid">
         <div class="row">
@@ -27,6 +25,7 @@
                                             </a>
                                     </li> 
                                     </ul>
+                                  
                                 </div>
                                 <div class="col-md-4">
                                     <h6>CHOOSE A SUB CATEGORY</h6>
@@ -84,32 +83,67 @@
                             </ng-select>
                             <div class="divBlk">
                                 <label for="title"> Title<span class="man-star"></span></label>
-                                <input type="text" id="title" formControlName="title" name="title" class="form-control custominp" />
+                                <input type="text" id="title" formControlName="title" name="title" class="form-control custominp"/>
                              </div>
+                             
+                             <div *ngIf="submitted && !f.title.value"  class="text-danger">
+                                <div *ngIf="!f.title.value">
+                                        Title is required
+                                </div>
+                            </div>
                             <div class="divBlk">
                                 <label for="subject"> Add SubjectLine<span class="man-star"></span></label>
                                 <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
                              </div>
                              <div class="divBlk">
                                 <label for="price"> Price<span class="man-star"></span></label>
-                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" />
+                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" pattern="^[0-9.]*$"/>
                              </div>
+                             <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
+                                        Actual price is required
+                            </div>
+                            <div *ngIf="submitted && f.actual_price.errors.pattern"  class="text-danger">
+                                <div *ngIf="f.actual_price.value">
+                                    Price should be number
+                                </div>
+                            </div>
                              <div class="divBlk">
                                 <label for="offerPrice"> Offer Price<span class="man-star"></span></label>
-                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" />
+                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" pattern="^[0-9.]*$"/>
                              </div>
+                             <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
+                                <div *ngIf="!f.offer_price.value">
+                                        Offer price is required
+                                </div>
+                            </div>
+                            <div *ngIf="submitted && f.offer_price.errors.pattern"  class="text-danger">
+                                <div *ngIf="f.offer_price.value">
+                                    Offer price should be number
+                                </div>
+                            </div>
                              <div class="divBlk">
                                 <label for="description"> Product Description<span class="man-star"></span></label>
                                 <textarea id="description" name="description" class="form-control custominp" formControlName="description" ></textarea>
                              </div>
+                             <div *ngIf="submitted && !f.description.value"  class="text-danger">
+                                <div *ngIf="!f.description.value">
+                                    Description is required
+                                </div>
+                            </div>
                              <div class="divBlk">
                                 <label for="returnDays"> Return & Exchange Days</label>
                                 <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
                              </div>
+                             
                              <div class="divBlk">
                                 <label for="leftPieces" > Left Pieces</label>
                                 <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" />
                              </div>
+                             <div *ngIf="submitted && !f.left_pieces.value"  class="text-danger">
+                                <div *ngIf="!f.left_pieces.value">
+                                    left Pieces is required
+                                </div>
+                            </div>
                              <div class="divBlk">
                                 <label for="availabilityAreas"> Availability Areas</label>
 
@@ -146,13 +180,18 @@
                                 <label for="whereToPurchase"> Where to Purchase <span class="man-star"></span></label>
                               
 
-                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp">
+                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp" pattern="^[0-9]*$">
                                     <option>Select</option>
                                     <option *ngFor="let where of whereToBuyList">
                                             {{where.name}}
                                     </option>
                                 </select>
                              </div>
+                             <div *ngIf="submitted && !f.where_to_buy.value"  class="text-danger">
+                                <div *ngIf="!f.where_to_buy.value">
+                                    Required Field
+                                </div>
+                            </div>
                              <div class="divBlk">
                                 <label for="boostProduct"> Boost Product</label>
                                 <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->

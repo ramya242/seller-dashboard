@@ -24,22 +24,23 @@ export class AddProductComponent implements OnInit {
       file:''
     }
   ]
+  submitted:boolean=false;
   constructor(private productService: ProductsService,
     private formBuilder: FormBuilder
     ) { 
-
+      console.log('skdffdk')
       this.productForm = this.formBuilder.group({
         product_level1_category: ['', Validators.required],
         product_level2_category: ['', Validators.required],
         product_level3_category: ['', Validators.required],
         product_areas: [[]],
         product_sizes: [[]],
-        actual_price: ['', [Validators.required,Validators.pattern("^[0-9]*$")]],
-        offer_price: ['', [Validators.required,Validators.pattern("^[0-9]*$")]],
-        exchange_days: ['', [Validators.pattern("^[0-9]*$")]],
+        actual_price: ['', [Validators.required,Validators.pattern("^[0-9.]*$")]],
+        offer_price: ['', [Validators.required,Validators.pattern("^[0-9.]*$")]],
+        exchange_days: ['', [Validators.pattern("^.[0-9]*$")]],
         left_pieces: ['', [Validators.pattern("^[0-9]*$")]],
         where_to_buy: ['',Validators.required],
-        title: [''],
+        title: ['',Validators.required],
         description:['',[Validators.required, Validators.maxLength(1000)]],
         product_boost:[''],
         union_territories:[''],
@@ -131,6 +132,11 @@ export class AddProductComponent implements OnInit {
   }
 
   public createProduct(){
+    this.submitted = true;
+    // stop here if form is invalid
+     if (this.productForm.invalid) {
+            return;
+        }
    const product :any= {
     "title":this.f.title.value,
     "description":this.f.description.value,
@@ -195,9 +201,10 @@ export class AddProductComponent implements OnInit {
     })
   }
   onSubmit(){
-
+   
   }
   get f(){
+   
     return this.productForm.controls;
   }
 
