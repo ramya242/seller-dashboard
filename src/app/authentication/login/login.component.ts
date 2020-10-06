@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthenticationService, private formBuilder: FormBuilder,private router: Router) {
     this.loginForm = this.formBuilder.group({
-      emailPhone:['',[Validators.required,Validators.pattern("/^[a-z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/")]],
+      emailPhone:['', [Validators.required, Validators.email]],
       password:['',Validators.required]
     })
     if (this.authService.userValue) { 
@@ -32,10 +32,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+    console.log(this.f.emailPhone.value)
+    console.log(this.f.password.value)
     this.submitted = true
+    console.log(this.loginForm.invalid)
     if (this.loginForm.invalid) {
      return
     }
+    console.log('coming')
     const user:any ={
       email:this.f.emailPhone.value,
       password:this.f.password.value

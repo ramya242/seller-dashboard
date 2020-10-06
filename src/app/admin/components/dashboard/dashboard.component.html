@@ -4,7 +4,7 @@
 
 	  <div class="container p-0">
 		<div class="row py-4">
-			<div class="col-auto mr-auto "><h1 class="h3 mb-0 text-gray-800">Good Morning Nagendra!</h1></div>
+			<div class="col-auto mr-auto " *ngIf="profileInfo"><h1 class="h3 mb-0 text-gray-800">{{greeting}} {{profileInfo.first_name}} {{profileInfo.last_name}}</h1></div>
 			<div class="col-auto"><div class="dropdown show">
 				<a class="btn  dropdown-toggle bs" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				  Life Time
