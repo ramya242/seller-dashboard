@@ -37,31 +37,29 @@ export class AuthenticationService {
     return localStorage.getItem("jtoken");
   }
   public get userValue(): any {
-    console.log(this.userSubject.value)
     // this.userSubject.value = JSON.parse(localStorage.getItem('user'))
       return JSON.parse(localStorage.getItem('user'));
   }
   refreshToken() {
     const headers = {'Authorization': this.getJwtToken()};
-    return this.httpClient.get<any>(`${environment.API_URL}/users/getRefreshToken`,{})
-        .pipe(map((user) => {
-            this.userSubject.next(user);
+    return this.httpClient.get<any>(`${environment.API_URL}user/getRefreshToken`,{})
+        .pipe(map((response) => {
+          let token = response.data.refreshToken
+          // return
+          localStorage.setItem('jtoken', token)
             this.startRefreshTokenTimer();
-            return user;
+            return token
         }));
-}
+  }
   // helper methods
 
   private refreshTokenTimeout;
 
   private startRefreshTokenTimer() {
-      // parse json object from base64 encoded jwt token
-      console.log(this.userValue)
-      const jwtToken = this.getJwtToken();
       // set a timeout to refresh the token a minute before it expires
       const expires = new Date(this.userValue.expires * 1000);
       const timeout = expires.getTime() - Date.now() - (60 * 1000);
-      this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+      // this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
   }
 
   private stopRefreshTokenTimer() {
@@ -69,7 +67,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.httpClient.post<any>(`${environment.API_URL}/users/revoke-token`, {}, { withCredentials: true }).subscribe();
+    // this.httpClient.post<any>(`${environment.API_URL}/users/revoke-token`, {}, { withCredentials: true }).subscribe();
       this.stopRefreshTokenTimer();
       this.userSubject.next(null);
       localStorage.removeItem('user');

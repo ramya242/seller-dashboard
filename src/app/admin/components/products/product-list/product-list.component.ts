@@ -26,11 +26,7 @@ export class ProductListComponent implements OnInit {
   }
   public getAllProductList()
   {
-      
-      console.log('coming');
-
       const inputData :any= {"business_userId":this.profileInfo.id,"offset":"0","limit":"20","filters":{"cat_1":[],"cat_2":[],"cat_3":[],"sizes":[],"area":[]},"sorting":"price_asc"};
-
       this.productService.getAllProductList(inputData).subscribe((data: any)=>{
         //console.log('veeru',data)
         if(data.status == 'success')
@@ -42,7 +38,6 @@ export class ProductListComponent implements OnInit {
   public getProfileInfo()
   {
       this.adminService.getProfileInfo().subscribe((data: any)=>{
-        console.log(data)
         if(data.status == 'success')
         {
           this.profileInfo =  data.data
@@ -53,7 +48,6 @@ export class ProductListComponent implements OnInit {
   public categories(level='level1',id='')
   {
     this.productService.subCategories(level,id).subscribe((data: any)=>{
-      console.log(data);
       if(data.status == 'success')
       {
         if(level=='level1')
@@ -77,7 +71,6 @@ export class ProductListComponent implements OnInit {
   public getSubCategories(level='level1',id='')
   {
     this.productService.subCategories(level,id).subscribe((data: any)=>{
-      console.log(data);
       if(data.status == 'success')
       {
         if(level=='level1')
@@ -107,7 +100,6 @@ export class ProductListComponent implements OnInit {
   }
   public getProductAreas(){
     this.productService.getProductAreas().subscribe((data: any)=>{
-      console.log(data);
       if(data.status == 'success')
       {
         this.productAreas =  data.data

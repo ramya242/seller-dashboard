@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class AdminService {
   headers:any= {}
   constructor(private httpClient: HttpClient) {
-    this.headers = {'Authorization': this.getToken(), 'Content-Type': 'application/json'};
+    // this.headers = {'Authorization': this.getToken(), 'Content-Type': 'application/json'};
   }
   getToken()
   {
@@ -16,6 +16,6 @@ export class AdminService {
   }
   public getProfileInfo()
   {
-    return this.httpClient.get(`${environment.API_URL}user/profile`,{headers:this.headers});
+    return this.httpClient.get(`${environment.API_URL}user/profile`);
   }
 }

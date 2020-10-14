@@ -45,7 +45,7 @@ export class ProductsService {
 
   public createProduct(product)
   {
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/create`,product,{headers:this.headers});
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/create`,product);
   }
   public getProductSizes(categoryId)
   {
@@ -54,16 +54,16 @@ export class ProductsService {
   public getAllProductList(data)
   {
   
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/getAll`,data,{headers:this.headers});
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/getAll`,data);
   }
   public productDetails(productId)
   {
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/single`, productId,{headers:this.headers});
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/single`, productId);
   }
   public uploadProductFiles(formData)
   {
-    this.headers = {'Authorization':  this.getToken()};
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/fileUpload`, formData,{headers:this.headers});
+    // this.headers = {'Authorization':  this.getToken()};
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/fileUpload`, formData);
   }
   getToken()
   {
