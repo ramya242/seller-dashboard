@@ -7,19 +7,13 @@
                <h6 class="m-0 font-weight-bold text-primary">Product List </h6>
             </div>
             <div class="card-body">
-               <!-- <ul>
-                  <li *ngFor="let res of productList"><a [routerLink]="['/admin/product-details/',res.id]">{{res.title}}<br/>
-                      <img [src]="res.posted_user.image" alt="image" width="50px" height="50px"><br/>
-                      <span>Category:{{res.product_level1_category.name}}</span><br/>
-                      <span>Price:{{res.actual_price}}</span><br/>
-                      <span>Offer Price:{{res.offer_price}}</span></a><br/><hr/>
-                  </li>
-                  </ul> -->
+             
                <!-- Page Heading -->
                <!-- Types-->
                <div class="d-flex py-3 justify-content-center">
-                  <div class="nav-item" (click)="getSubCategories('level2',category.id)" *ngFor="let category of categoriesList">
-                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
+                  <div class="nav-item1"  (click)="getSubCategories('level2',category.id)" *ngFor="let category of categoriesList">
+                  <a class="nav-link collapsed"  [ngClass]="{
+                     'text-success':category.id == selectedType }" href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
                   <span> {{category.name}}  </span>
                   </a>
                </div>
@@ -34,13 +28,10 @@
                            <div class="col-12">
                               <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
                                  <label class="mr-2">Sort by:</label>
-                                 <a class="btn btn-lg btn-light dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relevance <span class="caret"></span></a>
-                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(71px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a class="dropdown-item" href="#">Relevance</a>
-                                    <a class="dropdown-item" href="#">Price Descending</a>
-                                    <a class="dropdown-item" href="#">Price Ascending</a>
-                                    <a class="dropdown-item" href="#">Best Selling</a>
-                                 </div>
+                                 {{selectedSortType|json}}
+                                 <select (change)="filterChanged($event.target.value)">
+                                    <option *ngFor="let opt of sortOptions" [value]="opt.id" >{{opt.name}}</option>
+                                 </select>
                               </div>
                               <div class="btn-group float-md-right ml-3">
                                  <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-left"></span> </button>
@@ -78,8 +69,8 @@
                         </div>
                         <div class="row sorting mb-5 mt-5">
                            <div class="col-12">
-                              <a class="btn btn-light">
-                              <i class="fas fa-arrow-up mr-2"></i> Back to top</a>
+                              <!-- <a class="btn btn-light">
+                              <i class="fas fa-arrow-up mr-2"></i> Back to top</a> -->
                               <div class="btn-group float-md-right ml-3">
                                  <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-left"></span> </button>
                                  <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-right"></span> </button>
@@ -112,31 +103,96 @@
                                  <div class="card-body cb">
                                    
                                     <!-- catSidebar -->
-                                    <ul class="navbar-nav bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
                                        
-                                       <li class="nav-item" (click)="getSubCategories('level3',category.id)" *ngFor="let category of subCategoriesList;let i=index">
-                                          <a class="nav-link collapsed"  data-toggle="collapse" 
-                                          [attr.data-target]="'#collapseOne'+i"
-                                          aria-expanded="true" aria-controls="collapseOne">
-                                          <span> {{category.name}}  </span>
-                                          </a>
-                                          
-                                          <div id="collapseOne{{i}}"  class="collapse" aria-labelledby="headingTwo" data-parent="#accordionpiltcat">
-                                             <div class="bg-white py-2 collapse-inner rounded">
-
-                                               <a class="collapse-item" (click)="getAvailabilitySizes(cat.id)" *ngFor="let cat of subSubCategoriesList" >{{cat.name}}</a>
-                                             </div>
-                                           </div>
+                                       <li class="nav-item1" (click)="getSubCategories('level3',category.id)" *ngFor="let category of subCategoriesList;let i=index">
+                                          <input type="radio"  [name]="category.id" [id]="category.id"  [value]="category.id" (change)="onCheckboxChange($event,'level2',category)" [checked]="selectedLevel2.id==category.id"  />
+                                          {{category.name}}
                                        </li>
                                     </ul>
                                     <!-- End of Sidebar -->
 
-                                    <div *ngFor="let data of productAreas; let i=index">
-                                       <label>
-                                         <input type="checkbox" [value]="data.value" (change)="onCheckboxChange($event)" />
-                                         {{data.name}}
-                                       </label>
-                                     </div>
+                                 </div>
+                              </div>
+                           </article>
+                           
+                        </div>
+
+
+                        <div class="card mb-3">
+                           <article class="filter-group">
+                              <header class="card-header">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Sub Categories </h6>
+                                 </a>
+                              </header>
+                              <div class="filter-content collapse" id="collapse_aside2" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <li class="collapse-item" (click)="getAvailabilitySizes(cat.id)" *ngFor="let cat of subSubCategoriesList" >
+                                          <input type="radio" [name]="'sub'+cat.id" [id]="cat.id"  [value]="cat.id" (change)="onCheckboxChange($event,'level3',cat)" [checked]="selectedLevel3.id==cat.id" />
+                                          {{cat.name}}
+
+                                       </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+                                 </div>
+                              </div>
+                             
+                           </article>
+                           
+                        </div>
+
+                        <div class="card mb-3">
+                           <article class="filter-group">
+                              <header class="card-header">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Sizes</h6>
+                                 </a>
+                              </header>
+                              <div class="filter-content collapse" id="collapse_aside2" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <li class="collapse-item"  *ngFor="let size of availabilitySizes" >
+                                          <input type="radio" [name]="'size'+size.id" [id]="size.id"  [value]="size.id" (change)="onCheckboxChange($event,'size',size)" [checked]="selectedSize.id==size.id" />
+                                          {{size.name}}
+
+                                       </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+                                 </div>
+                              </div>
+                             
+                           </article>
+                           
+                        </div>
+
+                        <div class="card mb-3">
+                           <article class="filter-group">
+                              <header class="card-header">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Area </h6>
+                                 </a>
+                              </header>
+                      
+                              <div class="filter-content collapse" id="collapse_aside3" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <li *ngFor="let area of productAreas; let i=index" >
+                                          <input type="radio" [name]="'area'+selectedArea.id" [id]="area.id"  [value]="area.id" (change)="onCheckboxChange($event,'area',area);" [checked]="selectedArea.id==area.id" />
+                                            {{area.name}}
+                                          </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
                                  </div>
                               </div>
                            </article>
