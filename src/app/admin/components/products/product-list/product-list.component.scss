@@ -108,5 +108,16 @@ a {
     min-height: 0vh; 
 }
 .card-img-top{
-    height: 180px;
+    height: 250px;
+}
+.imgBlock{
+    height: 100%;
+    width: 100%;
+    // object-fit: cover;
+    object-fit: contain;
+}
+.text-ecllipse{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

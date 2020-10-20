@@ -13,6 +13,8 @@ import { ProductListComponent } from './components/products/product-list/product
 import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { ProfileComponent } from './components/profile/profile.component'; // <-- import the module
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     TopBarComponent,
     AddProductComponent,
     ProductListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxPaginationModule
   ]
 })
 export class AdminModule { }

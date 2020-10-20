@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +18,7 @@ import { CommonComponent } from './common/common.component';
 import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
 import { LoadingComponent } from './common/loading/loading.component';
 import { TokenInterceptor } from './authentication/helpers/token.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -37,6 +41,9 @@ import { TokenInterceptor } from './authentication/helpers/token.interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     
   ],
   providers: [

@@ -22,7 +22,7 @@
   </div> -->
 
 
-  <div class="row mx-0">
+  <div class="row mx-0 pt-5 mt-5">
 
     <div class="container">
     
@@ -48,6 +48,10 @@
                 </aside>
                 <aside class="col-sm-7">
         <article class="card-body p-5">
+          <div class="text-right">
+            <a [routerLink]="['/admin/add-product/',productId]">Edit</a>
+            <a (click)="deleteProduct()">Delete</a>
+          </div>
             <h3 class="title mb-3">{{productData.title}}</h3>
         
         <p class="price-detail-wrap"> 

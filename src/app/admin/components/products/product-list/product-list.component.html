@@ -28,7 +28,6 @@
                            <div class="col-12">
                               <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
                                  <label class="mr-2">Sort by:</label>
-                                 {{selectedSortType|json}}
                                  <select (change)="filterChanged($event.target.value)">
                                     <option *ngFor="let opt of sortOptions" [value]="opt.id" >{{opt.name}}</option>
                                  </select>
@@ -53,12 +52,12 @@
                            <div class="col-6 col-md-6 col-lg-4 mb-3" *ngFor="let product of productList">
                               <div class="card h-100 border-0">
                                  <div class="card-img-top">
-                                    <img src="{{product.product_media[0].url}}" class="img-fluid mx-auto d-block" alt="Card image cap">
+                                    <img src="{{product.product_media[0].url}}" class="img-fluid mx-auto imgBlock d-block" alt="Card image cap">
                                  </div>
                                  <div class="card-body text-center">
-                                    <h4 class="card-title">
+                                    <h6 class="card-title text-ecllipse">
                                        <a [routerLink]="['/admin/product-details/',product.id]" class=" font-weight-bold text-dark text-uppercase small"> {{product.title}}</a>
-                                    </h4>
+                                    </h6>
                                     <h5 class="card-price small text-warning">
                                        <i>
                                        <s>₹{{product.actual_price}}</s> ₹{{product.offer_price}}</i>

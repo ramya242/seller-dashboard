@@ -3,6 +3,7 @@ import {AuthenticationService} from '../authentication.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router} from '@angular/router'
 import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   loading:boolean = false;
 
 
-  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder,private router: Router) {
+  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder,private router: Router,private toastr: ToastrService) {
     this.loginForm = this.formBuilder.group({
       emailPhone:['', [Validators.required, Validators.email]],
       password:['',Validators.required]
@@ -32,14 +33,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log(this.f.emailPhone.value)
-    console.log(this.f.password.value)
     this.submitted = true
-    console.log(this.loginForm.invalid)
     if (this.loginForm.invalid) {
      return
     }
-    console.log('coming')
+    // console.log('coming')
+    this.loading = true
     const user:any ={
       email:this.f.emailPhone.value,
       password:this.f.password.value
@@ -47,7 +46,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(user).pipe(first())
     .subscribe({
         next: (user) => {
-          console.log('co',user)
+          // console.log('co',user)
+          this.loading = true
           if(user.user_role == 'USER')
               {
                 this.router.navigate(['/seller-signup']);
@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
         error: error => {
           console.log(error)
             this.error = error;
+            this.toastr.info('Invalid Credentials.');
             this.loading = false;
         }
     });

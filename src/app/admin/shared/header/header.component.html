@@ -63,7 +63,7 @@
               <img src="{{profilePic}}"  onerror="this.src='assets/default.jpg';" class="avatar" alt="Avatar">  <b class="caret"></b>
             </a>
             <div class="dropdown-menu">
-               <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
+               <a [routerLink]="['/admin/profile']"  class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
                <div class="dropdown-divider"></div>
                <a (click)="logout()" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a>
             </div>

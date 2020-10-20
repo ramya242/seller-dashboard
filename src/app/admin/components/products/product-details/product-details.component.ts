@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router'
 import {ProductsService} from '../../products.service'
 import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {NgxGalleryImage} from '@kolkov/ngx-gallery';
 import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
+import { Router, ActivatedRoute, Params } from '@angular/router'
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -14,14 +15,14 @@ export class ProductDetailsComponent implements OnInit {
     productData:any=[];
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
-    constructor(private productService: ProductsService,private activatedRoute: ActivatedRoute,private cdr: ChangeDetectorRef) { 
+    constructor(private productService: ProductsService,private activatedRoute: ActivatedRoute,private cdr: ChangeDetectorRef,private router: Router) { 
 
     this.activatedRoute.params.subscribe((params: Params) => {
       if (params.id) {
         this.productId=params.id;
         this.productDetails()
       }
-      })
+    })
   }
  
 
@@ -93,4 +94,15 @@ export class ProductDetailsComponent implements OnInit {
     //your code to update the model
     this.cdr.detectChanges();
  }
+ deleteProduct(){
+    if(confirm("Are you sure do you want to delete this product?"))
+    {
+        this.productService.productDelete(this.productId).subscribe((data: any)=>{
+          if(data.status == 'success')
+          {
+            this.router.navigate(['/admin/product-list'])
+          }
+        })
+    }
+  }
 }

@@ -47,6 +47,10 @@ export class ProductsService {
   {
     return this.httpClient.post(`${environment.API_URL}business_profile/products/create`,product);
   }
+  public updateProduct(product)
+  {
+    return this.httpClient.put(`${environment.API_URL}business_profile/products/update`,product);
+  }
   public getProductSizes(categoryId)
   {
     return this.httpClient.get(`${environment.API_URL}business_profile/meta/product_sizes/level3/${categoryId}`);
@@ -64,6 +68,11 @@ export class ProductsService {
   {
     // this.headers = {'Authorization':  this.getToken()};
     return this.httpClient.post(`${environment.API_URL}business_profile/products/fileUpload`, formData);
+  }
+  public productDelete(productId)
+  {
+    // this.headers = {'Authorization':  this.getToken()};
+    return this.httpClient.delete(`${environment.API_URL}business_profile/products/delete/${productId}`);
   }
   getToken()
   {
