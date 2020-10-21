@@ -142,14 +142,12 @@ export class AddProductComponent implements OnInit {
 
   public createProduct(){
     this.submitted = true;
-    alert(1)
     console.log(this.productForm)
     // stop here if form is invalid
      if (this.productForm.invalid) {
        alert(3)
-            // return;
+            return;
         }
-        alert()
     this.loading =true
    const product :any= {
     "title":this.f.title.value,
@@ -181,7 +179,7 @@ export class AddProductComponent implements OnInit {
         else{
           if(data.status == 'success')
           {
-            this.toastr.info('Product added successfully.');
+            this.toastr.info('Product updated successfully.');
             this.router.navigate(['/admin/product-list'])
           }
           else{

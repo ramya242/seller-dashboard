@@ -101,27 +101,25 @@
                                 <label for="price"> Price<span class="man-star"></span></label>
                                 <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" pattern="^[0-9.]*$"/>
                              </div>
-                             <!-- <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
+                             <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
                                         Actual price is required
-                            </div> -->
-                            <!-- <div *ngIf="submitted && f.actual_price.errors.pattern"  class="text-danger">
-                                <div *ngIf="f.actual_price.value">
+                            </div> 
+                             <!-- <div *ngIf="submitted && f.actual_price.pattern"  class="text-danger">
                                     Price should be number
-                                </div>
                             </div> -->
+                           
                              <div class="divBlk">
                                 <label for="offerPrice"> Offer Price<span class="man-star"></span></label>
                                 <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" pattern="^[0-9.]*$"/>
                              </div>
-                             <!-- <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
+                             <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
                                 <div *ngIf="!f.offer_price.value">
                                         Offer price is required
                                 </div>
                             </div>
-                            <div *ngIf="submitted && f.offer_price.errors.pattern"  class="text-danger">
-                                
+                            
+                            <!-- <div *ngIf="submitted && f.offer_price.pattern"  class="text-danger">
                                     Offer price should be number
-                               
                             </div> -->
                              <div class="divBlk">
                                 <label for="description"> Product Description<span class="man-star"></span></label>

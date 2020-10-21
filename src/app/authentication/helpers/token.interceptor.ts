@@ -19,12 +19,17 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && error.status === 400 && error.error.message == 'token_expired') {
+      if (error instanceof HttpErrorResponse && error.status == 400 && error.error.message == 'token_expired') {
         console.log(error.error.message == 'token_expired')
 
         return this.handle401Error(request, next);
-      } else {
-        this.authService.logout()
+      } 
+      else if(error.statusText == "Bad Request")
+      {
+        console.log(error.statusText == "Bad Request")
+
+      }
+      else {
         return throwError(error);
       }
     }));
