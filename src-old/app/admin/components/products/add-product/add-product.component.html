@@ -1,0 +1,245 @@
+<!-- <app-loading *ngIf="loading"></app-loading> -->
+
+<!-- Begin Page Content -->
+      <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">ADD PROUDCT </h6>
+                    </div>
+                    <div class="card-body">
+                        <form  [formGroup]="productForm"
+                        (ngSubmit)="createProduct()">
+                            <div class="d-flex">
+                                <div class="col-md-4">
+                                    <h6>CHOOSE A CATEGORY</h6>
+                                    <ul class="list-style-none">                            
+                                    <li *ngFor="let cat of categoriesList">
+                                        <a (click)="getSubCategories('level2',cat.id)"> 
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                            <input type="radio" formControlName="product_level1_category"       class="form-check-input" [value]="cat.id"
+                                                  >{{cat.name}}
+                                                </label>
+                                              </div>
+                                            </a>
+                                    </li> 
+                                    </ul>
+                                  
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>CHOOSE A SUB CATEGORY</h6>
+                                    <ul>
+                                        <li *ngFor="let cat of subCategoriesList;let i=index">
+                                            <a (click)="getSubCategories('level3',cat.id)"> 
+
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                      <input type="radio" formControlName="product_level2_category" class="form-check-input" [value]="cat.id">{{cat.name}}
+                                                    </label>
+                                                  </div>
+                                            </a>
+                                        </li> 
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>CHOOSE A SUB SUB CATEGORY</h6>
+                                    <ul>
+                                        <li *ngFor="let cat of subSubCategoriesList">
+                                            <a (click)="getAvailabilitySizes(cat.id)"> <div class="form-check">
+                                                <label class="form-check-label">
+                                                  <input type="radio" class="form-check-input" formControlName="product_level3_category" [value]="cat.id">{{cat.name}}
+                                                </label>
+                                              </div></a>
+                                        </li> 
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="divBlk">
+                                <label for="product_sizes"> Select Availability Sizes <span class="man-star"></span></label>
+                              
+
+                                <!-- <select  id="product_sizes" name="product_sizes" class="form-control custominp" formControlName="product_sizes">
+                                    <option>Select</option>
+                                    <option *ngFor="let size of availabilitySizes">
+                                            {{size.name}}
+                                    </option>
+                                </select> -->
+                             </div>
+                             <!-- <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" formControlName="product_sizes" [config]="config" [options]="availabilitySizes"></ngx-select-dropdown> -->
+                             <ng-select *ngIf="availabilitySizes.length>0"
+                                [items]="availabilitySizes"
+                                [multiple]="true"
+                                bindLabel="name"
+                                [selectableGroup]="true"
+                                [closeOnSelect]="false"
+                                bindValue="id"
+                                formControlName="product_sizes">
+                               
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                                </ng-template>
+                            </ng-select>
+                            <div class="divBlk">
+                                <label for="title"> Title<span class="man-star"></span></label>
+                                <input type="text" id="title" formControlName="title" name="title" class="form-control custominp"/>
+                             </div>
+                             
+                             <div *ngIf="submitted && !f.title.value"  class="text-danger">
+                                <div *ngIf="!f.title.value">
+                                        Title is required
+                                </div>
+                            </div>
+                            <div class="divBlk">
+                                <label for="subject"> Add SubjectLine<span class="man-star"></span></label>
+                                <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
+                             </div>
+                             <div class="divBlk">
+                                <label for="price"> Price<span class="man-star"></span></label>
+                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" pattern="^[0-9.]*$"/>
+                             </div>
+                             <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
+                                        Actual price is required
+                            </div> 
+                             <!-- <div *ngIf="submitted && f.actual_price.pattern"  class="text-danger">
+                                    Price should be number
+                            </div> -->
+                           
+                             <div class="divBlk">
+                                <label for="offerPrice"> Offer Price<span class="man-star"></span></label>
+                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" pattern="^[0-9.]*$"/>
+                             </div>
+                             <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
+                                <div *ngIf="!f.offer_price.value">
+                                        Offer price is required
+                                </div>
+                            </div>
+                            
+                            <!-- <div *ngIf="submitted && f.offer_price.pattern"  class="text-danger">
+                                    Offer price should be number
+                            </div> -->
+                             <div class="divBlk">
+                                <label for="description"> Product Description<span class="man-star"></span></label>
+                                <textarea id="description" name="description" class="form-control custominp" formControlName="description" ></textarea>
+                             </div>
+                             <div *ngIf="submitted && !f.description.value"  class="text-danger">
+                                <div *ngIf="!f.description.value">
+                                    Description is required
+                                </div>
+                            </div>
+                             <div class="divBlk">
+                                <label for="returnDays"> Return & Exchange Days</label>
+                                <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
+                             </div>
+                             
+                             <div class="divBlk">
+                                <label for="leftPieces" > Left Pieces</label>
+                                <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" />
+                             </div>
+                             <div *ngIf="submitted && !f.left_pieces.value"  class="text-danger">
+                                <div *ngIf="!f.left_pieces.value">
+                                    left Pieces is required
+                                </div>
+                            </div>
+                             <div class="divBlk">
+                                <label for="availabilityAreas"> Availability Areas</label>
+
+                                <!-- <select  id="availabilityAreas" formControlName="product_areas" name="availabilityAreas" class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let area of productAreas">
+                                            {{area.name}}
+                                    </option>
+                                </select> -->
+                                <ng-select *ngIf="productAreas.length>0"
+                                    [items]="productAreas"
+                                    [multiple]="true"
+                                    bindLabel="name"
+                                    [selectableGroup]="true"
+                                    [closeOnSelect]="false"
+                                    bindValue="id"
+                                    formControlName="product_areas">
+                                   
+                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                                    </ng-template>
+                                </ng-select>
+                             </div>
+                             <div class="divBlk">
+                                <label for="unionTerritories"> Union Territories</label>
+                                <select  id="unionTerritories" formControlName="union_territories" name="unionTerritories" class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let area of unionTerritoriesList" value="{{area.id}}">
+                                            {{area.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <div class="divBlk">
+                                <label for="whereToPurchase"> Where to Purchase <span class="man-star"></span></label>
+                              
+
+                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp" pattern="^[0-9]*$">
+                                    <option>Select</option>
+                                    <option *ngFor="let where of whereToBuyList" value="{{where.id}}">
+                                            {{where.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <div *ngIf="submitted && !f.where_to_buy.value"  class="text-danger">
+                                <div *ngIf="!f.where_to_buy.value">
+                                    Required Field
+                                </div>
+                            </div>
+                             <div class="divBlk">
+                                <label for="boostProduct"> Boost Product</label>
+                                <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
+                                <select  id="boostProduct" name="boostProduct" formControlName="product_boost"  class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let boost of productBoostList" value="{{boost.id}}">
+                                            {{boost.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <h6 class="px-2 pt-3"> UPLOAD UP TO 10 PHOTOS</h6>
+
+                             <div class="divBlk d-flex flex-wrap">
+                                <!-- <div *ngFor="let url of urls" class="imgBlk">
+                                    <img  [src]="url" class="rounded mb-3" width="180">
+                                </div> -->
+
+
+                                    <div class="block1 img-container " *ngFor="let url of urls;let i=index">
+                                       <div class="parent2 position-relative">
+                                        <label class="snap-images ">
+                                            <img id="blah2" src="{{url.url?url.url:'assets/upload.png'}}" width="100%" height="80px" class="profilepic2 img-preview">
+                                            
+                                            <input type="file" multiple class="upload2 hide gallery-img-file accept-image d-none" (change)="detectFiles($event,i)" accept="image/*">
+                                          
+                                        </label>
+                                             <div class="child2">
+                                                <span class="fa fa-close removebt" (click)="removeImg(i)"></span>
+                                             </div>
+                                        </div>
+                                    </div>
+                                    
+                                <div class="add-image" id="add-image" (click)="addImage()">
+                                    <div class="circle-o plusSign  "><span>+</span></div>
+                                    <h6 class="text-center w-100">ADD IMAGE</h6>
+                                </div>
+
+                                <!-- <input type="file" multiple (change)="detectFiles($event)"> -->
+                             </div>
+                             <div class="divBlk pt-3">
+                                 <input type="submit" class="btn btn-primary" value="Add Product" *ngIf="!productId" />
+                                 <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" />
+                             </div>
+                        </form>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+      </div>
+

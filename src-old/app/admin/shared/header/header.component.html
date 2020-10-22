@@ -1,0 +1,75 @@
+<div class="menu-area menu-sticky">
+  <nav class="navbar navbar-expand-xl navbar-light fixed-top">
+     <a href="#" class="navbar-brand"><i class="fa fa-cube"></i><b>My Mall</b></a>
+     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+     <span class="navbar-toggler-icon"></span>
+     </button>
+     <!-- Collection of nav links, forms, and other content for toggling -->
+     <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+      <div class="navbar-nav">
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link" data-toggle="dropdown">Add a Product</a>
+            <div class="dropdown-menu">
+               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Single Product</a>
+               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Multiple Products</a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a  class="nav-item nav-link" data-toggle="dropdown">
+            Inventory</a>
+            <div class="dropdown-menu">
+               <a [routerLink]="['/admin/product-list']" class="dropdown-item">Complete List</a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown">Reach</a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item">Product Likes </a>
+               <a href="#" class="dropdown-item">Product Save </a>
+               <a href="#" class="dropdown-item">Product Share </a>
+               <a href="#" class="dropdown-item">Product Reviews </a>
+               <a href="#" class="dropdown-item">Product Views </a>
+               <a href="#" class="dropdown-item">Product Visit</a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown">Growth </a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item">Performance form </a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown"> Advertising </a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item"> Push Notifications </a>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link " data-toggle="dropdown">Partnership</a>
+            <div class="dropdown-menu">
+               <a href="#" class="dropdown-item"> Support </a>
+               <a href="#" class="dropdown-item">  Photos </a>
+               <a href="#" class="dropdown-item"> Account Support </a>
+               <a href="#" class="dropdown-item"> Support Delivery </a>
+               <a href="#" class="dropdown-item"> How To Grow </a>
+            </div>
+         </div>
+      </div>
+      <div class="navbar-nav ml-auto pt-1">
+         <a href="#" class="nav-item nav-link messages pt-1"><i class="fa fa-comment-o"></i><span class="badge">10</span></a>
+         <a href="#" class="nav-item nav-link notifications pt-1"><i class="fa fa-bell-o"></i></a>
+         <div class="nav-item dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action">
+              <img src="{{profilePic}}"  onerror="this.src='assets/default.jpg';" class="avatar" alt="Avatar">  <b class="caret"></b>
+            </a>
+            <div class="dropdown-menu">
+               <a [routerLink]="['/admin/profile']"  class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
+               <div class="dropdown-divider"></div>
+               <a (click)="logout()" class="dropdown-item"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                  Logout</a>
+            </div>
+         </div>
+      </div>
+   </div>
+  </nav>
+</div>

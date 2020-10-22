@@ -1,28 +1,8 @@
-<!-- <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
-        <table class="table table-striped">
-          <tr>
-            <td>Name</td>
-            <td>{{productData['title']}}</td>
-          </tr>
-          <tr>
-            <td>Description</td>
-            <td>{{productData['description']}}</td>
-          </tr>
-          <tr>
-            <td>Price</td>
-            <td>{{productData['offer_price']}}</td>
-          </tr>
-        </table>
-        <br>
-       
-      </div>
-    </div>
-  </div> -->
+<app-admin-loading *ngIf="loading"></app-admin-loading>
 
+  <main role="main" class="main">
 
-  <div class="row mx-0 pt-5 mt-5">
+  <div class="row mx-5">
 
     <div class="container">
     
@@ -39,7 +19,7 @@
           <div class="item-gallery"> <img src="marketplace.jpg"> </div>
           <div class="item-gallery"> <img src="marketplace.jpg"> </div>
         </div> -->
-        <div *ngIf="galleryImages" class="d-flex">
+        <div *ngIf="galleryImages" class="d-flex ml-3 py-3">
           <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
 
         </div>  
@@ -48,33 +28,28 @@
                 </aside>
                 <aside class="col-sm-7">
         <article class="card-body p-5">
-          <div class="text-right">
-            <a [routerLink]="['/admin/add-product/',productId]">Edit</a>
-            <a (click)="deleteProduct()">Delete</a>
+          <div class="text-right productIcons">
+            <a [routerLink]="['/admin/add-product/',productId]" class="cursor-pointer" title="Edit"><i class="fa fa-edit"></i></a>
+            <a (click)="deleteProduct()" class="cursor-pointer" title="Delete"><i class="fa fa-trash"></i></a>
           </div>
-            <h3 class="title mb-3">{{productData.title}}</h3>
+            <h3 class="title text-capitalize">{{productData.title}}</h3>
+            <h4>{{productData.subject_line}}</h4>
         
         <p class="price-detail-wrap"> 
             <span class="price h3 text-warning"> 
-                <span class="currency">rs</span><span class="num">{{productData.actual_price}}</span>
+                <span class="currency">₹</span><span class="num">{{productData.actual_price}}</span>
             </span> 
-            <span>{{productData.offer_price}}</span> 
+            <span class="pl-2" style="text-decoration: line-through;"> ₹{{productData.offer_price}}</span> 
         </p> <!-- price-detail-wrap .// -->
         <dl class="item-property">
           <dt>Description</dt>
           <dd><p>{{productData.description}} </p></dd>
         </dl>
-        <dl class="param param-feature">
-          <dt>Model#</dt>
-          <dd>12345611</dd>
-        </dl>  <!-- item-property-hor .// -->
-        <dl class="param param-feature">
-          <dt>Color</dt>
-          <dd>Black and white</dd>
-        </dl>  <!-- item-property-hor .// -->
+       
         <dl class="param param-feature">
           <dt>Delivery</dt>
-          <dd>Russia, USA, and Europe</dd>
+          <dd *ngFor="let area of productData.product_areas">{{area.name}}</dd>
+          
         </dl>  <!-- item-property-hor .// -->
         
         <hr>
@@ -90,7 +65,7 @@
                 <div class="col-sm-7">
                     <dl class="param param-inline">
                           <dt>Size: </dt>
-                          <dd class="btn btn-sm btn-primary" *ngFor="let size of productData.product_sizes">{{size.name}}</dd>
+                          <dd class="btn btn-sm btn-primary m-1" *ngFor="let size of productData.product_sizes">{{size.name}}</dd>
 
                     </dl>  <!-- item-property .// -->
                 </div> <!-- col.// -->
@@ -109,3 +84,4 @@
   </div>
 
   <!-- Content Row -->
+</main>

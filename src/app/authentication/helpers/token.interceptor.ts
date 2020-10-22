@@ -27,6 +27,7 @@ export class TokenInterceptor implements HttpInterceptor {
       else if(error.statusText == "Bad Request")
       {
         console.log(error.statusText == "Bad Request")
+        return throwError(error);
 
       }
       else {

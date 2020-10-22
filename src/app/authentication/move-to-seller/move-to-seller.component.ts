@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormArray,FormControl } from '@angular/forms'
 import { Router} from '@angular/router'
+import { iif } from 'rxjs';
 import{ ProductsService} from '../../admin/components/products.service'
 import{ AuthenticationService} from '../authentication.service'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-move-to-seller',
@@ -17,8 +19,10 @@ export class MoveToSellerComponent implements OnInit {
   deliveryServiceTypesList:any = []
   areaOfOperationsList:any =[]
   submitted:boolean=false;
+  statesList:any =[]
+  loading:boolean= false
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private productService : ProductsService,private authenticationService: AuthenticationService) { 
+  constructor(private formBuilder: FormBuilder,private router: Router, private productService : ProductsService,private authenticationService: AuthenticationService,private toastr: ToastrService) { 
     this.sellerForm = this.formBuilder.group({
       business_name:['',Validators.required],
       business_category:['',Validators.required],
@@ -65,6 +69,7 @@ export class MoveToSellerComponent implements OnInit {
     this.majorCategories()
     this.deliveryServiceTypes()
     this.areaOfOperations()
+    this.getProductAreas()
   }
   
   public getCategories(){
@@ -106,7 +111,6 @@ export class MoveToSellerComponent implements OnInit {
         if(level=='level1')
         {
           this.majorCategoryList =  data.data
-          console.log(this.majorCategoryList)
         }
         
       }
@@ -114,8 +118,12 @@ export class MoveToSellerComponent implements OnInit {
     }) 
   }
   submit(){
-    console.log(this.f.in_time_delivery.value)
-
+    this.submitted = true;
+    // stop here if form is invalid
+     if (this.sellerForm.invalid) {
+         this.toastr.info('Please enter all required fields.');
+          return;
+      }
     const formData = new FormData();
     formData.append('business_name', this.f.business_name.value);  
     formData.append('business_contact_no', this.f.business_contact_no.value);  
@@ -153,20 +161,21 @@ export class MoveToSellerComponent implements OnInit {
     formData.append('product_delivery', this.f.product_delivery.value.toString());  
     formData.append('after_sale_service', this.f.after_sale_service.value.toString());
     formData.append('business_with_other_ecom', this.f.business_with_other_ecom.value);  
+    formData.append('account_type', 'seller');  
     if(this.f.business_with_other_ecom.value=='yes')
     {
       formData.append('business_with_other_ecom_notes', this.f.business_with_other_ecom_notes.value);
     }
     formData.append('after_sale_service', this.f.after_sale_service.value);  
+    this.loading =true
     this.authenticationService.moveTosellerAccount(formData).subscribe((data: any)=>{
-      console.log(data)
+      this.toastr.info(data.message);
+      if(data.status == 'success')
+      {
+          this.router.navigate(['/'])
+      }
     })
-    this.submitted = true;
-    // stop here if form is invalid
-     if (this.sellerForm.invalid) {
-            return;
-        }
-    console.log(this.f)
+   
   }
   get f(){
     return this.sellerForm.controls;
@@ -202,6 +211,17 @@ export class MoveToSellerComponent implements OnInit {
       });
     }
   }
-  
-
+  public getProductAreas(){
+    this.productService.getProductAreas().subscribe((data: any)=>{
+      if(data.status == 'success')
+      {
+        this.statesList =  data.data
+      }
+     
+    }) 
+  }
+  goToLogin(){
+    localStorage.clear()
+    this.router.navigate(['/login'])
+  }
 }

@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
     if (time < 10) {
       this.greeting = "Good morning";
     } else if (time < 20) {
-      this.greeting = "Good day";
+      this.greeting = "Good afternoon";
     } else {
       this.greeting = "Good evening";
     }

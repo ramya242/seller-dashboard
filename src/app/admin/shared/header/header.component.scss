@@ -154,6 +154,13 @@
   border-color: #f4f2ff;
 }
 
+.dropdown-item.active,
+.dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: #ffff !important;
+}
+
 @media (min-width: 1200px) {
   .form-inline .input-group {
     width: 300px;

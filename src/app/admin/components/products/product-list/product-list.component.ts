@@ -23,6 +23,7 @@ export class ProductListComponent implements OnInit {
   selectedArea:any={}
   selectedSize:any={}
   selectedSortType:any
+  loading:boolean = true
   constructor(private productService: ProductsService,private adminService: AdminService) { }
   sortOptions=[
     {
@@ -57,6 +58,7 @@ export class ProductListComponent implements OnInit {
   }
   public getAllProductList()
   {
+    this.loading = true
       const inputData :any= {
         "business_userId":this.profileInfo.id,
         "offset":"0",
@@ -72,6 +74,7 @@ export class ProductListComponent implements OnInit {
       };
       this.productService.getAllProductList(inputData).subscribe((data: any)=>{
         //console.log('veeru',data)
+        this.loading = false
         if(data.status == 'success')
         {
           this.productList =  data.data
@@ -81,6 +84,7 @@ export class ProductListComponent implements OnInit {
   public getProfileInfo()
   {
       this.adminService.getProfileInfo().subscribe((data: any)=>{
+        this.loading = false
         if(data.status == 'success')
         {
           this.profileInfo =  data.data

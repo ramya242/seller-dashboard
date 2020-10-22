@@ -1,0 +1,362 @@
+<div class="signup-form">
+	<form class="form-horizontal" [formGroup]="sellerForm" (ngSubmit)="submit()"
+	>
+	<div class="row">
+	   <div class="col-8 offset-4">
+		  <h2>ODCET Seller Registration</h2>
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Business Name</label>
+	   <div class="col-8">
+		  <input type="text" class="form-control" formControlName="business_name" id="businessname" required="required">
+	   </div>
+	   <div *ngIf="submitted && !f.business_name.value"  class="text-danger">
+		   Business Name required
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Mobile Number</label>
+	   <div class="col-8">
+		  <input type="text" class="form-control" formControlName="business_contact_no" id="mobile" required="required">
+	   </div>
+	   <div *ngIf="submitted && !f.business_contact_no.value"  class="text-danger">
+			Mobile number required
+		</div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Email</label>
+	   <div class="col-8">
+		  <input type="email" class="form-control" formControlName="email" id="email" required="required">
+		  <span>example@example.com</span>
+	   </div>
+	   <div *ngIf="submitted && !f.email.value"  class="text-danger">
+			Email required
+		</div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Brand/ Store Name</label>
+	   <div class="col-8">
+		  <input type="text" class="form-control" formControlName="brand_or_store_name" id="brandstorenames" required="required">
+	   </div>
+	   <div *ngIf="submitted && !f.brand_or_store_name.value"  class="text-danger">
+			Brand/store required
+		</div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Registered Office</label>
+	   <div class="col-8">
+		  <input type="text" class="form-control" formControlName="address" id="registeredoffice" required="required">
+		  <span>Address</span>
+	   </div>
+	   <div *ngIf="submitted && !f.address.value"  class="text-danger">
+			Address required
+		</div>
+	   <label class="col-form-label col-4"></label>
+	   <div class="col-8">
+		  <input type="text" class="form-control" formControlName="area_town_or_village" id="area" required="required">
+		  <span>Area / Town / Village</span>
+	   </div>
+	   <div *ngIf="submitted && !f.area_town_or_village.value"  class="text-danger">
+			Address required
+		</div>
+	   <label class="col-form-label col-4"></label> 
+	   <div class="col-4">
+		  <input type="text" class="form-control" formControlName="city" required="required">
+		  <span>city</span>
+	   </div>
+	   <div *ngIf="submitted && !f.city.value"  class="text-danger">
+		City required
+		</div>
+	   <div class="col-4">
+		  <input type="text" class="form-control" formControlName="state_id" required="required">
+		  <span>state</span>
+	   </div>
+	   <div *ngIf="submitted && !f.state_id.value"  class="text-danger">
+		State required
+		</div>
+	   <label class="col-form-label col-4"></label> 
+	   <div class="col-4">
+		  <input type="text" class="form-control" formControlName="pincode" required="required">
+		  <span>Pincode</span>
+	   </div>
+	   <div *ngIf="submitted && !f.pincode.value"  class="text-danger">
+		Pincode required
+		</div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Vendor/Owner/Representative</label>
+	   <div class="col-4">
+		  <input type="text" class="form-control" formControlName="vendor_firstname" required="required">
+		  <span>First Name</span>
+	   </div>
+	   <div class="col-4">
+		  <input type="text" class="form-control" formControlName="vendoer_lastname" required="required">
+		  <span>Last Name</span>
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Vendor/Owner/Representative</label>
+	   <div class="col-8">
+		  <div class="form-check-inline py-2" *ngFor="let business of businessTypes;let i=index">
+			 <input type="radio" formControlName="business_type" id="type-{{i}}" [value]="business.id" />
+			 <label for="type-{{i}}">{{business.name}}</label>
+		  </div>
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Year Of Establishment</label>
+	   <div class="col-8">
+		  <input type="text" class="form-control" formControlName="year_of_establishment" id="yoe" required="required">
+		  <span>Enter Year</span>
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Seller Major Category</label>
+	   <div class="col-8">
+		  <div class="form-check py-2 px-0" *ngFor="let category of categoriesList;let i=index;">
+			 <input type="radio" id="major-{{i}}" formControlName="business_category" [value]="category.id">
+			 <label for="major-{{i}}">{{category.name}}</label>
+		  </div>
+	   </div>
+	  
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Major Product Sub Categories</label>
+	   <div class="col-8">
+		  <div class="form-check py-2 px-0" *ngFor="let category of majorCategoryList;let i=index">
+			 <input type="radio" id="category-{{i}}" formControlName="business_sub_category" [value]="category.id" />
+			 <label for="category-{{i}}">{{category.name}}</label>
+		  </div>
+	   </div>
+	</div>
+	<div class=" row">
+	   <label class="col-form-label col-8"> Delivery/ Courier Services Available</label>
+	   <div class="col">
+	   </div>
+	</div>
+	<div class=" form-group row">
+	   <table class="table table-bordered table-definition mb-1">
+		  <thead class="">
+			 <tr>
+				<th></th>
+				<th *ngFor="let type of deliveryServiceTypesList">{{type.name}} </th>
+			 </tr>
+		  </thead>
+		  <tbody>
+			 <tr>
+				<td>
+				   In Time Delivery    
+				</td>
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index" >
+				   <div class="form-check py-2 px-0">
+					  <input type="checkbox" id="time-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'in_time_delivery')" />
+					  <label for="time-{{i}}"></label>
+				   </div>
+				</td>
+			 </tr>
+			 <tr>
+				<td>Punctuality</td>
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
+				   <div class="form-check py-2 px-0">
+					  <input type="checkbox" id="punctuality-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'punctuality')" />
+					  <label for="punctuality-{{i}}"></label>
+				   </div>
+				</td>
+			 </tr>
+			 <tr>
+				<td>In time Pickup</td>
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
+				   <div class="form-check py-2 px-0">
+					  <input type="checkbox" id="pickup-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'in_time_pickup')" />
+					  <label for="pickup-{{i}}"></label>
+				   </div>
+				</td>
+			 </tr>
+			 <tr>
+				<td>Friendliness</td>
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
+				   <div class="form-check py-2 px-0">
+					  <input type="checkbox" id="friend-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'friendliness')" />
+					  <label for="friend-{{i}}"></label>
+				   </div>
+				</td>
+			 </tr>
+			 <tr>
+				<td> Responsiveness </td>
+				<td *ngFor="let type of deliveryServiceTypesList;let i=index">
+				   <div class="form-check py-2 px-0">
+					  <input type="checkbox" id="responsive-{{i}}" [value]="type.id" (change)="onCheckboxChange($event,'service_responsiveness')" />
+					  <label for="responsive-{{i}}"></label>
+				   </div>
+				</td>
+			 </tr>
+		  </tbody>
+	   </table>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-5">Stock Quantity of Each Product</label>
+	   <div class="col-7">
+		  <input type="text"  class="form-control" formControlName="stock_quantity_of_each_product" />
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-12">  Bank Details </label>
+	</div>
+	<table class="table table-bordered table-definition mb-1">
+	   <thead class="">
+		  <tr>
+			 <th></th>
+			 <th rowspan="2">Details </th>
+		  </tr>
+	   </thead>
+	   <tbody>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-12"> Account Holder Name   </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" name="ahn" id="ahn" required="required" formControlName="bank_account_holder_name" >   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-12"> Account Number  </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="bank_account_number" id="anu" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-12"> IFSC Code </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="bank_ifsc_code" id="ifsc" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-12"> Account Type  </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="bank_account_type" id="at" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-12"> Bank & Branch </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="bank_branch" id="bb" required="required">   
+			 </td>
+		  </tr>
+	   </tbody>
+	</table>
+	<div class="form-group row">
+	   <label class="col-form-label col-12">  Sales Tax Registrations </label>
+	</div>
+	<table class="table table-bordered table-definition mb-1">
+	   <thead class="">
+		  <tr>
+			 <th></th>
+			 <th rowspan="2">Details </th>
+		  </tr>
+	   </thead>
+	   <tbody>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-4"> GST </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="gst_number" id="gst" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-4"> PAN </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="pan_number" id="pan" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-4"> VAT </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="vat" id="vat" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-4"> MSME </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="msme" id="msme" required="required">   
+			 </td>
+		  </tr>
+		  <tr>
+			 <td>
+				<label class="col-form-label col-12"> Shop & Establishment </label> 
+			 </td>
+			 <td>
+				<input type="text" class="form-control" formControlName="shop_establishment" id="shop" required="required">   
+			 </td>
+		  </tr>
+	   </tbody>
+	</table>
+	<div class="form-group row">
+	   <label class="col-form-label col-12">Major Product Sub Categories</label>
+	   <div class="col-12">
+		  <table class="table table-bordered table-definition mb-1">
+			 <thead class="">
+				<tr>
+				   <th></th>
+				   <th *ngFor="let area of areaOfOperationsList">{{area.name}}  </th>
+				</tr>
+			 </thead>
+			 <tbody>
+				<tr>
+				   <td>
+					  Product Delivery 
+				   </td>
+				   <td *ngFor="let area of areaOfOperationsList;let i=index;">
+					  <div class="form-check py-2 px-0">
+						 <input type="checkbox" id="parea-{{i}}"  [value]="area.id" (change)="onCheckboxChange($event,'product_delivery')" />
+						 <label for="parea-{{i}}"></label>
+					  </div>
+				   </td>
+				</tr>
+				<tr>
+				   <td>After Sale Service </td>
+				   <td *ngFor="let area of areaOfOperationsList;let i=index;">
+					  <div class="form-check py-2 px-0">
+						 <input type="checkbox" id="aarea-{{i}}" [value]="area.id" (change)="onCheckboxChange($event,'after_sale_service')"   />
+						 <label for="aarea-{{i}}"></label>
+					  </div>
+				   </td>
+				</tr>
+			 </tbody>
+		  </table>
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <label class="col-form-label col-4">Have you previously done business with any other Ecom sites</label>
+	   <div class="col-8">
+		  <div class="form-check-inline py-2" >
+			 <input type="checkbox" id="businessWithOtherEcom" [checked]="f.business_with_other_ecom.value == 'yes'"  (change)="updateEcomerceStatus($event)" >
+			 <label for="businessWithOtherEcom"></label>
+		  </div>
+		  <div *ngIf="f.business_with_other_ecom.value=='yes'">
+			 <input type="text" class="form-control" formControlName="business_with_other_ecom_notes" id="ecom" >
+		  </div>
+	   </div>
+	</div>
+	<div class="form-group row">
+	   <div class="col-8 offset-4">
+		  <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+	   </div>
+	</div>
+	</form>
+ </div>

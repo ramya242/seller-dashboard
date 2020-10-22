@@ -11,12 +11,12 @@
                     </div>
                     <div class="card-body">
                         <form  [formGroup]="productForm"
-                        (ngSubmit)="createProduct()">
-                            <div class="d-flex">
-                                <div class="col-md-4">
-                                    <h6>CHOOSE A CATEGORY</h6>
-                                    <ul class="list-style-none">                            
-                                    <li *ngFor="let cat of categoriesList">
+                        (ngSubmit)="createProduct()" class="d-flex flex-wrap ">
+                            <div class="d-flex flex-wrap w-100 justify-content-center">
+                                <div class="col-md-12 mt-3">
+                                    <div class="">
+                                    <ul class="list-group list-group-horizontal justify-content-center pb-4">                            
+                                    <li *ngFor="let cat of categoriesList" class="list-group-item">
                                         <a (click)="getSubCategories('level2',cat.id)"> 
                                             <div class="form-check">
                                                 <label class="form-check-label">
@@ -27,11 +27,14 @@
                                             </a>
                                     </li> 
                                     </ul>
-                                  
                                 </div>
-                                <div class="col-md-4">
-                                    <h6>CHOOSE A SUB CATEGORY</h6>
-                                    <ul>
+                                
+                                </div>
+                                <div class="col-md-4 mt-3" *ngIf="f.product_level1_category.value>0">
+                                    <div class="card card-body">
+                                        <h6>Choose a  Category</h6>
+
+                                    <ul class="scroll">
                                         <li *ngFor="let cat of subCategoriesList;let i=index">
                                             <a (click)="getSubCategories('level3',cat.id)"> 
 
@@ -43,10 +46,13 @@
                                             </a>
                                         </li> 
                                     </ul>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <h6>CHOOSE A SUB SUB CATEGORY</h6>
-                                    <ul>
+                                <div class="col-md-4 mt-3" *ngIf="f.product_level1_category.value>0">
+                                    <div class="card card-body">
+                                        <h6>Choose a sub category</h6>
+
+                                    <ul class="scroll">
                                         <li *ngFor="let cat of subSubCategoriesList">
                                             <a (click)="getAvailabilitySizes(cat.id)"> <div class="form-check">
                                                 <label class="form-check-label">
@@ -55,36 +61,39 @@
                                               </div></a>
                                         </li> 
                                     </ul>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="divBlk">
-                                <label for="product_sizes"> Select Availability Sizes <span class="man-star"></span></label>
-                              
-
-                                <!-- <select  id="product_sizes" name="product_sizes" class="form-control custominp" formControlName="product_sizes">
-                                    <option>Select</option>
-                                    <option *ngFor="let size of availabilitySizes">
-                                            {{size.name}}
-                                    </option>
-                                </select> -->
+                            <div class="col-md-12 text-center pt-3" *ngIf="f.product_level1_category.value>0">
+                                <nav class="">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a >{{getCategoryName('level1')}}</a></li>
+                                        <li class="breadcrumb-item" *ngIf="f.product_level2_category.value>0"><a >{{getCategoryName('level2')}}</a></li>
+                                        <li class="breadcrumb-item active"  *ngIf="f.product_level3_category.value>0">{{getCategoryName('level3')}}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                           
+                            <div class="divBlk col-sm-6" *ngIf="availabilitySizes.length > 0">
+                                <label for="product_sizes"> Select Availability Sizes <span class="man-star">*</span></label>
+                                <ng-select *ngIf="availabilitySizes.length>0"
+                                    [items]="availabilitySizes"
+                                    [multiple]="true"
+                                    bindLabel="name"
+                                    [selectableGroup]="true"
+                                    [closeOnSelect]="false"
+                                    bindValue="id"
+                                    formControlName="product_sizes">
+                                   
+                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                                    </ng-template>
+                                </ng-select>
                              </div>
                              <!-- <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" formControlName="product_sizes" [config]="config" [options]="availabilitySizes"></ngx-select-dropdown> -->
-                             <ng-select *ngIf="availabilitySizes.length>0"
-                                [items]="availabilitySizes"
-                                [multiple]="true"
-                                bindLabel="name"
-                                [selectableGroup]="true"
-                                [closeOnSelect]="false"
-                                bindValue="id"
-                                formControlName="product_sizes">
-                               
-                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
-                                </ng-template>
-                            </ng-select>
-                            <div class="divBlk">
-                                <label for="title"> Title<span class="man-star"></span></label>
+                             
+                            <div class="divBlk col-sm-6">
+                                <label for="title"> Title<span class="man-star">*</span></label>
                                 <input type="text" id="title" formControlName="title" name="title" class="form-control custominp"/>
                              </div>
                              
@@ -93,49 +102,44 @@
                                         Title is required
                                 </div>
                             </div>
-                            <div class="divBlk">
-                                <label for="subject"> Add SubjectLine<span class="man-star"></span></label>
+                            <div class="divBlk col-sm-6">
+                                <label for="subject"> Add Subject Line<span class="man-star">*</span></label>
                                 <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
                              </div>
-                             <div class="divBlk">
-                                <label for="price"> Price<span class="man-star"></span></label>
-                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" pattern="^[0-9.]*$"/>
+                             <div class="divBlk col-sm-6">
+                                <label for="price"> Price<span class="man-star">*</span></label>
+                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" />
                              </div>
                              <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
                                         Actual price is required
                             </div> 
-                             <!-- <div *ngIf="submitted && f.actual_price.pattern"  class="text-danger">
+                             <div *ngIf="submitted && f.actual_price.errors?.pattern"  class="text-danger">
                                     Price should be number
-                            </div> -->
-                           
-                             <div class="divBlk">
-                                <label for="offerPrice"> Offer Price<span class="man-star"></span></label>
-                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" pattern="^[0-9.]*$"/>
+                            </div>
+                             <div class="divBlk col-sm-6">
+                                <label for="offerPrice"> Offer Price<span class="man-star">*</span></label>
+                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" />
                              </div>
-                             <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
-                                <div *ngIf="!f.offer_price.value">
+                              <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
                                         Offer price is required
-                                </div>
                             </div>
                             
-                            <!-- <div *ngIf="submitted && f.offer_price.pattern"  class="text-danger">
+                             <div *ngIf="submitted && f.offer_price.errors?.pattern"  class="text-danger">
                                     Offer price should be number
-                            </div> -->
-                             <div class="divBlk">
-                                <label for="description"> Product Description<span class="man-star"></span></label>
-                                <textarea id="description" name="description" class="form-control custominp" formControlName="description" ></textarea>
                              </div>
-                             <div *ngIf="submitted && !f.description.value"  class="text-danger">
-                                <div *ngIf="!f.description.value">
+                             <div class="divBlk col-sm-6">
+                                <label for="description"> Product Description<span class="man-star">*</span></label>
+                                <textarea  id="description" name="description" formControlName="description" class="form-control custominp" ></textarea>
+                                <div *ngIf="submitted && !f.description.value"  class="text-danger">
                                     Description is required
                                 </div>
                             </div>
-                             <div class="divBlk">
+                             <div class="divBlk col-sm-6">
                                 <label for="returnDays"> Return & Exchange Days</label>
                                 <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
                              </div>
                              
-                             <div class="divBlk">
+                             <div class="divBlk col-sm-6">
                                 <label for="leftPieces" > Left Pieces</label>
                                 <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" />
                              </div>
@@ -144,15 +148,10 @@
                                     left Pieces is required
                                 </div>
                             </div>
-                             <div class="divBlk">
+                             <div class="divBlk col-sm-6">
                                 <label for="availabilityAreas"> Availability Areas</label>
 
-                                <!-- <select  id="availabilityAreas" formControlName="product_areas" name="availabilityAreas" class="form-control custominp">
-                                    <option>Select</option>
-                                    <option *ngFor="let area of productAreas">
-                                            {{area.name}}
-                                    </option>
-                                </select> -->
+                                
                                 <ng-select *ngIf="productAreas.length>0"
                                     [items]="productAreas"
                                     [multiple]="true"
@@ -167,7 +166,7 @@
                                     </ng-template>
                                 </ng-select>
                              </div>
-                             <div class="divBlk">
+                             <div class="divBlk col-sm-6">
                                 <label for="unionTerritories"> Union Territories</label>
                                 <select  id="unionTerritories" formControlName="union_territories" name="unionTerritories" class="form-control custominp">
                                     <option>Select</option>
@@ -176,11 +175,21 @@
                                     </option>
                                 </select>
                              </div>
-                             <div class="divBlk">
-                                <label for="whereToPurchase"> Where to Purchase <span class="man-star"></span></label>
+                             <div class="divBlk col-sm-6">
+                                <label for="boostProduct"> Boost Product</label>
+                                <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
+                                <select  id="boostProduct" name="boostProduct" formControlName="product_boost"  class="form-control custominp">
+                                    <option>Select</option>
+                                    <option *ngFor="let boost of productBoostList" value="{{boost.id}}">
+                                            {{boost.name}}
+                                    </option>
+                                </select>
+                             </div>
+                             <div class="divBlk col-sm-6">
+                                <label for="whereToPurchase"> Where to Purchase <span class="man-star">*</span></label>
                               
 
-                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp" pattern="^[0-9]*$">
+                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp" >
                                     <option>Select</option>
                                     <option *ngFor="let where of whereToBuyList" value="{{where.id}}">
                                             {{where.name}}
@@ -192,17 +201,13 @@
                                     Required Field
                                 </div>
                             </div>
-                             <div class="divBlk">
-                                <label for="boostProduct"> Boost Product</label>
+                            
+                             <div class="divBlk col-sm-6" *ngIf="f.where_to_buy.value==1">
+                                <label for="links"> Website Link</label>
                                 <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
-                                <select  id="boostProduct" name="boostProduct" formControlName="product_boost"  class="form-control custominp">
-                                    <option>Select</option>
-                                    <option *ngFor="let boost of productBoostList" value="{{boost.id}}">
-                                            {{boost.name}}
-                                    </option>
-                                </select>
+                                <input type="text" id="links" name="links" formControlName="links" class="form-control custominp" />
                              </div>
-                             <h6 class="px-2 pt-3"> UPLOAD UP TO 10 PHOTOS</h6>
+                             <h6 class="px-2 pt-3 col-md-12"> Upload Up To 10 Photos</h6>
 
                              <div class="divBlk d-flex flex-wrap">
                                 <!-- <div *ngFor="let url of urls" class="imgBlk">
@@ -231,7 +236,7 @@
 
                                 <!-- <input type="file" multiple (change)="detectFiles($event)"> -->
                              </div>
-                             <div class="divBlk pt-3">
+                             <div class="divBlk pt-3 col-md-12 text-center">
                                  <input type="submit" class="btn btn-primary" value="Add Product" *ngIf="!productId" />
                                  <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" />
                              </div>

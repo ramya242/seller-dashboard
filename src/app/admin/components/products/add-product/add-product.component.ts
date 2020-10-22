@@ -48,6 +48,7 @@ export class AddProductComponent implements OnInit {
         product_boost:[''],
         union_territories:[''],
         subject_line:['',[Validators.required,  Validators.maxLength(150)]],
+        links:[''],
        
       })
       this.activatedRoute.params.subscribe((params: Params) => {
@@ -119,16 +120,23 @@ export class AddProductComponent implements OnInit {
   public getSubCategories(level='level1',id='')
   {
     this.productService.subCategories(level,id).subscribe((data: any)=>{
-      console.log(data);
       if(data.status == 'success')
       {
         if(level=='level1')
         {
           this.categoriesList =  data.data
+          this.productForm.patchValue({
+            product_level2_category:0,
+            product_level3_category:0,
+          })
         }
         if(level=='level2')
         {
           this.subCategoriesList =  data.data
+          this.productForm.patchValue({
+            product_level2_category:0,
+            product_level3_category:0
+          })
         }
         if(level=='level3')
         {
@@ -145,7 +153,7 @@ export class AddProductComponent implements OnInit {
     console.log(this.productForm)
     // stop here if form is invalid
      if (this.productForm.invalid) {
-       alert(3)
+      this.toastr.info('Please enter all required fields.');
             return;
         }
     this.loading =true
@@ -174,7 +182,7 @@ export class AddProductComponent implements OnInit {
         this.loading = false
         if(this.urls.length >0  && this.urls[0].file !='')
         {
-          // this.productFileUpload(data.productId)
+          this.productFileUpload(data.productId)
         }  
         else{
           if(data.status == 'success')
@@ -193,10 +201,11 @@ export class AddProductComponent implements OnInit {
   else{
 
     this.productService.createProduct(product).subscribe((data: any)=>{
+
       this.loading = false
-        if(this.urls.length >0)
+        if(this.urls.length >0 && this.urls[0].file !='')
         {
-          this.productFileUpload(data.productId)
+          this.productFileUpload(data.data.productId)
         }
         else {
           if(data.data.status == 'success')
@@ -270,7 +279,7 @@ export class AddProductComponent implements OnInit {
     formData.append('type', 'image');  
     formData.append('productId', id);  
     this.productService.uploadProductFiles(formData).subscribe((data: any)=>{
-    if(data.data.status == 'success')
+    if(data.status == 'success')
     {
       this.toastr.info('Product saved successfully.');
       this.router.navigate(['/admin/product-list'])
@@ -288,7 +297,7 @@ export class AddProductComponent implements OnInit {
       console.log(data)
       if(data.status == 'success')
       {
-        let {left_pieces, title, description,product_areas,offer_price,subject_line,actual_price,exchange_days,product_level1_category, product_level2_category, product_level3_category,product_sizes,product_boost,union_territories,where_to_buy  } = data.data
+        let {left_pieces, title, description,product_areas,offer_price,subject_line,actual_price,exchange_days,product_level1_category, product_level2_category, product_level3_category,product_sizes,product_boost,union_territories,where_to_buy,links  } = data.data
         product_sizes = product_sizes.map(size => size.id)
         product_areas = product_areas.map(area => area.id)
         // where_to_buy = where_to_buy.map(type => area.id)
@@ -307,7 +316,8 @@ export class AddProductComponent implements OnInit {
           union_territories: union_territories,
           where_to_buy:where_to_buy.id,
           product_boost:product_boost,
-          product_areas:product_areas
+          product_areas:product_areas,
+          links:links
           // participants: selectedContacts,
           // speakers:selectedSpeakers,
         })
@@ -328,5 +338,21 @@ export class AddProductComponent implements OnInit {
         // console.log(this.galleryImages)
       }
   })
+  }
+  getCategoryName(type)
+  {
+    if(type=='level1')
+    {
+      return this.categoriesList.filter(item => item.id== this.f.product_level1_category.value).map(e=>e.name)
+    }
+    if(type=='level2')
+    {
+      return this.subCategoriesList.filter(item => item.id== this.f.product_level2_category.value).map(e=>e.name)
+    }
+    if(type=='level3')
+    {
+      return this.subSubCategoriesList.filter(item => item.id== this.f.product_level3_category.value).map(e=>e.name)
+    }
+   
   }
 }

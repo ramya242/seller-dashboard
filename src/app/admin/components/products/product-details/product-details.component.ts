@@ -15,6 +15,7 @@ export class ProductDetailsComponent implements OnInit {
     productData:any=[];
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
+    loading:boolean = true
     constructor(private productService: ProductsService,private activatedRoute: ActivatedRoute,private cdr: ChangeDetectorRef,private router: Router) { 
 
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -74,7 +75,7 @@ export class ProductDetailsComponent implements OnInit {
     const inputData :any= {"productId":this.productId};
 
     this.productService.productDetails(inputData).subscribe((data: any)=>{
-      console.log(data)
+      this.loading = false
       if(data.status == 'success')
       {
         this.productData =  data.data
@@ -86,7 +87,6 @@ export class ProductDetailsComponent implements OnInit {
               big: media.url
             }
         })
-        console.log(this.galleryImages)
       }
   })
   }
