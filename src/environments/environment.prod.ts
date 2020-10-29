@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API_URL: "http://13.235.202.157/api/v1/"
+  API_URL: "https://app.odcet.com/api/v1/"
 };

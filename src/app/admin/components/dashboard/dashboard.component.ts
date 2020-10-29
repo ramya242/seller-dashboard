@@ -18,9 +18,9 @@ export class DashboardComponent implements OnInit {
     // this.user = JSON.parse(localStorage.getItem('user'))
     this.getProfileInfo()
     var time = new Date().getHours();
-    if (time < 10) {
+    if (time < 12) {
       this.greeting = "Good morning";
-    } else if (time < 20) {
+    } else if (time < 18) {
       this.greeting = "Good afternoon";
     } else {
       this.greeting = "Good evening";
