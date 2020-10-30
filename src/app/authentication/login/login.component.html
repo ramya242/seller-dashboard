@@ -1,66 +1,83 @@
-
-  <app-loading *ngIf="loading"></app-loading>
-  <div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-      <div class="col-xl-10 col-lg-12 col-md-9 pt-5 mt-5">
-
-        <div class="card o-hidden border-0  col-md-6 shadow-lg my-5 mx-auto">
-          <div class="card-body p-0 ">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-<!--
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
--->
-              <div class="col-lg-12 ">
-                <div class="p-5 ">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+<div class="login-container">
+  <div class="wrapper float-left">
+    <div class="row-data">
+      <div class="container form-container">
+        <div class="custom-text-width">
+          <h1 id="custom-text">Sign up to get your ideas</h1>
+        </div>
+        <div class="login-form">
+          <div class="form-logo">
+           <img src = "assets/images/odcetlogoblue.png" style="width: 160px;
+           height: 50px;"/>
+          </div>
+             <!-- <div>
+               <h3 class="text-center">Welcome to Odcet</h3>
+             </div>      -->
+          <form  [formGroup]="loginForm" (ngSubmit)="login()" class="loginForm" >
+            <div class="text-center inputAlign">
+              <fieldset style="position: relative; margin-bottom: 7px">
+                <span
+                  ><input
+                    aria-invalid="false"
+                    autocomplete="username"
+                    id="email"
+                    name="id"
+                    placeholder="Email"
+                    formControlName="emailPhone"
+                    required
+                /></span>
+                 <!-- pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(odcet)+(?:\.[a-zA-Z0-9-]+)*$/" -->
+         
+              
+                <div *ngIf="submitted && f.emailPhone.errors"  class="text-danger">
+                  <div *ngIf="f.emailPhone.value">
+                    Username is required!
                   </div>
-                  <form class="user" [formGroup]="loginForm" (ngSubmit)="login()"
-                  >
-                    <div class="form-group">
-                      <input type="text"  class="form-control form-control-user"   formControlName="emailPhone"  placeholder="Enter Email Address..."
-                      >
-                      <div *ngIf="submitted && !f.emailPhone.value" class="text-danger">
-                        <div *ngIf="!f.emailPhone.value" >
-                         Email  required.
-                        </div>
-                      </div>
-                      <div *ngIf="submitted && f.emailPhone.errors"  class="text-danger">
-                        <div *ngIf="f.emailPhone.value">
-                            Enter valid Email 
-                        </div>
-                    </div>
-                    </div>
-                    <div class="form-group">
-                      <input type="password"   formControlName="password"  class="form-control form-control-user"  placeholder="Password" >
-                      <div *ngIf="submitted && !f.password.value" class="text-danger">
-                        <div *ngIf="!f.password.value">
-                        Password required.
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <button name="submit" id="submit" type="submit" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </button>
-                   
-                  </form>
-                  <hr/>
-                  <div class="text-center">
-                    <a class="small" [routerLink]="['/forgot-password']">Forgot Password?</a>
+              </div>
+              </fieldset>
+            </div>
+            <div class="text-center inputAlign">
+              <fieldset style="position: relative">
+                <span
+                  ><input
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    formControlName="password"
+                    required
+                /></span>
+                <div *ngIf="submitted && !f.password.value" class="text-danger">
+                  <div *ngIf="!f.password.value">
+                  Password required.
                   </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
+           
+            <div style="float: left; margin-bottom: 12px; margin-top: 8px">
+              <a
+              [routerLink]="['/forgot-password']"
+                style="color: #1a73e8; font-size: 14px; font-weight: bold"
+                >Forgot password?</a>
+            </div>
+            <div>
+              <button [disabled]="loginForm.invalid"
+                aria-label=""
+                class="red SignupButton active"
+               
+              >
+                <div>Log in <span class="spinner-border" *ngIf="loading"></span></div> 
+              </button>
+            </div>
+          </form>
+
+          <hr />
+          <div style=" font-size: 12px; text-align: center; margin-top: 35px;">
+            Not you ? Log in with a different account
           </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
+</div>
