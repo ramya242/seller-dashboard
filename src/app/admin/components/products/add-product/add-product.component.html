@@ -40,8 +40,8 @@
 
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                      <input type="radio" formControlName="product_level2_category" class="form-check-input" [value]="cat.id">{{cat.name}}
-                                                    </label>
+                                                        <input type="radio" formControlName="product_level2_category" class="form-check-input" [value]="cat.id" >{{cat.name}}{{cat.id}}
+                                                   </label>
                                                   </div>
                                             </a>
                                         </li> 
@@ -56,7 +56,7 @@
                                         <li *ngFor="let cat of subSubCategoriesList">
                                             <a (click)="getAvailabilitySizes(cat.id)"> <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input type="radio" class="form-check-input" formControlName="product_level3_category" [value]="cat.id">{{cat.name}}
+                                                  <input type="radio" class="form-check-input" formControlName="product_level3_category" [value]="cat.id"  >{{cat.name}}
                                                 </label>
                                               </div></a>
                                         </li> 
@@ -148,7 +148,7 @@
                                     left Pieces is required
                                 </div>
                             </div>
-                             <div class="divBlk col-sm-6">
+                             <!-- <div class="divBlk col-sm-6">
                                 <label for="availabilityAreas"> Availability Areas</label>
 
                                 
@@ -165,8 +165,8 @@
                                         <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
                                     </ng-template>
                                 </ng-select>
-                             </div>
-                             <div class="divBlk col-sm-6">
+                             </div> -->
+                             <!-- <div class="divBlk col-sm-6">
                                 <label for="unionTerritories"> Union Territories</label>
                                 <select  id="unionTerritories" formControlName="union_territories" name="unionTerritories" class="form-control custominp">
                                     <option>Select</option>
@@ -174,7 +174,7 @@
                                             {{area.name}}
                                     </option>
                                 </select>
-                             </div>
+                             </div> -->
                              <div class="divBlk col-sm-6">
                                 <label for="boostProduct"> Boost Product</label>
                                 <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
@@ -207,6 +207,12 @@
                                 <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
                                 <input type="text" id="links" name="links" formControlName="links" class="form-control custominp" />
                              </div>
+                             <div class="divBlk col-sm-6">
+                                <label class="form-check-label" for="delivery_available">
+                                    <input type="checkbox" class="form-check-input" id="delivery_available"   (change)="checkValue($event)"
+                                    name="delivery_available"  >Delivery Available
+                                    </label>
+                                    </div> 
                              <h6 class="px-2 pt-3 col-md-12"> Upload Up To 10 Photos</h6>
 
                              <div class="divBlk d-flex flex-wrap">
@@ -237,7 +243,9 @@
                                 <!-- <input type="file" multiple (change)="detectFiles($event)"> -->
                              </div>
                              <div class="divBlk pt-3 col-md-12 text-center">
-                                 <input type="submit" class="btn btn-primary" value="Add Product" *ngIf="!productId" />
+                                 <input type="submit" class="btn btn-primary mr-2" value="Add Product" *ngIf="!productId" />
+                                 <input type="submit" class="btn btn-primary mr-2" value="Preview" *ngIf="!productId" />
+                                 <input type="submit" class="btn btn-primary" (click) = "submitnew()" value="Submit & add new" *ngIf="!productId" />
                                  <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" />
                              </div>
                         </form>

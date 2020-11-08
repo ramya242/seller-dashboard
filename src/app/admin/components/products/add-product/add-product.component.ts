@@ -20,6 +20,10 @@ export class AddProductComponent implements OnInit {
   productBoostList:any =[]
   productForm: FormGroup
   productId:any
+  submitnewbutton: any
+  apiresponse: any
+  selectCategory: any = 8
+  delivery_available : any = 0
   urls = [
     {
       id:1,
@@ -49,6 +53,7 @@ export class AddProductComponent implements OnInit {
         union_territories:[''],
         subject_line:['',[Validators.required,  Validators.maxLength(150)]],
         links:[''],
+        delivery_available:[[]]
        
       })
       this.activatedRoute.params.subscribe((params: Params) => {
@@ -67,6 +72,8 @@ export class AddProductComponent implements OnInit {
     this.productBoost()
     // this.createProduct()
   }
+
+  
   public unionTerritories(){
     this.productService.subCategories('','','product_union_territories').subscribe((data: any)=>{
       console.log(data);
@@ -122,21 +129,23 @@ export class AddProductComponent implements OnInit {
     this.productService.subCategories(level,id).subscribe((data: any)=>{
       if(data.status == 'success')
       {
+        console.log("========================level===");
+        console.log(data);
         if(level=='level1')
         {
           this.categoriesList =  data.data
-          this.productForm.patchValue({
-            product_level2_category:0,
-            product_level3_category:0,
-          })
+          // this.productForm.patchValue({
+          //   product_level2_category:0,
+          //   product_level3_category:0,
+          // })
         }
         if(level=='level2')
         {
           this.subCategoriesList =  data.data
-          this.productForm.patchValue({
-            product_level2_category:0,
-            product_level3_category:0
-          })
+          // this.productForm.patchValue({
+          //   product_level2_category:0,
+          //   product_level3_category:0
+          // })
         }
         if(level=='level3')
         {
@@ -151,10 +160,11 @@ export class AddProductComponent implements OnInit {
   public createProduct(){
     this.submitted = true;
     console.log(this.productForm)
+    
     // stop here if form is invalid
      if (this.productForm.invalid) {
       this.toastr.info('Please enter all required fields.');
-            return;
+            //return;
         }
     this.loading =true
    const product :any= {
@@ -173,8 +183,12 @@ export class AddProductComponent implements OnInit {
     "links":"www.example.com/123",
     "subject_line":this.f.subject_line.value,
     "union_territories":this.f.union_territories.value,
-    "product_boost":this.f.product_boost.value
+    "product_boost":this.f.product_boost.value,
+    "delivery_available": this.delivery_available
   }
+  console.log("====================================");
+  console.log(product);
+  return;
   if(this.productId)
   {
     product.productId = this.productId
@@ -198,20 +212,37 @@ export class AddProductComponent implements OnInit {
              
     })
   }
+ 
   else{
 
     this.productService.createProduct(product).subscribe((data: any)=>{
 
       this.loading = false
+     
         if(this.urls.length >0 && this.urls[0].file !='')
         {
           this.productFileUpload(data.data.productId)
         }
         else {
-          if(data.data.status == 'success')
+          
+          console.log("===="+data.status);
+          if(data.status == 'success')
           {
-            this.toastr.info('Product added successfully.');
-            this.router.navigate(['/admin/product-list'])
+            if(this.submitnewbutton)
+            {
+              this.submitnewbutton = 0;
+              this.toastr.info('Product added successfully.');
+              this.submitted = false;
+              this.urls = [];
+              this.f.title.reset();
+              //this.router.navigate(['/admin/product-list'])
+            }
+            else
+            {
+              this.toastr.info('Product added successfully.');
+              this.router.navigate(['/admin/product-list'])
+            }
+          
           }
           else{
             this.toastr.error('Unable to add product.');
@@ -281,8 +312,18 @@ export class AddProductComponent implements OnInit {
     this.productService.uploadProductFiles(formData).subscribe((data: any)=>{
     if(data.status == 'success')
     {
-      this.toastr.info('Product saved successfully.');
-      this.router.navigate(['/admin/product-list'])
+      if(this.submitnewbutton)
+      {
+        this.submitnewbutton = 0;
+        this.urls = [];
+        this.f.title.reset();
+        this.toastr.info('Product saved successfully.');
+      }
+      else{
+        this.toastr.info('Product saved successfully.');
+        this.router.navigate(['/admin/product-list'])
+      }
+     
     }
     else{
       this.toastr.error('Unable to add product.');
@@ -298,8 +339,8 @@ export class AddProductComponent implements OnInit {
       if(data.status == 'success')
       {
         let {left_pieces, title, description,product_areas,offer_price,subject_line,actual_price,exchange_days,product_level1_category, product_level2_category, product_level3_category,product_sizes,product_boost,union_territories,where_to_buy,links  } = data.data
-        product_sizes = product_sizes.map(size => size.id)
-        product_areas = product_areas.map(area => area.id)
+        product_sizes = Array.isArray(product_sizes) ?product_sizes.map(size => size.id) : []
+        product_areas = product_areas ? product_areas.map(area => area.id) : []
         // where_to_buy = where_to_buy.map(type => area.id)
         this.productForm.patchValue({
           left_pieces:left_pieces,
@@ -311,20 +352,22 @@ export class AddProductComponent implements OnInit {
           exchange_days:exchange_days,
           product_level1_category:product_level1_category.id,
           product_level2_category:product_level2_category.id,
-          product_level3_category:product_level3_category.id,
+          product_level3_category:product_level3_category?product_level3_category.id:0,
           product_sizes: product_sizes,
           union_territories: union_territories,
-          where_to_buy:where_to_buy.id,
+          where_to_buy:where_to_buy != null?where_to_buy.id:0,
           product_boost:product_boost,
           product_areas:product_areas,
           links:links
           // participants: selectedContacts,
           // speakers:selectedSpeakers,
         })
+        console.log("===================="+product_level2_category.id)
+        this.selectCategory = 8;
         this.getSubCategories('level2',product_level1_category.id)
         this.getSubCategories('level3',product_level2_category.id)
         // this.getSubCategavories('level3',product_level2_category.id)
-        this.getAvailabilitySizes(product_level3_category.id)
+        this.getAvailabilitySizes(product_level3_category?product_level3_category.id:0)
 
         // this.productData =  data.data
         // let {product_media} =this.productData
@@ -355,4 +398,14 @@ export class AddProductComponent implements OnInit {
     }
    
   }
+  submitnew()
+  {
+    console.log("=========submit new button");
+    this.submitnewbutton = 1;
+  }
+  checkValue(values:any){
+    this.delivery_available = values.currentTarget.checked?1:0;
+    console.log(this.delivery_available);
+    console.log(values.currentTarget.checked);
+    }
 }

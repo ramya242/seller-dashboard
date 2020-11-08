@@ -8,18 +8,16 @@
      <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
       <div class="navbar-nav">
          <div class="nav-item dropdown">
-            <a href="#" class="nav-item nav-link" data-toggle="dropdown">Add a Product</a>
+            <a href="#" class="nav-item nav-link" data-toggle="dropdown">Add New</a>
             <div class="dropdown-menu">
-               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Single Product</a>
-               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Multiple Products</a>
+               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Add a Product</a>
+               <a [routerLink]="['/admin/add-product']" class="dropdown-item">Add a Offer</a>
             </div>
          </div>
          <div class="nav-item dropdown">
-            <a  class="nav-item nav-link" data-toggle="dropdown">
+            <a [routerLink]="['/admin/product-list']"   class="nav-item nav-link" >
             Inventory</a>
-            <div class="dropdown-menu">
-               <a [routerLink]="['/admin/product-list']" class="dropdown-item">Complete List</a>
-            </div>
+           
          </div>
          <div class="nav-item dropdown">
             <a href="#" class="nav-item nav-link " data-toggle="dropdown">Reach</a>
