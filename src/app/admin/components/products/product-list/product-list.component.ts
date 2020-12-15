@@ -22,6 +22,7 @@ export class ProductListComponent implements OnInit {
   selectedLevel3:any={}
   selectedArea:any={}
   selectedSize:any={}
+  selectedColor:any={}
   selectedSortType:any
   loading:boolean = true
   constructor(private productService: ProductsService,private adminService: AdminService) { }
@@ -68,7 +69,8 @@ export class ProductListComponent implements OnInit {
           "cat_2":this.selectedLevel2.id?[this.selectedLevel2.id]:[],
           "cat_3":this.selectedLevel3.id?[this.selectedLevel3.id]:[],
           "sizes":this.selectedSize.id?[this.selectedSize.id]:[],
-          "area":this.selectedArea.id?[this.selectedArea.id]:[]
+          "area":this.selectedArea.id?[this.selectedArea.id]:[],
+          "colors":this.selectedColor.id?[this.selectedColor.id]:[],
         },
         "sorting":this.selectedSortType?this.selectedSortType: "price_asc"
       };

@@ -54,7 +54,7 @@
                         </div>
                         <div class="row">
                            <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
-                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer" [routerLink]="['/admin/product-details/',product.id]" *ngFor="let product of productList">
+                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer" [routerLink]="['/admin/product-details/',product.product_id]" *ngFor="let product of productList">
                               <div class="card h-100 border-0">
                                  <div class="card-img-top">
                                     <img src="{{product.product_media.length >0 ? product.product_media[0].url : 'assets/logo.png'}}"  onerror="this.src='assets/logo.png'"  class="img-fluid mx-auto imgBlock d-block" alt="{{product.title}}">
@@ -183,7 +183,7 @@
                            
                         </div>
 
-                        <div class="card mb-3">
+                        <div class="card mb-3 d-none">
                            <article class="filter-group">
                               <header class="card-header">
                                  <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">

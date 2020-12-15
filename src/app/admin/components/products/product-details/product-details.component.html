@@ -29,7 +29,7 @@
                 <aside class="col-sm-7">
         <article class="card-body p-5">
           <div class="text-right productIcons">
-            <a [routerLink]="['/admin/add-product/',productId]" class="cursor-pointer" title="Edit"><i class="fa fa-edit"></i></a>
+            <a [routerLink]="['/admin/add-product/',productId,productData.product_common_id]" class="cursor-pointer" title="Edit"><i class="fa fa-edit"></i></a>
             <a (click)="deleteProduct()" class="cursor-pointer" title="Delete"><i class="fa fa-trash"></i></a>
           </div>
             <h3 class="title text-capitalize">{{productData.title}}</h3>

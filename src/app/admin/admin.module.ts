@@ -15,7 +15,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ProfileComponent } from './components/profile/profile.component';
-import { AdminLoadingComponent } from './components/admin-loading/admin-loading.component'; // <-- import the module
+import { AdminLoadingComponent } from './components/admin-loading/admin-loading.component';
+import { OffersComponent } from './components/offers/offers.component';
+import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { AdminLoadingComponent } from './components/admin-loading/admin-loading.
     ProductListComponent,
     ProductDetailsComponent,
     ProfileComponent,
-    AdminLoadingComponent
+    AdminLoadingComponent,
+    OffersComponent,
+    CreateOfferComponent,
   ],
   imports: [
     CommonModule,

@@ -64,6 +64,10 @@ export class ProductsService {
   {
     return this.httpClient.post(`${environment.API_URL}business_profile/products/single`, productId);
   }
+  public sameTypeProductDetails(productId)
+  {
+    return this.httpClient.post(`${environment.API_URL}business_profile/products/sameTypeProducts`, productId);
+  }
   public uploadProductFiles(formData)
   {
     // this.headers = {'Authorization':  this.getToken()};

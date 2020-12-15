@@ -1,258 +1,302 @@
 <!-- <app-loading *ngIf="loading"></app-loading> -->
-
 <!-- Begin Page Content -->
-      <div class="container-fluid">
-        <div class="row">
-
-            <div class="col-md-12">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">ADD PROUDCT </h6>
+<div class="container-fluid">
+   <div class="row">
+     <div class="col-md-12">
+       <div class=" mb-4">
+         <div class=" py-3">
+           <h6 class="m-0 font-weight-bold text-primary">ADD PROUDCT </h6>
+         </div>
+         <div class="">
+           <form  [formGroup]="productForm"
+           (ngSubmit)="createProduct()" class="d-flex flex-wrap ">
+           <div class="d-flex flex-wrap w-100 justify-content-center">
+             <div class="col-md-12 mt-3">
+               <div class="">
+                 <ul class="list-group list-group-horizontal justify-content-center pb-4">
+                   <li *ngFor="let cat of categoriesList" class="list-group-item">
+                     <a (click)="getSubCategories('level2',cat.id)">
+                       <div class="form-check">
+                         <label class="form-check-label">
+                         <input type="radio" formControlName="product_level1_category"       class="form-check-input" [value]="cat.id"
+                           >{{cat.name}}
+                         </label>
+                       </div>
+                     </a>
+                   </li>
+                 </ul>
+               </div>
+             </div>
+             <div class="col-md-4 mt-3" *ngIf="f.product_level1_category.value>0">
+               <div class="card card-body">
+                 <h6>Choose a  Category</h6>
+                 <!-- <select>
+                   </select> -->
+                 <select  id="product_level2_category" name="product_level2_category" formControlName="product_level2_category"  class="form-control custominp" (change)="getSubCategories('level3',$event.target.value)">
+                   <option>Select</option>
+                   <option *ngFor="let cat of subCategoriesList" value="{{cat.id}}">
+                     {{cat.name}}
+                   </option>
+                 </select>
+                 
+               </div>
+             </div>
+             <div class="col-md-4 mt-3" *ngIf="f.product_level1_category.value>0">
+               <div class="card card-body">
+                 <h6>Choose a sub category</h6>
+                 <select  id="product_level3_category" name="product_level3_category" formControlName="product_level3_category"  class="form-control custominp" (change)="getAvailabilitySizes($event.target.value)">
+                   <option>Select</option>
+                   <option *ngFor="let cat of subSubCategoriesList" value="{{cat.id}}">
+                     {{cat.name}}
+                   </option>
+                 </select>
+               
+               </div>
+             </div>
+           </div>
+           <div class="col-md-12 text-center pt-3" *ngIf="f.product_level1_category.value>0">
+             <nav class="">
+               <ol class="breadcrumb">
+                 <li class="breadcrumb-item"><a >{{getCategoryName('level1')}}</a></li>
+                 <li class="breadcrumb-item" *ngIf="f.product_level2_category.value>0"><a >{{getCategoryName('level2')}}</a></li>
+                 <li class="breadcrumb-item active"  *ngIf="f.product_level3_category.value>0">{{getCategoryName('level3')}}</li>
+               </ol>
+             </nav>
+           </div>
+       
+           <div class="d-flex w-100">
+             <!-- First Block -->
+             <div class="col-md-6 px-0">
+               <div class="divBlk  ">
+                 <div class="imgBlock">
+                   <h6 class="px-2 pt-3 col-md-12"> Upload Up To 10 Photos</h6>
+                   <div class="d-flex justify-content-between" >
+                     {{selectedVarientIndexForImages}}
+                    <div>
+                        <div *ngFor="let url of variantImages; let i=index" (click)="selectedVarientIndexForImages=i">
+                          <div class="colorDiv"></div>
+                          <span>{{variantImages[i] && variantImages[i].length}}/5</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <form  [formGroup]="productForm"
-                        (ngSubmit)="createProduct()" class="d-flex flex-wrap ">
-                            <div class="d-flex flex-wrap w-100 justify-content-center">
-                                <div class="col-md-12 mt-3">
-                                    <div class="">
-                                    <ul class="list-group list-group-horizontal justify-content-center pb-4">                            
-                                    <li *ngFor="let cat of categoriesList" class="list-group-item">
-                                        <a (click)="getSubCategories('level2',cat.id)"> 
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                            <input type="radio" formControlName="product_level1_category"       class="form-check-input" [value]="cat.id"
-                                                  >{{cat.name}}
-                                                </label>
-                                              </div>
-                                            </a>
-                                    </li> 
-                                    </ul>
-                                </div>
-                                
-                                </div>
-                                <div class="col-md-4 mt-3" *ngIf="f.product_level1_category.value>0">
-                                    <div class="card card-body">
-                                        <h6>Choose a  Category</h6>
+                    <div>
+                      <img id="blah2" src="{{urls[0].url?urls[0].url:'assets/upload.png'}}" width="auto" height="80px" class="profilepic2 img-preview">
 
-                                    <ul class="scroll">
-                                        <li *ngFor="let cat of subCategoriesList;let i=index">
-                                            <a (click)="getSubCategories('level3',cat.id)"> 
-
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" formControlName="product_level2_category" class="form-check-input" [value]="cat.id" >{{cat.name}}{{cat.id}}
-                                                   </label>
-                                                  </div>
-                                            </a>
-                                        </li> 
-                                    </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mt-3" *ngIf="f.product_level1_category.value>0">
-                                    <div class="card card-body">
-                                        <h6>Choose a sub category</h6>
-
-                                    <ul class="scroll">
-                                        <li *ngFor="let cat of subSubCategoriesList">
-                                            <a (click)="getAvailabilitySizes(cat.id)"> <div class="form-check">
-                                                <label class="form-check-label">
-                                                  <input type="radio" class="form-check-input" formControlName="product_level3_category" [value]="cat.id"  >{{cat.name}}
-                                                </label>
-                                              </div></a>
-                                        </li> 
-                                    </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 text-center pt-3" *ngIf="f.product_level1_category.value>0">
-                                <nav class="">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a >{{getCategoryName('level1')}}</a></li>
-                                        <li class="breadcrumb-item" *ngIf="f.product_level2_category.value>0"><a >{{getCategoryName('level2')}}</a></li>
-                                        <li class="breadcrumb-item active"  *ngIf="f.product_level3_category.value>0">{{getCategoryName('level3')}}</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                           
-                            <div class="divBlk col-sm-6" *ngIf="availabilitySizes.length > 0">
-                                <label for="product_sizes"> Select Availability Sizes <span class="man-star">*</span></label>
-                                <ng-select *ngIf="availabilitySizes.length>0"
-                                    [items]="availabilitySizes"
-                                    [multiple]="true"
-                                    bindLabel="name"
-                                    [selectableGroup]="true"
-                                    [closeOnSelect]="false"
-                                    bindValue="id"
-                                    formControlName="product_sizes">
-                                   
-                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
-                                    </ng-template>
-                                </ng-select>
-                             </div>
-                             <!-- <ngx-select-dropdown (change)="selectionChanged($event)" [multiple]="true" formControlName="product_sizes" [config]="config" [options]="availabilitySizes"></ngx-select-dropdown> -->
-                             
-                            <div class="divBlk col-sm-6">
-                                <label for="title"> Title<span class="man-star">*</span></label>
-                                <input type="text" id="title" formControlName="title" name="title" class="form-control custominp"/>
-                             </div>
-                             
-                             <div *ngIf="submitted && !f.title.value"  class="text-danger">
-                                <div *ngIf="!f.title.value">
-                                        Title is required
-                                </div>
-                            </div>
-                            <div class="divBlk col-sm-6">
-                                <label for="subject"> Add Subject Line<span class="man-star">*</span></label>
-                                <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
-                             </div>
-                             <div class="divBlk col-sm-6">
-                                <label for="price"> Price<span class="man-star">*</span></label>
-                                <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" />
-                             </div>
-                             <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
-                                        Actual price is required
-                            </div> 
-                             <div *ngIf="submitted && f.actual_price.errors?.pattern"  class="text-danger">
-                                    Price should be number
-                            </div>
-                             <div class="divBlk col-sm-6">
-                                <label for="offerPrice"> Offer Price<span class="man-star">*</span></label>
-                                <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" />
-                             </div>
-                              <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
-                                        Offer price is required
-                            </div>
-                            
-                             <div *ngIf="submitted && f.offer_price.errors?.pattern"  class="text-danger">
-                                    Offer price should be number
-                             </div>
-                             <div class="divBlk col-sm-6">
-                                <label for="description"> Product Description<span class="man-star">*</span></label>
-                                <textarea  id="description" name="description" formControlName="description" class="form-control custominp" ></textarea>
-                                <div *ngIf="submitted && !f.description.value"  class="text-danger">
-                                    Description is required
-                                </div>
-                            </div>
-                             <div class="divBlk col-sm-6">
-                                <label for="returnDays"> Return & Exchange Days</label>
-                                <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
-                             </div>
-                             
-                             <div class="divBlk col-sm-6">
-                                <label for="leftPieces" > Left Pieces</label>
-                                <input type="text" id="leftPieces" name="leftPieces" formControlName="left_pieces"  class="form-control custominp" />
-                             </div>
-                             <div *ngIf="submitted && !f.left_pieces.value"  class="text-danger">
-                                <div *ngIf="!f.left_pieces.value">
-                                    left Pieces is required
-                                </div>
-                            </div>
-                             <!-- <div class="divBlk col-sm-6">
-                                <label for="availabilityAreas"> Availability Areas</label>
-
-                                
-                                <ng-select *ngIf="productAreas.length>0"
-                                    [items]="productAreas"
-                                    [multiple]="true"
-                                    bindLabel="name"
-                                    [selectableGroup]="true"
-                                    [closeOnSelect]="false"
-                                    bindValue="id"
-                                    formControlName="product_areas">
-                                   
-                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
-                                    </ng-template>
-                                </ng-select>
-                             </div> -->
-                             <!-- <div class="divBlk col-sm-6">
-                                <label for="unionTerritories"> Union Territories</label>
-                                <select  id="unionTerritories" formControlName="union_territories" name="unionTerritories" class="form-control custominp">
-                                    <option>Select</option>
-                                    <option *ngFor="let area of unionTerritoriesList" value="{{area.id}}">
-                                            {{area.name}}
-                                    </option>
-                                </select>
-                             </div> -->
-                             <div class="divBlk col-sm-6">
-                                <label for="boostProduct"> Boost Product</label>
-                                <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
-                                <select  id="boostProduct" name="boostProduct" formControlName="product_boost"  class="form-control custominp">
-                                    <option>Select</option>
-                                    <option *ngFor="let boost of productBoostList" value="{{boost.id}}">
-                                            {{boost.name}}
-                                    </option>
-                                </select>
-                             </div>
-                             <div class="divBlk col-sm-6">
-                                <label for="whereToPurchase"> Where to Purchase <span class="man-star">*</span></label>
-                              
-
-                                <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp" >
-                                    <option>Select</option>
-                                    <option *ngFor="let where of whereToBuyList" value="{{where.id}}">
-                                            {{where.name}}
-                                    </option>
-                                </select>
-                             </div>
-                             <div *ngIf="submitted && !f.where_to_buy.value"  class="text-danger">
-                                <div *ngIf="!f.where_to_buy.value">
-                                    Required Field
-                                </div>
-                            </div>
-                            
-                             <div class="divBlk col-sm-6" *ngIf="f.where_to_buy.value==1">
-                                <label for="links"> Website Link</label>
-                                <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
-                                <input type="text" id="links" name="links" formControlName="links" class="form-control custominp" />
-                             </div>
-                             <div class="divBlk col-sm-6">
-                                <label class="form-check-label" for="delivery_available">
-                                    <input type="checkbox" class="form-check-input" id="delivery_available"   (change)="checkValue($event)"
-                                    name="delivery_available"  >Delivery Available
-                                    </label>
-                                    </div> 
-                             <h6 class="px-2 pt-3 col-md-12"> Upload Up To 10 Photos</h6>
-
-                             <div class="divBlk d-flex flex-wrap">
-                                <!-- <div *ngFor="let url of urls" class="imgBlk">
-                                    <img  [src]="url" class="rounded mb-3" width="180">
-                                </div> -->
-
-
-                                    <div class="block1 img-container " *ngFor="let url of urls;let i=index">
-                                       <div class="parent2 position-relative">
-                                        <label class="snap-images ">
-                                            <img id="blah2" src="{{url.url?url.url:'assets/upload.png'}}" width="100%" height="80px" class="profilepic2 img-preview">
-                                            
-                                            <input type="file" multiple class="upload2 hide gallery-img-file accept-image d-none" (change)="detectFiles($event,i)" accept="image/*">
-                                          
-                                        </label>
-                                             <div class="child2">
-                                                <span class="fa fa-close removebt" (click)="removeImg(i)"></span>
-                                             </div>
-                                        </div>
-                                    </div>
-                                    
-                                <div class="add-image" id="add-image" (click)="addImage()">
-                                    <div class="circle-o plusSign  "><span>+</span></div>
-                                    <h6 class="text-center w-100">ADD IMAGE</h6>
-                                </div>
-
-                                <!-- <input type="file" multiple (change)="detectFiles($event)"> -->
-                             </div>
-                             <div class="divBlk pt-3 col-md-12 text-center">
-                                 <input type="submit" class="btn btn-primary mr-2" value="Add Product" *ngIf="!productId" />
-                                 <input type="submit" class="btn btn-primary mr-2" value="Preview" *ngIf="!productId" />
-                                 <input type="submit" class="btn btn-primary" (click) = "submitnew()" value="Submit & add new" *ngIf="!productId" />
-                                 <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" />
-                             </div>
-                        </form>
                     </div>
-                  </div>
-            </div>
+                    <div></div>
+
+                </div>
+                   <div class="divBlk d-flex ">
+                  
+                     <div class="block1 img-container " *ngFor="let url of variantImages[selectedVarientIndexForImages];let i=index">
+                       <div class="parent2 position-relative">
+                         <label class="snap-images ">
+                         <img id="blah2" src="{{url.url?url.url:'assets/upload.png'}}" width="100%" height="80px" class="profilepic2 img-preview">
+                         <input type="file" multiple class="upload2 hide gallery-img-file accept-image d-none" (change)="detectFiles($event,i)" accept="image/*">
+                         </label>
+                         <div class="child2">
+                           <span class="fa fa-close removebt" (click)="removeImg(i)"></span>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="add-image" id="add-image" (click)="addImage()" *ngIf="urls.length<5">
+                       <div class="circle-o plusSign  "><span>+</span></div>
+                       <h6 class="text-center w-100">ADD IMAGE</h6>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class="divBlk ">
+                 <label for="title"> Title<span class="man-star">*</span></label>
+                 <input type="text" id="title" formControlName="title" name="title" class="form-control custominp"/>
+                 <div *ngIf="submitted && !f.title.value"  class="text-danger">
+                   <div *ngIf="!f.title.value">
+                     Title is required
+                   </div>
+                 </div>
+               </div>
+               <div class="divBlk ">
+                 <label for="brand_name"> Brand Name<span class="man-star">*</span></label>
+                 <input type="text" id="brand_name" formControlName="brand_name" name="brand_name" class="form-control custominp"/>
+                 <div *ngIf="submitted && !f.brand_name.value"  class="text-danger">
+                   <div *ngIf="!f.brand_name.value">
+                     Brand name is required
+                   </div>
+                 </div>
+               </div>
+               <div class="divBlk ">
+                 <label for="subject"> Add Subject Line<span class="man-star">*</span></label>
+                 <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
+               </div>
+               <div class="divBlk ">
+                 <label for="description"> Product Description<span class="man-star">*</span></label>
+                 <textarea  id="description" rows="5" name="description" formControlName="description" class="form-control custominp" ></textarea>
+                 <div *ngIf="submitted && !f.description.value"  class="text-danger">
+                   Description is required
+                 </div>
+               </div>
+               <div class="divBlk ">
+                 <label for="product_code"> Product Code</label>
+                 <input type="text" id="product_code" formControlName="product_code" name="product_code" class="form-control custominp" />
+               </div>
+               <div class="divBlk ">
+                 <label for="whereToPurchase"> Where to Purchase <span class="man-star">*</span></label>
+                 <select  id="whereToPurchase" name="whereToPurchase" formControlName="where_to_buy" class="form-control custominp" >
+                   <option>Select</option>
+                   <option *ngFor="let where of whereToBuyList" value="{{where.id}}">
+                     {{where.name}}
+                   </option>
+                 </select>
+               </div>
+               <div *ngIf="submitted && !f.where_to_buy.value"  class="text-danger">
+                 <div *ngIf="!f.where_to_buy.value">
+                   Required Field
+                 </div>
+               </div>
+               <div class="divBlk col-sm-6" *ngIf="f.where_to_buy.value==1">
+                 <label for="links"> Website Link</label>
+                 <!-- <input type="text" id="boostProduct" name="boostProduct" class="form-control custominp" value=""> -->
+                 <input type="text" id="links" name="links" formControlName="links" class="form-control custominp" />
+               </div>
+               <div class="d-flex justify-content-end switchBlk">
+                 <p class="swtext"> Is delivery Available..?  </p>
+                 <label class="switch">
+                   <!-- <input type="checkbox" checked=""> -->
+                   <input type="checkbox" class="form-check-input" id="delivery_available"   (change)="checkValue($event)"
+                     name="delivery_available"  />
+                   <span class="slider round"></span>
+                 </label>
+               </div>
+             </div>
+             <!-- First Block -->
+             <!-- Second Block -->
+             <!-- {{f.search_keywords.value | json}} -->
+             <div class="col-md-6 px-0">
+               <div class="divBlk ">
+                <label for="search_keywords"> Search Keywords<span class="man-star">*</span></label>
+                 <!-- <label for="search_keywords"> Search Keywords<span class="man-star">*</span></label>
+                 <input type="text" id="search_keywords" formControlName="search_keywords" name="search_keywords" class="form-control custominp"/> -->
+                 <ng-select 
+                   [addTag]="addTag"
+                   [multiple]="true"
+                   formControlName="search_keywords">
+        </ng-select>
+                 <div *ngIf="submitted && !f.search_keywords.value"  class="text-danger">
+                   <div *ngIf="!f.search_keywords.value">
+                     Search keyword is required
+                   </div>
+                 </div>
+               </div>
+               <div class="divBlk  ">
+                 <label for="returnDays"> Return & Exchange Days</label>
+                 <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
+               </div>
+            
+               <div class="form-row divBlk d-flex flex-wrap" formArrayName="variants">
+                  <div class="col-md-12 form-group required " *ngFor="let variant of variants().controls; let i=index" [formGroupName]="i">
+                     <label  class="control-label"> Variant 1 </label>   
+                     <div class="row">
+                      <div class="form-group col-4">
+                        <ng-select *ngIf="productColorsList.length>0"
+                           [items]="productColorsList"
+                           [multiple]="true"
+                           bindLabel="name"
+                           [selectableGroup]="true"
+                           [closeOnSelect]="false"
+                           bindValue="id"
+                           formControlName="product_colors"
+                           >
+                           <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                           </ng-template>
+                           </ng-select>
+                      </div>
+                   
+                      <a (click)="selectedVarientIndexForSizes=i;open(content);"  >Sizes</a>
+                     
+                      <div class="form-group col-4"> <input type="text" class="form-control " formControlName="actual_price" placeholder="Price"> </div>
+                      <div class="form-group col-4"> <input type="text" class="form-control " formControlName="offer_price" placeholder=" Offer Price"> </div>
+                      <div class="d-flex align-items-center justify-item-center switchBlk">
+                        <span class="">Out of Stock</span>
+                        <label class="switch">
+                           <input type="checkbox" class="form-check-input" id="is_stock_available{{i}}"  formControlName="is_stock_available" 
+                             (change)="checkValue($event)"
+                              />
+                           <span class="slider round"></span>
+                         </label>
+                      </div>
+                     
+                     </div>
+                     <div>Add New Varriable   </div>
+                   
+                   </div>
+                   <!-- {{f.variants.value | json}} -->
+                   <button type="button" *ngIf="f.variants.value.length < 5"  (click)="addVariant()" class="btn btn-primary">Add More</button>
+
+               </div>
+               <!-- form-row Variant 1 end.// -->
+             </div>
+             <!-- Second Block -->
+           </div>
+          
+           <div class="divBlk pt-3 col-md-12 text-center">
+             <input type="submit" class="btn btn-primary mr-2" value="Add Product" *ngIf="!productId" />
+             <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" /> 
+           </div>
+           </form>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+ <ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Product Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  [formGroup]="productDetailForm" class="d-flex flex-wrap " (ngSubmit)="saveProductDetails()">
+      <div class="form-group">
+        <div *ngIf="availabilitySizes.length>0">
+          <label>Add Multiple Quantity:</label>
+          <button type="button" (click)="addSizesLeftPieces()" class="btn btn-primary">Add More</button>
         </div>
+        <table class="table table-bordered" formArrayName="sizesLeftPieces">
+          <tr *ngFor="let item of sizesLeftPieces().controls; let i=index" [formGroupName]="i">
+            <td  *ngIf="availabilitySizes.length>0">
+                Sizes :
+                <!-- <input type="text" formControlName="sizes" class="form-control"> -->
+                <ng-select 
+                  [items]="availabilitySizes"
+                  bindLabel="name"
+                  [selectableGroup]="true"
+                  [closeOnSelect]="false"
+                  bindValue="id"
+                  formControlName="size_id">
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />  {{item.name}}
+                  </ng-template>
+                  </ng-select>
+            </td>
+            <td>
+                Left Pieces:
+                <input type="text" formControlName="left_pieces" class="form-control">
+            </td>
+            <td *ngIf="availabilitySizes.length>0">
+                <button (click)="removeSizesLeftPieces(i)" class="btn btn-danger">Remove</button>
+            </td>
+          </tr>
+        </table>
+        <button type="submit" class="btn btn-outline-dark" >Save</button>
 
       </div>
-
+    </form>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
