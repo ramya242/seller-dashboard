@@ -13,8 +13,20 @@ export class OfferService {
   public getOfferCategories(){
     return this.httpClient.get(`${environment.API_URL}business_profile/meta/offer_categories`);
   }
-  public offerDetails(productId)
+  public offerDetails(offerId)
   {
-    return this.httpClient.post(`${environment.API_URL}business_profile/products/single`, productId);
+    return this.httpClient.post(`${environment.API_URL}business_profile/offers/single`, offerId);
+  }
+  public uploadProductFiles(formData)
+  {
+    return this.httpClient.post(`${environment.API_URL}business_profile/offers/fileUpload`, formData);
+  }
+  public createOffer(offer)
+  {
+    return this.httpClient.post(`${environment.API_URL}business_profile/offers/create`,offer);
+  }
+  public updateOffer(offer)
+  {
+    return this.httpClient.put(`${environment.API_URL}business_profile/offers/update`,offer);
   }
 }

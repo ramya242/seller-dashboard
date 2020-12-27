@@ -16,6 +16,7 @@ export class ProductDetailsComponent implements OnInit {
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
     loading:boolean = true
+    productInfo:any 
     constructor(private productService: ProductsService,private activatedRoute: ActivatedRoute,private cdr: ChangeDetectorRef,private router: Router) { 
 
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -79,8 +80,9 @@ export class ProductDetailsComponent implements OnInit {
       if(data.status == 'success')
       {
         this.productData =  data.data
-        let {product_media} =this.productData
-        this.galleryImages = product_media.map((media)=>{
+        let {variant_media,product_info} =this.productData
+        this.productInfo = product_info
+        this.galleryImages = variant_media.map((media)=>{
             return {
               small: media.url,
               medium: media.url,
@@ -89,7 +91,7 @@ export class ProductDetailsComponent implements OnInit {
         })
       }
   })
-  }
+  }                                                   
   ngAfterViewChecked(){
     //your code to update the model
     this.cdr.detectChanges();
@@ -97,9 +99,10 @@ export class ProductDetailsComponent implements OnInit {
  deleteProduct(){
     if(confirm("Are you sure do you want to delete this product?"))
     {
-        this.productService.productDelete(this.productId).subscribe((data: any)=>{
+        this.productService.deleteVariant(this.productId).subscribe((data: any)=>{
           if(data.status == 'success')
           {
+            alert("Product deleted successfully. ")
             this.router.navigate(['/admin/product-list'])
           }
         })

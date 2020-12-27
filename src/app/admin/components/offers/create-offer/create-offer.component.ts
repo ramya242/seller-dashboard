@@ -14,6 +14,7 @@ export class CreateOfferComponent implements OnInit {
   categoriesList:any =[]
   whereToBuyList:any =[]
   submitted:boolean= false
+  loading:boolean = false
   urls = [
     {
       id:1,
@@ -28,31 +29,18 @@ export class CreateOfferComponent implements OnInit {
     private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private toastr: ToastrService,private router: Router
     ) { 
       this.offerForm = this.formBuilder.group({
-        product_level1_category: ['', Validators.required],
-        product_level2_category: ['', Validators.required],
-        product_level3_category: ['', Validators.required],
-        product_areas: [[]],
-        product_sizes: [[]],
-        actual_price: ['', [Validators.required,Validators.pattern("^[0-9.]*$")]],
-        offer_price: ['', [Validators.required,Validators.pattern("^[0-9.]*$")]],
-        exchange_days: ['', [Validators.pattern("^.[0-9]*$")]],
-        left_pieces: ['', [Validators.pattern("^[0-9]*$")]],
+        validOn: ['', [Validators.required]],
+        validUpto: ['', [Validators.required]],
+        start_date: ['', [Validators.required]],
         where_to_buy: ['',Validators.required],
         title: ['',Validators.required],
         description:['',[Validators.required, Validators.maxLength(1000)]],
         product_boost:[''],
-        union_territories:[''],
-        subject_line:['',[Validators.required,  Validators.maxLength(150)]],
         links:[''],
-        delivery_available:[[]]
-       
+        offer_category: ['', Validators.required],
+        promo_code: ['', Validators.required]
       })
-      this.activatedRoute.params.subscribe((params: Params) => {
-        if (params.id) {
-          this.offerId=params.id;
-          this.offerDetails()
-        }
-      })
+     
 
 
      }
@@ -60,17 +48,23 @@ export class CreateOfferComponent implements OnInit {
   ngOnInit(): void {
     this.whereToBuy()
     this.offerService.getOfferCategories().subscribe((data: any)=>{
-      console.log(data);
+      // console.log(data);
       if(data.status == 'success')
       {
-        this.categoriesList =  data.data[0].category
+        this.categoriesList =  data.data
       }
+      this.activatedRoute.params.subscribe((params: Params) => {
+        if (params.id) {
+          this.offerId=params.id;
+          this.offerDetails()
+        }
+      })
      
     }) 
   }
   public whereToBuy(){
     this.productService.whereToBuy().subscribe((data: any)=>{
-      console.log(data);
+      // console.log(data);
       if(data.status == 'success')
       {
         this.whereToBuyList =  data.data
@@ -105,7 +99,7 @@ export class CreateOfferComponent implements OnInit {
   }
   public offerDetails()
   {
-    const inputData :any= {"productId":this.offerId};
+    const inputData :any= {"offerId":this.offerId};
 
     this.offerService.offerDetails(inputData).subscribe((data: any)=>{
       console.log(data)
@@ -116,13 +110,13 @@ export class CreateOfferComponent implements OnInit {
         this.offerForm.patchValue({
           title:title,
           description: description,
-          offer_category:offer_category ,
+          offer_category:offer_category.id,
           promo_code:promo_code,
           validOn:validOn,
           validUpto:validUpto,
           where_to_buy:where_to_buy != null?where_to_buy.id:0,
           links:links,
-          start_date:start_date
+          start_date:start_date,
           // participants: selectedContacts,
           // speakers:selectedSpeakers,
         })
@@ -131,7 +125,48 @@ export class CreateOfferComponent implements OnInit {
   })
   }
   createOffer(){
-
+    const offer :any= {
+      "title":this.f.title.value,
+      "description":this.f.description.value,
+      "offer_category":this.f.offer_category.value,
+      // "left_pieces":this.f.left_pieces.value,
+      "where_to_buy":this.f.where_to_buy.value,
+      "links":this.f.links.value,
+      "validOn":Array.isArray(this.f.validOn.value) ? this.f.validOn.value : [this.f.validOn.value],
+      "validUpto":this.f.validUpto.value,
+      "promo_code":this.f.promo_code.value,
+      "start_date":this.f.start_date.value,
+    }
+  if(this.offerId)
+  {
+    offer.offerId = this.offerId
+    this.loading = true;
+    this.offerService.updateOffer(offer).subscribe((data: any)=>{
+        this.loading = false
+          if(data.status == 'success')
+          {
+            this.toastr.info('Offer updated successfully.');
+            
+          this.offerFileUpload(data.data.offerId)
+     
+            // this.router.navigate(['/admin/product-list'])
+          }
+          else{
+            this.toastr.error('Unable to add product.');
+          } 
+        // }
+       
+             
+    })
+  }
+ 
+  else{
+    this.loading = true;
+    this.offerService.createOffer(offer).subscribe((data: any)=>{
+      this.loading = false
+      this.offerFileUpload(data.data.offerId)
+    })
+  }
   }
   get f(){
     return this.offerForm.controls;
@@ -146,5 +181,31 @@ export class CreateOfferComponent implements OnInit {
       }
      
     }) 
+  }
+  offerFileUpload(id){
+    // console.log(this.variantImages)
+    // return
+   
+    const formData   = new FormData();  
+    formData.append('filesArray[]',this.urls[0].file)
+    if(!formData.has("filesArray[]"))
+    {
+      return false
+    }
+    formData.append('type', 'image');  
+    formData.append('offerId', id); 
+    this.loading = true;
+    this.offerService.uploadProductFiles(formData).subscribe((data: any)=>{
+      this.loading = false;
+        if(data.status == 'success')
+        {
+         
+        
+        }
+        else{
+          this.toastr.error('Unable to add product.');
+        }
+      })   
+    
   }
 }

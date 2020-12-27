@@ -17,7 +17,7 @@ export class ProductListComponent implements OnInit {
   subSubCategoriesList:any=[]
   availabilitySizes:any=[]
   productAreas:any =[]
-  selectedType:any=1
+  selectedType:any
   selectedLevel2:any={}
   selectedLevel3:any={}
   selectedArea:any={}
@@ -25,6 +25,7 @@ export class ProductListComponent implements OnInit {
   selectedColor:any={}
   selectedSortType:any
   loading:boolean = true
+  isGrid:boolean = true
   constructor(private productService: ProductsService,private adminService: AdminService) { }
   sortOptions=[
     {
@@ -47,7 +48,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     this.getProfileInfo()
     this.categories()
-    this.getProductAreas()
+    // this.getProductAreas()
     
     
   }
@@ -65,14 +66,14 @@ export class ProductListComponent implements OnInit {
         "offset":"0",
         "limit":"100",
         "filters":{
-          "cat_1":[this.selectedType],
+          "cat_1":this.selectedType ? [this.selectedType] : [],
           "cat_2":this.selectedLevel2.id?[this.selectedLevel2.id]:[],
           "cat_3":this.selectedLevel3.id?[this.selectedLevel3.id]:[],
           "sizes":this.selectedSize.id?[this.selectedSize.id]:[],
           "area":this.selectedArea.id?[this.selectedArea.id]:[],
           "colors":this.selectedColor.id?[this.selectedColor.id]:[],
         },
-        "sorting":this.selectedSortType?this.selectedSortType: "price_asc"
+        "sorting":this.selectedSortType?this.selectedSortType: "newest"
       };
       this.productService.getAllProductList(inputData).subscribe((data: any)=>{
         //console.log('veeru',data)
@@ -90,7 +91,9 @@ export class ProductListComponent implements OnInit {
         if(data.status == 'success')
         {
           this.profileInfo =  data.data
-          this.getSubCategories('level2',this.selectedType)
+          // this.getSubCategories('','level2',this.selectedType)
+          this.getAllProductList()
+
         }
     })
   }
@@ -117,8 +120,16 @@ export class ProductListComponent implements OnInit {
     }) 
   }
 
-  public getSubCategories(level='level1',id='')
+  public getSubCategories(event,level='level1',id='')
   {
+    // alert(level+''+id)
+    // alert(id)
+    if(event)
+    {
+      event.preventDefault();
+    }
+    
+
     this.productService.subCategories(level,id).subscribe((data: any)=>{
       if(data.status == 'success')
       {
@@ -148,12 +159,13 @@ export class ProductListComponent implements OnInit {
         
       }
       this.getAllProductList()
-     
+
     }) 
    
 
   }
   public getAvailabilitySizes(id){
+    return false
     this.getAllProductList()
     this.productService.getProductSizes(id).subscribe((data: any)=>{
       if(data.status == 'success')
@@ -183,6 +195,7 @@ export class ProductListComponent implements OnInit {
     if(type=='size')
     {
       this.selectedSize = selectedValue
+      this.getAllProductList()
     }
     if(type=='area')
     {
@@ -191,7 +204,7 @@ export class ProductListComponent implements OnInit {
     }
 
   }      
-  
+
   
 }
                                                                                                                                                                                                                                       

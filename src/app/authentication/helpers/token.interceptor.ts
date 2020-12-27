@@ -19,7 +19,8 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && error.status == 400 && error.error.message == 'token_expired') {
+    console.log(error.error.message)
+      if (error instanceof HttpErrorResponse && error.status == 400 && (error.error.message == 'token_expired' || error.error.message =='token_invalid')) {
         console.log(error.error.message == 'token_expired')
 
         return this.handle401Error(request, next);
@@ -53,6 +54,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
       return this.authService.refreshToken().pipe(
         switchMap((token: any) => {
+        console.log(token)
           this.isRefreshing = false;
           this.refreshTokenSubject.next(token.jwt);
           return next.handle(this.addToken(request, token.jwt));

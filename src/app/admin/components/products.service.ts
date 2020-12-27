@@ -78,6 +78,15 @@ export class ProductsService {
     // this.headers = {'Authorization':  this.getToken()};
     return this.httpClient.delete(`${environment.API_URL}business_profile/products/delete/${productId}`);
   }
+  public deleteVariant(variantId)
+  {
+    // this.headers = {'Authorization':  this.getToken()};
+    return this.httpClient.delete(`${environment.API_URL}business_profile/products/deleteVariant/${variantId}`);
+  }
+  public deleteVariantImage(variantId)
+  {
+    return this.httpClient.delete(`${environment.API_URL}business_profile/products/deleteVariantImage/${variantId}`);
+  }
   getToken()
   {
     return "Bearer "+localStorage.getItem("jtoken")

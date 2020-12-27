@@ -5,13 +5,14 @@
      <span class="navbar-toggler-icon"></span>
      </button>
      <!-- Collection of nav links, forms, and other content for toggling -->
-     <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-      <div class="navbar-nav">
+     <div id="navbarCollapse" class="collapse navbar-collapse justify-content-center">
+      
+      <div class="navbar-nav m-auto">
          <div class="nav-item dropdown">
             <a href="#" class="nav-item nav-link" data-toggle="dropdown">Add New</a>
             <div class="dropdown-menu">
                <a [routerLink]="['/admin/add-product']" class="dropdown-item">Add a Product</a>
-               <a [routerLink]="['/admin/create-offer']" class="dropdown-item">Add a Offer</a>
+               <a [routerLink]="['/admin/create-offer']" class="dropdown-item">Add an Offer</a>
             </div>
          </div>
          <div class="nav-item dropdown">

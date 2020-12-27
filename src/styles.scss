@@ -5,6 +5,7 @@
 @import "~font-awesome/css/font-awesome.css";   
 @import './theme.scss';
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('https://fonts.googleapis.com/css?family=Cabin:400,500,700|Montserrat:400,500,700');
 
 /*!
  * Start Bootstrap - SB Admin 2 v4.1.1 (https://startbootstrap.com/themes/sb-admin-2)
@@ -22,6 +23,7 @@
 
  body {
 	background: #fff;
+	font-family: 'Cabin', sans-serif !important;
 }
 .navbar-header.col {
 	padding: 0 !important;
@@ -215,3 +217,27 @@
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+.ngx-gallery-image-wrapper{
+	background: #d8d7d7;
+}
+.default-color{
+	color: $fontColor;
+}
+.cursor-pointer,a{
+	cursor: pointer;
+}
+button:focus{
+	outline: none !important;
+}
+.ng-select .ng-clear-wrapper .ng-clear {
+    font-size: 30px !important;
+}
+div, a{
+	:focus{
+		outline: none;
+	}
+}
+.text-gray{
+	color: #a7a7a7;
+}

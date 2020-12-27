@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators,FormArray } from '@angular/forms'
 import { Router, ActivatedRoute, Params } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+// import { X_OK } from 'constants';
 
 @Component({
   selector: 'app-add-product',
@@ -29,6 +30,7 @@ export class AddProductComponent implements OnInit {
   apiresponse: any
   selectCategory: any 
   delivery_available : any = 0
+  urlIndex:any =0
   urls = [
     {
       id:1,
@@ -57,14 +59,14 @@ export class AddProductComponent implements OnInit {
         exchange_days: ['', [Validators.pattern("^.[0-9]*$")]],
         // left_pieces: ['', [Validators.pattern("^[0-9]*$")]],
         where_to_buy: ['',Validators.required],
-        title: ['',Validators.required],
-        brand_name: ['',Validators.required],
+        title: ['',[Validators.required, Validators.maxLength(150)]],
+        brand_name: ['',[Validators.required, Validators.maxLength(50)]],
         product_code:[''],
         search_keywords: [[],Validators.required],
-        description:['',[Validators.required, Validators.maxLength(1000)]],
+        description:['',[Validators.required, Validators.maxLength(3000)]],
         product_boost:[''],
         union_territories:[''],
-        subject_line:['',[Validators.required,  Validators.maxLength(150)]],
+        subject_line:['',[Validators.required,  Validators.maxLength(350)]],
         links:[''],
         delivery_available:[0],
         variants: this.formBuilder.array([]) ,
@@ -184,20 +186,37 @@ export class AddProductComponent implements OnInit {
 
   public createProduct(){
     this.submitted = true;
-    console.log(this.productForm)
-    console.log(this.sizesWithLeftPieces)
-    console.log(this.variantImages)
     let variants:any = this.f.variants.value.map((item,i)=>{
         item.sizes_with_left_pieces = this.sizesWithLeftPieces[i]
         return item
     })
-    // console.log(variants)
     // return;
     // stop here if form is invalid
+
+  for (let el in this.productForm.controls) {
+    if (this.productForm.controls[el].errors) {
+      // console.log([el])
+      // console.log(this.productForm.controls[el].errors)
+    }
+  } 
+  for (let el in this.productDetailForm.controls) {
+    if (this.productDetailForm.controls[el].errors) {
+      console.log([el])
+      console.log(this.productDetailForm.controls[el].errors)
+    }
+  } 
+ 
+ 
+
+ 
+
      if (this.productForm.invalid) {
       this.toastr.info('Please enter all required fields.');
-            // return;
+            return;
         }
+
+        // alert()
+        // return
     this.loading =true
    const product :any= {
     "title":this.f.title.value,
@@ -229,60 +248,31 @@ export class AddProductComponent implements OnInit {
   if(this.productId)
   {
     product.productId = this.productId
+    this.loading = true;
     this.productService.updateProduct(product).subscribe((data: any)=>{
         this.loading = false
-        if(this.urls.length >0  && this.urls[0].file !='')
-        {
-          this.productFileUpload(data.productId)
-        }  
-        else{
           if(data.status == 'success')
           {
             this.toastr.info('Product updated successfully.');
-            // this.router.navigate(['/admin/product-list'])
+            
+          this.productFileUpload(data.data.productIds)
+     
+            this.router.navigate(['/admin/product-list'])
           }
           else{
             this.toastr.error('Unable to add product.');
           } 
-        }
+        // }
        
              
     })
   }
  
   else{
+    this.loading = true;
     this.productService.createProduct(product).subscribe((data: any)=>{
       this.loading = false
-      console.log(data.data.productIds)
-      
       this.productFileUpload(data.data.productIds)
-        // if(this.urls.length >0 && this.urls[0].file !='')
-        // {
-        //   this.productFileUpload(data.data.productIds)
-        // }
-        // else {
-        //   if(data.status == 'success')
-        //   {
-        //     if(this.submitnewbutton)
-        //     {
-        //       this.submitnewbutton = 0;
-        //       this.toastr.info('Product added successfully.');
-        //       this.submitted = false;
-        //       this.urls = [];
-        //       this.f.title.reset();
-        //       //this.router.navigate(['/admin/product-list'])
-        //     }
-        //     else
-        //     {
-        //       this.toastr.info('Product added successfully.');
-        //       this.router.navigate(['/admin/product-list'])
-        //     }
-          
-        //   }
-        //   else{
-        //     this.toastr.error('Unable to add product.');
-        //   }
-        // }        
     })
   }
     
@@ -311,21 +301,43 @@ export class AddProductComponent implements OnInit {
       }
     }
   }
-  removeImg(i){
+  removeImg(i,imageId){
+    // alert(imageId)
+    if(imageId && imageId!='')
+    {
+      if(confirm('Are you sure do you want to delete this image ?'))
+      {
+        this.deleteVariantImage(imageId)
+      }
+      else{
+        return false
+      }
+     
+    }
     this.variantImages[this.selectedVarientIndexForImages].splice(i,1)
 
   }
-  addImage(){
+  addImage(trigger=false){
     // this.urls.push({
     //   id:1,
     //   url:'',
     //   file:''
     // })
+
     this.variantImages[this.selectedVarientIndexForImages].push({
-      id:1,
+      imageId:1,
       url:'',
       file:''
     })
+    let imageId = this.variantImages[this.selectedVarientIndexForImages].length -1
+    // console.log(imageId)
+    setTimeout(()=>{
+      if(trigger){
+        let element: HTMLElement = document.getElementById('imageId'+imageId) as HTMLElement;
+        element.click();
+      }
+    },10)
+    
   }
   
   onSubmit(){
@@ -336,15 +348,15 @@ export class AddProductComponent implements OnInit {
   }
 
   productFileUpload(ids){
-    // console.log(this. )
+    // console.log(this.variantImages)
+    // return
     ids.forEach((id,j) => {
-      console.log(id)
       const formData   = new FormData();  
-      if(this.variantImages[j].length ==0)
+      if(this.variantImages[j] && this.variantImages[j].length ==0)
       {
         return false
       }
-    let files:any = this.variantImages[j].map((url,i)=>{
+      let files:any = this.variantImages[j].map((url,i)=>{
       if(!url.file || url.file==''){
         return false
       }
@@ -354,45 +366,54 @@ export class AddProductComponent implements OnInit {
       }
       formData.append('filesArray[]',url.file)
     });
-    formData.append('type', 'image');  
-    formData.append('productId', id);  
-    this.productService.uploadProductFiles(formData).subscribe((data: any)=>{
-    if(data.status == 'success')
+
+
+    if(!formData.has("filesArray[]"))
     {
-      if(this.submitnewbutton)
-      {
-        this.submitnewbutton = 0;
-        this.urls = [];
-        this.f.title.reset();
-        this.toastr.info('Product saved successfully.');
-      }
-      else{
-        this.toastr.info('Product saved successfully.');
-        this.router.navigate(['/admin/product-list'])
-      }
-     
+      return false
     }
-    else{
-      this.toastr.error('Unable to add product.');
-    }
-  })   
+    formData.append('type', 'image');  
+    formData.append('productId', id); 
+    this.loading = true;
+    this.productService.uploadProductFiles(formData).subscribe((data: any)=>{
+      this.loading = false;
+        if(data.status == 'success')
+        {
+          if(this.submitnewbutton)
+          {
+            this.submitnewbutton = 0;
+            this.urls = [];
+            this.f.title.reset();
+            this.toastr.info('Product saved successfully.');
+          }
+          else{
+            this.toastr.info('Product saved successfully.');
+            this.router.navigate(['/admin/product-list'])
+          }
+        
+        }
+        else{
+          this.toastr.error('Unable to add product.');
+        }
+      })   
     });
        
   }
   public productDetails()
   {
     const inputData :any= {"productId":this.productId,"commonId":this.commonId};
-
+    this.loading = true;
     this.productService.sameTypeProductDetails(inputData).subscribe((data: any)=>{
+      this.loading = false;
       if(data.status == 'success')
       {
-        console.log(data)
         // return
         let product = data.data
-        let {left_pieces, title, description,product_areas,offer_price,subject_line,actual_price,exchange_days,product_level1_category, product_level2_category, product_level3_category,product_sizes,product_boost,union_territories,where_to_buy,links,product_code,search_keywords,brand_name,product_variants  } = product
+        let {left_pieces, title, description,product_areas,offer_price,subject_line,actual_price,exchange_days,product_level1_category, product_level2_category, product_level3_category,product_sizes,product_boost,union_territories,where_to_buy,links,product_code,search_keywords,brand_name,product_variants,delivery_available  } = product
         product_sizes = Array.isArray(product_sizes) ?product_sizes.map(size => size.id) : []
         product_areas = product_areas ? product_areas.map(area => area.id) : []
         // where_to_buy = where_to_buy.map(type => area.id)
+        this.delivery_available =delivery_available
         this.productForm.patchValue({
           left_pieces:left_pieces,
           title:title,
@@ -424,16 +445,16 @@ export class AddProductComponent implements OnInit {
         this.variantImages =[]
         product_variants.forEach((item,k)=>{
           item.product_colors = item.product_colors ? item.product_colors.map(color => color.id) : []
-// console.log(item.product_colors)
           this.variants().push(this.formBuilder.group({
             actual_price:item.actual_price,
             offer_price:item.offer_price,
+            offer_percentage:item.offer_percentage,
             is_stock_available:item.is_stock_available,
              product_colors:[item.product_colors],
-             product_id:item.id
+             variant_id:item.id
           }))
           this.productSizeQuantiesArray.push(item.sizes_with_quantity)
-          // this.variantImages.push(item.product_media)
+          this.variantImages.push(item.variant_media)
        
         
             // const control = <FormArray>this.variants().at(k).get('product_colors');
@@ -452,7 +473,6 @@ export class AddProductComponent implements OnInit {
           //   })
           // )
         })
-        console.log(this.variantImages)
       }
   })
   }
@@ -478,10 +498,8 @@ export class AddProductComponent implements OnInit {
   }
   checkValue(values:any){
     this.delivery_available = values.currentTarget.checked?1:0;
-    }
-
-
-    variants() : FormArray {
+  }
+  variants() : FormArray {
     return this.productForm.get("variants") as FormArray
   }
    
@@ -491,8 +509,9 @@ export class AddProductComponent implements OnInit {
       // sizes_with_left_pieces: [],
       actual_price:'',
       offer_price:'',
+      offer_percentage:'',
       is_stock_available:'',
-      product_id:''
+      variant_id:''
     })
   }
    
@@ -502,6 +521,18 @@ export class AddProductComponent implements OnInit {
   }
    
   removeVariant(i:number) {
+    if(this.variants().at(i).value.variant_id && this.variants().at(i).value.variant_id!='')
+    {
+      if(confirm('Are you sure do you want to delete this variant ?'))
+      {
+        this.deleteVariant(this.variants().at(i).value.variant_id)
+      }
+      else{
+        return false
+      }
+     
+    }
+   
     this.variants().removeAt(i);
     this.variantImages.splice(i,1)
 
@@ -514,8 +545,8 @@ export class AddProductComponent implements OnInit {
    
   newSizesLeftPieces(): FormGroup {
     return this.formBuilder.group({
-      size_id:'',
-     left_pieces:''
+      size_id:0,
+     left_pieces:0
     })
   }
    
@@ -530,17 +561,9 @@ export class AddProductComponent implements OnInit {
   }
 
   open(content) {
-    // item.product_details.forEach((details)=>{
-    //   this.sizesLeftPieces().push(this.formBuilder.group({
-    //     sizes:details.size_id,
-    //     left_pieces:details.left_pieces
-    //   }))
-    // })
     if(this.productSizeQuantiesArray[this.selectedVarientIndexForSizes])
     {
-// console.log(this.selectedVarientIndexForSizes)
       let pDetails = this.productSizeQuantiesArray[this.selectedVarientIndexForSizes]
-      console.log(pDetails)
       this.sizesLeftPieces().clear()
       if(pDetails.length >0){
         pDetails.forEach((details,l) => {
@@ -555,6 +578,9 @@ export class AddProductComponent implements OnInit {
       }
     }
     else{
+      (this.productDetailForm.controls['sizesLeftPieces'] as FormArray).clear();
+
+      // this.sizesLeftPieces()= this.newSizesLeftPieces();
       this.addSizesLeftPieces()
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -583,6 +609,80 @@ export class AddProductComponent implements OnInit {
   }
   addTag(tag: string) {
     /* https://github.com/ng-select/ng-select/issues/809 */
-    return tag;
-}
+      return tag;
+  }
+  getColorCode(index,colorId){
+    if(index==0 && colorId && colorId.length > 0)
+    {
+      return this.productColorsList.map(item=>{
+        if(item.id==colorId[0]){
+          return item.color_code_hex
+        }
+      }).filter(item=>item)
+    }
+    if(index==1 && colorId && colorId.length > 0)
+    {
+      let selectedId = colorId.length > 1 ? colorId[1] : colorId[0]
+      return this.productColorsList.map(item=>{
+        if(item.id == selectedId){
+          return item.color_code_hex
+        }
+      }).filter(item=>item)
+    }
+    
+  }
+  getSizeName(id){
+   
+      return this.availabilitySizes.map(item=>{
+        if(item.id==id){
+          return item.name
+        }
+      }).filter(item=>item)
+    
+    
+    
+  }
+  deleteVariant(variantId){
+    this.loading = true;
+    this.productService.deleteVariant(variantId).subscribe((data: any)=>{
+      this.loading = false;
+      if(data.status == 'success')
+      {
+        this.toastr.info('Variant deleted successfully.');
+      }
+     
+    }) 
+  }
+  deleteVariantImage(variantId){
+    this.loading = true;
+    this.productService.deleteVariantImage(variantId).subscribe((data: any)=>{
+      this.loading = false;
+      if(data.status == 'success')
+      {
+        this.toastr.info('Image deleted successfully.');
+      }
+     
+    }) 
+  }
+  showAlert()  {
+    // alert()
+    // alert(this.f.product_level3_category.value)
+    if(!this.f.product_level3_category.value || this.f.product_level3_category.value ==0)
+    {
+      // alert("Please select gender or category or subcategory.")
+    }
+    
+  }
+  getPrice(i) {
+    
+    let percentage  = this.variants().at(i).value.offer_percentage
+    let price  = this.variants().at(i).value.actual_price
+    let offerVal = Number(percentage) / 100;
+    var totalValue = price - (price * offerVal)
+    this.variants().at(i).patchValue({
+      offer_price:totalValue
+    })
+    return totalValue
+    
+  }
 }

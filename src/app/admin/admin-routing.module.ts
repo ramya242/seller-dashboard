@@ -24,6 +24,7 @@ const routes: Routes = [
         { path: 'profile',component: ProfileComponent,canActivate:[AuthGuard]},
         { path: 'offers',component: OffersComponent,canActivate:[AuthGuard]},
         { path: 'create-offer',component: CreateOfferComponent,canActivate:[AuthGuard]},
+        { path: 'create-offer/:id',component: CreateOfferComponent,canActivate:[AuthGuard]},
       ]
   }
 ];

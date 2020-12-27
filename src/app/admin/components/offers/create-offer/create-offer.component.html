@@ -12,76 +12,51 @@
                 <div class="card-body">
                     <form  [formGroup]="offerForm"
                     (ngSubmit)="createOffer()" class="d-flex flex-wrap ">
-                        <div class="d-flex flex-wrap w-100 justify-content-center">
-                            <div class="col-md-12 mt-3">
-                                <div class="">
-                                <ul class="list-group list-group-horizontal justify-content-center pb-4">                            
-                                <li *ngFor="let cat of categoriesList" class="list-group-item">
-                                    <a > 
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                        <input type="radio" formControlName="product_level1_category"       class="form-check-input" [value]="cat.id"
-                                              >{{cat.name}}
-                                            </label>
-                                          </div>
-                                        </a>
-                                </li> 
-                                </ul>
-                            </div>
-                            
-                            </div>
-                         
-                        </div>
-                     
                        
-                     
-                         
-                        <!-- <div class="divBlk col-sm-6">
-                            <label for="title"> Title<span class="man-star">*</span></label>
-                            <input type="text" id="title" formControlName="title" name="title" class="form-control custominp"/>
-                         </div>
-                         
-                         <div *ngIf="submitted && !f.title.value"  class="text-danger">
-                            <div *ngIf="!f.title.value">
-                                    Title is required
-                            </div>
-                        </div> -->
                         <div class="divBlk col-sm-6">
-                            <label for="subject"> Subject about the offer<span class="man-star">*</span></label>
-                            <input type="text" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
+                            <label for="subject"> Select Category<span class="man-star">*</span></label>
+                            <select  id="offer_category" name="offer_category" formControlName="offer_category"  class="form-control custominp">
+                                <option>Select</option>
+                                <option *ngFor="let category of categoriesList" value="{{category.id}}">
+                                        {{category.name}}
+                                </option>
+                            </select>
+                         </div>
+                        <div class="divBlk col-sm-6">
+                            <label for="title"> Subject about the offer<span class="man-star">*</span></label>
+                            <input type="text" id="subject" formControlName="title" name="title" class="form-control custominp" />
                          </div>
                          <div class="divBlk col-sm-6">
-                            <label for="price"> Offer from<span class="man-star">*</span></label>
-                            <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" />
+                            <label for="start_date"> Offer from<span class="man-star">*</span></label>
+                            <input type="text" id="start_date" name="start_date" class="form-control custominp" formControlName="start_date" />
                          </div>
-                         <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
+                         <div *ngIf="submitted && !f.start_date.value"  class="text-danger">
                                     Offer from is required
                         </div> 
 
                         <div class="divBlk col-sm-6">
-                            <label for="price"> Offer validity<span class="man-star">*</span></label>
-                            <input type="text" id="price" name="price" class="form-control custominp" formControlName="actual_price" />
+                            <label for="validUpto"> Offer validity<span class="man-star">*</span></label>
+                            <input type="text" id="validUpto" name="validUpto" class="form-control custominp" formControlName="validUpto" />
                          </div>
-                         <div *ngIf="submitted && !f.actual_price.value"  class="text-danger">
+                         <div *ngIf="submitted && !f.validUpto.value"  class="text-danger">
                                     Offer validity is required
                         </div> 
 
                        
 
                          <div class="divBlk col-sm-6">
-                            <label for="boostProduct"> Valid on</label>
+                            <label for="validOn"> Valid on</label>
                           
-                            <select  id="boostProduct" name="boostProduct" formControlName="product_boost"  class="form-control custominp">
+                            <select  id="validOn" name="validOn" formControlName="validOn"  class="form-control custominp">
                                 <option>Select</option>
-                                <option *ngFor="let boost of productBoostList" value="{{boost.id}}">
-                                        {{boost.name}}
-                                </option>
+                                <option value="mobile">Mobile</option>
+                                <option value="web">Web</option>
                             </select>
                          </div>
 
                          <div class="divBlk col-sm-6">
-                            <label for="offerPrice"> Promo Code<span class="man-star">*</span></label>
-                            <input type="text" id="offerPrice" name="offerPrice" class="form-control custominp" formControlName="offer_price" />
+                            <label for="promo_code"> Promo Code<span class="man-star">*</span></label>
+                            <input type="text" id="offerPrice" name="promo_code" class="form-control custominp" formControlName="promo_code" />
                          </div>
                           <div *ngIf="submitted && !f.offer_price.value"  class="text-danger">
                             Promo is required
@@ -116,7 +91,7 @@
                             <input type="text" id="links" name="links" formControlName="links" class="form-control custominp" />
                          </div>
                         
-                         <h6 class="px-2 pt-3 col-md-12"> Upload Up To 10 Photos</h6>
+                         <h6 class="px-2 pt-3 col-md-12"> Upload offer image</h6>
 
                          <div class="divBlk d-flex flex-wrap">
                             <!-- <div *ngFor="let url of urls" class="imgBlk">
@@ -132,21 +107,22 @@
                                         <input type="file" multiple class="upload2 hide gallery-img-file accept-image d-none" (change)="detectFiles($event,i)" accept="image/*">
                                       
                                     </label>
-                                         <div class="child2">
+                                         <!-- <div class="child2">
                                             <span class="fa fa-close removebt" (click)="removeImg(i)"></span>
-                                         </div>
+                                         </div> -->
                                     </div>
                                 </div>
                                 
-                            <div class="add-image" id="add-image" (click)="addImage()">
+                            <!-- <div class="add-image" id="add-image" (click)="addImage()">
                                 <div class="circle-o plusSign  "><span>+</span></div>
                                 <h6 class="text-center w-100">ADD IMAGE</h6>
-                            </div>
+                            </div> -->
 
                             <!-- <input type="file" multiple (change)="detectFiles($event)"> -->
                          </div>
                          <div class="divBlk pt-3 col-md-12 text-center">
                              <input type="submit" class="btn btn-primary mr-2" value="Add Offer" *ngIf="!offerId" />
+                             <input type="submit" class="btn btn-primary" value="Update Offer" *ngIf="offerId" />
                              <!-- <input type="submit" class="btn btn-primary mr-2" value="Preview" *ngIf="!productId" />
                              <input type="submit" class="btn btn-primary" (click) = "submitnew()" value="Submit & add new" *ngIf="!productId" />
                              <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" /> -->

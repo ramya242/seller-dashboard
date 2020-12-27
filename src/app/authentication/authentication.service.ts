@@ -44,11 +44,18 @@ export class AuthenticationService {
     const headers = {'Authorization': this.getJwtToken()};
     return this.httpClient.get<any>(`${environment.API_URL}user/getRefreshToken`,{})
         .pipe(map((response) => {
-          let token = response.data.refreshToken
+        if(response.data.status == 'error')
+        {
+			localStorage.clear()
+        }
+        else{
+			let token = response.data.refreshToken
           // return
           localStorage.setItem('jtoken', token)
             this.startRefreshTokenTimer();
             return token
+        }
+          
         }));
   }
   // helper methods

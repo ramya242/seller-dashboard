@@ -4,27 +4,34 @@
 <div class="container-fluid ">
    <div class="row">
       <div class="col-md-12">
-         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-               <h6 class="m-0 font-weight-bold text-primary">Product List </h6>
-            </div>
-            <div class="card-body">
+         <div class="card1 shadow1 mb-4">
+          
+            <div class="card-body1">
              
                <!-- Page Heading -->
                <!-- Types-->
-               <div class="d-flex py-3 justify-content-center pt-5">
+               <div class="d-flex py-3 justify-content-between align-items-center pt-5 px-5">
+                  <div></div>
                   <ul class="list-group list-group-horizontal">
-                     <li class="list-group-item" [ngClass]="{
-                        'selectedCategory':category.id == selectedType }" (click)="getSubCategories('level2',category.id)" *ngFor="let category of categoriesList">
-                     <a class=""   href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
-                     <span> {{category.name}}  </span>
-                     </a>
-                  </li>
+                     <ng-container  *ngFor="let category of categoriesList">                     
+                        <li class="list-group-item" [ngClass]="{
+                        'selectedCategory':category.id == selectedType }" (click)="getSubCategories($event,'level2',category.id)">
+                        <a class=""   href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
+                           <!-- <img src= "assets/images/ic_men_normal.png" style="vertical-align: sub;" /> -->
+                        <span> {{category.name}}  </span>
+                        </a>
+                     </li>
+                  </ng-container>
+
                   </ul>
+                  <div>
+                     <a class="d-inline-block px-1" (click)="isGrid=true"><img src="{{isGrid ? 'assets/images/grid_hover.png' : 'assets/images/grid_normal.png'}}" /></a>
+                     <a class="d-inline-block px-1" (click)="isGrid=false"><img src="{{!isGrid ? 'assets/images/list_hover.png' : 'assets/images/list_normal.png'}}" /></a>
+                  </div>
             </div>
             <!-- Types-->
             <!-- Content Row -->
-            <div class="container pt-5">
+            <div class="container-fluid p-4">
                <div class="row">
                   <div class="col-md-8 order-md-2 col-lg-9">
                      <div class="container-fluid">
@@ -52,28 +59,64 @@
                               </div> -->
                            </div>
                         </div>
-                        <div class="row">
+                        <!-----------Grid View-------------------->
+                        <div class="row" *ngIf="isGrid">
                            <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
-                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer" [routerLink]="['/admin/product-details/',product.product_id]" *ngFor="let product of productList">
+                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer" [routerLink]="['/admin/product-details/',product.id]" *ngFor="let product of productList">
+                              <!-- <div class="form-check position-absolute" style="z-index: 999;">
+                                 <label class="form-check-label">
+                                   <input type="checkbox" class="form-check-input" value="" />
+                                 </label>
+                               </div> -->
                               <div class="card h-100 border-0">
                                  <div class="card-img-top">
-                                    <img src="{{product.product_media.length >0 ? product.product_media[0].url : 'assets/logo.png'}}"  onerror="this.src='assets/logo.png'"  class="img-fluid mx-auto imgBlock d-block" alt="{{product.title}}">
+                                    <img src="{{product.variant_media.length >0 ? product.variant_media[0].url : 'assets/logo.png'}}"  onerror="this.src='assets/logo.png'"  class="img-fluid mx-auto imgBlock d-block" alt="{{product.title}}">
                                  </div>
-                                 <div class="card-body text-center">
-                                    <h6 class="card-title text-ecllipse">
-                                       <a  class=" font-weight-bold text-dark text-uppercase small"> {{product.title}}</a>
-                                    </h6>
-                                    <p class=" text-ecllipse">
-                                       <a  class="m-0 "> {{product.description}}</a>
-                                    </p>
-                                    <h5 class="card-price small text-warning">
-                                       <i>
-                                       <s>₹{{product.actual_price}}</s> ₹{{product.offer_price}}</i>
+                                 <div class="card-body text-let">
+                                    <h5 class="card-title1 text-ecllipse m-0">
+                                       <a  class=" font-weight-bold text-dark  "> {{product.product_info.title}}</a>
                                     </h5>
+                                    <p class=" text-ecllipse font-weight-100 mb-2">
+                                      {{product.product_info.description}}
+                                    </p>
+                                    <h6 class="card-price  text-warning1">
+                                       RS.{{product.actual_price}} <small class="text-gray"><s>Rs.{{product.offer_price}}</s></small> 
+                                        <span class="text-warning"> ({{product.offer_percentage}}% OFF)</span>
+                                    </h6>
                                  </div>
                               </div>
                            </div>
                         </div>
+                         <!-----------Grid View-------------------->
+                          <!-----------List View-------------------->
+                        <div class="row" *ngIf="!isGrid">
+                           <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
+                           <div class="col-md-12">
+                          <table class="table table-bordered table-hover">
+                             <thead>
+                                <tr>
+                                   <th>S.no</th>
+                                   <th>Image</th>
+                                   <th>Title</th>
+                                   <th>Description</th>
+                                   <th>Price</th>
+                                   <th>Offer price</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                                <tr *ngFor="let product of productList;let i=index" class="cursor-pointer" [routerLink]="['/admin/product-details/',product.id]" >
+                                   <td>{{i+1}}</td>
+                                    <td style="width: 120px;">  <img src="{{product.variant_media.length >0 ? product.variant_media[0].url : 'assets/logo.png'}}" width="100px" height="100px"  onerror="this.src='assets/logo.png'"  class="img-fluid mx-auto  d-block" alt="{{product.title}}"></td>
+                                    <td> {{product.product_info.title}}</td>
+                                    <td> {{product.product_info.description}}</td>
+                                    <td> ₹{{product.actual_price}}</td>
+                                    <td> ₹{{product.offer_price}}</td>
+                                </tr>
+                             </tbody>
+                          </table>
+                        </div>
+                     </div>
+                        <!-----------List View-------------------->
                         <div class="row sorting mb-5 mt-5 d-none">
                            <div class="col-12">
                             
@@ -96,7 +139,7 @@
                      </div>
                   </div>
                   <div class="col-md-4 order-md-1 col-lg-3 sidebar-filter p-0">
-                     <div class="col-md-12 p-0">
+                     <div class="col-md-12 p-0" style="position: sticky;top:100px">
                         <div class="card mb-3">
                            <article class="filter-group">
                               <header class="card-header">
@@ -110,14 +153,15 @@
                                    
                                     <!-- catSidebar -->
                                     <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
-                                       
-                                       <li class="nav-item1" (click)="getSubCategories('level3',category.id)" *ngFor="let category of subCategoriesList;let i=index">
-                                          <label for="{{category.id}}">
-                                             <input type="radio"  [name]="category.id" [id]="category.id"  [value]="category.id" (change)="onCheckboxChange($event,'level2',category)" [checked]="selectedLevel2.id==category.id"  />
-                                             {{category.name}}
-                                          </label>
-                                          
-                                       </li>
+                                       <ng-container *ngFor="let category of subCategoriesList;let k=index">
+                                          <li class="nav-item1"  >
+                                             <label for="{{category.id}}">
+                                                <input type="radio"  [name]="category.id" [id]="category.id"  [value]="category.id" (change)="onCheckboxChange($event,'level2',category);getSubCategories($event,'level3',category.id)" 
+                                                [checked]="selectedLevel2.id==category.id"  />
+                                                {{category.name}} {{category.id}}
+                                             </label>
+                                          </li>
+                                       </ng-container>
                                     </ul>
                                     <!-- End of Sidebar -->
 
