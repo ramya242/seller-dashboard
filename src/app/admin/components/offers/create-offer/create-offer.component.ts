@@ -4,6 +4,8 @@ import { ProductsService } from '../../products.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router, ActivatedRoute, Params } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-create-offer',
@@ -15,6 +17,8 @@ export class CreateOfferComponent implements OnInit {
   whereToBuyList:any =[]
   submitted:boolean= false
   loading:boolean = false
+  model: NgbDateStruct;
+
   urls = [
     {
       id:1,
@@ -28,6 +32,7 @@ export class CreateOfferComponent implements OnInit {
   constructor(private offerService: OfferService,private productService: ProductsService,
     private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private toastr: ToastrService,private router: Router
     ) { 
+      console.log(moment().format("YY-MM-DD HH:mm"))
       this.offerForm = this.formBuilder.group({
         validOn: ['', [Validators.required]],
         validUpto: ['', [Validators.required]],
@@ -125,6 +130,16 @@ export class CreateOfferComponent implements OnInit {
   })
   }
   createOffer(){
+  
+    console.log(this.f.validUpto.value)
+    let startDate:any = this.f.start_date.value
+    startDate = `${startDate.year}-${startDate.month}-${startDate.day}`
+    startDate  = moment(startDate,'YYYY-MM-DD').format('YYYY-MM-DD HH:mm')
+
+    let endDate:any = this.f.validUpto.value
+    endDate = `${endDate.year}-${endDate.month}-${endDate.day}`
+    endDate  = moment(endDate,'YYYY-MM-DD').format('YYYY-MM-DD HH:mm')
+    
     const offer :any= {
       "title":this.f.title.value,
       "description":this.f.description.value,
@@ -133,10 +148,11 @@ export class CreateOfferComponent implements OnInit {
       "where_to_buy":this.f.where_to_buy.value,
       "links":this.f.links.value,
       "validOn":Array.isArray(this.f.validOn.value) ? this.f.validOn.value : [this.f.validOn.value],
-      "validUpto":this.f.validUpto.value,
+      "validUpto":endDate,
       "promo_code":this.f.promo_code.value,
-      "start_date":this.f.start_date.value,
+      "start_date":startDate,
     }
+    // return
   if(this.offerId)
   {
     offer.offerId = this.offerId
@@ -149,14 +165,12 @@ export class CreateOfferComponent implements OnInit {
             
           this.offerFileUpload(data.data.offerId)
      
-            // this.router.navigate(['/admin/product-list'])
+            this.router.navigate(['/admin/offers'])
           }
           else{
-            this.toastr.error('Unable to add product.');
+            this.toastr.error('Unable to add offer.');
           } 
         // }
-       
-             
     })
   }
  
@@ -164,7 +178,14 @@ export class CreateOfferComponent implements OnInit {
     this.loading = true;
     this.offerService.createOffer(offer).subscribe((data: any)=>{
       this.loading = false
-      this.offerFileUpload(data.data.offerId)
+      if(data.status == 'success')
+      {
+        this.offerFileUpload(data.data.offerId)
+        this.router.navigate(['/admin/offers'])
+      }
+      else{
+        this.toastr.error('Unable to add offer.');
+      } 
     })
   }
   }

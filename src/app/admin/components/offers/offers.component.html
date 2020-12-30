@@ -1,1 +1,15 @@
-<p>offers works!</p>
+<div class="col-md-12 py-4 px-5">
+    <h4 class="pb-2">Offers</h4>
+    <div class="media border p-3 mb-2" *ngFor="let offer of offersList;let i=index" >
+        <!-- <ng-container [routerLink]="['/admin/create-offer',offer.id]"> -->
+            <img src="{{offer.offer_media[0] ? offer.offer_media[0].url : 'assets/logo.png'}}" alt="John Doe" class="mr-3  object-fit-contain" style="width:60px;height:60px">
+            <div class="media-body">
+            <h4>{{offer.title}} <small><i>Deal ends on {{offer.va}}</i></small></h4>
+            <p>{{offer.description}}</p>      
+            </div>
+          <!-- </ng-container> -->
+        <a (click)="deleteOffer(offer.id,i)"><i class="fa fa-trash text-danger"></i></a>
+
+        
+      </div>
+</div>

@@ -29,4 +29,12 @@ export class OfferService {
   {
     return this.httpClient.put(`${environment.API_URL}business_profile/offers/update`,offer);
   }
+  public getOffers(data)
+  {
+    return this.httpClient.post(`${environment.API_URL}business_profile/offers/getAll`,data);
+  }
+  public offerDelete(id)
+  {
+    return this.httpClient.delete(`${environment.API_URL}business_profile/offers/delete/${id}`);
+  }
 }

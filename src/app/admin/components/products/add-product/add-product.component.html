@@ -86,7 +86,7 @@
                         </div>
                         <div>
                           <img id="blah2" src="{{variantImages[selectedVarientIndexForImages][urlIndex] 
-                          ? variantImages[selectedVarientIndexForImages][urlIndex].url :'assets/upload.png'}}" width="150px" height="150px"  onError="this.src='assets/upload.png'" class="profilepic2 img-preview">
+                          ? variantImages[selectedVarientIndexForImages][urlIndex].url :'assets/images/upload.png'}}" width="150px" height="150px"  onError="this.src='assets/images/upload.png'" class="profilepic2 img-preview cursor-pointer object-fit-contain">
                         </div>
                         <div></div>
 
@@ -96,7 +96,7 @@
                       
                           <div class="parent2 position-relative">
                             <label class="snap-images ">
-                            <img id="blah2" src="{{url.url?url.url:'assets/upload.png'}}" (click)="urlIndex=i" width="100%" height="80px" class="profilepic2 img-preview">
+                            <img id="blah2" src="{{url.url?url.url:'assets/images/upload.png'}}" (click)="urlIndex=i" width="100%" height="80px" class="profilepic2 img-preview object-fit-contain" >
                             <input type="file" id="imageId{{i}}" multiple class="upload2 hide gallery-img-file accept-image d-none" (change)="detectFiles($event,i)" *ngIf="!url.variant_id" accept="image/*">
                             </label>
                             <div class="child2">

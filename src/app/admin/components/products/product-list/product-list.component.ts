@@ -26,6 +26,9 @@ export class ProductListComponent implements OnInit {
   selectedSortType:any
   loading:boolean = true
   isGrid:boolean = true
+  showCheckboxes:boolean = false
+  selectedProducts:any =[]
+  selectAll:boolean= false
   constructor(private productService: ProductsService,private adminService: AdminService) { }
   sortOptions=[
     {
@@ -165,14 +168,13 @@ export class ProductListComponent implements OnInit {
 
   }
   public getAvailabilitySizes(id){
-    return false
-    this.getAllProductList()
-    this.productService.getProductSizes(id).subscribe((data: any)=>{
-      if(data.status == 'success')
-      {
-        this.availabilitySizes= data.data
-      }
-    })
+    // return false
+    // this.productService.getProductSizes(id).subscribe((data: any)=>{
+    //   if(data.status == 'success')
+    //   {
+    //     this.availabilitySizes= data.data
+    //   }
+    // })
   }
   public getProductAreas(){
     this.productService.getProductAreas().subscribe((data: any)=>{
@@ -190,7 +192,10 @@ export class ProductListComponent implements OnInit {
     }
     if(type=='level3')
     {
+      console.log(selectedValue)
       this.selectedLevel3 = selectedValue
+      this.getAllProductList()
+
     }
     if(type=='size')
     {
@@ -204,7 +209,25 @@ export class ProductListComponent implements OnInit {
     }
 
   }      
+  editProducts(){
+    this.showCheckboxes = true
+  }
+  checkUncheckAll (ev) {
+    this.selectedProducts = []
+    this.productList.length > 0 &&
+      this.productList.forEach((x, i) => {
+        x.isSelected = ev
+        if (ev) {
+          x.isSelected = ev
+          this.selectedProducts.push(x.userIdOfContact)
+        }
+        
+      })
+      this.selectAll = !this.selectAll
 
-  
+  }
+  isAllChecked () {
+    return this.productList.every(item => item.isSelected)
+  }
 }
                                                                                                                                                                                                                                       

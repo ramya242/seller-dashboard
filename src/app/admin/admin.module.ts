@@ -18,6 +18,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdminLoadingComponent } from './components/admin-loading/admin-loading.component';
 import { OffersComponent } from './components/offers/offers.component';
 import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { CreateOfferComponent } from './components/offers/create-offer/create-of
     ReactiveFormsModule,
     NgSelectModule,
     NgxGalleryModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbModule
   ]
 })
 export class AdminModule { }

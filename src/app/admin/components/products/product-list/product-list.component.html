@@ -3,14 +3,15 @@
 <!-- Begin Page Content -->
 <div class="container-fluid ">
    <div class="row">
-      <div class="col-md-12">
-         <div class="card1 shadow1 mb-4">
+      <div class="col-md-12 px-0">
+         <div class="card1 shadow1">
           
             <div class="card-body1">
              
                <!-- Page Heading -->
                <!-- Types-->
-               <div class="d-flex py-3 justify-content-between align-items-center pt-5 px-5">
+               <div class="d-flex py-3 justify-content-between align-items-center pt-3 px-5" style="position: sticky;
+               top: 50px;z-index:3;background:#fff">
                   <div></div>
                   <ul class="list-group list-group-horizontal">
                      <ng-container  *ngFor="let category of categoriesList">                     
@@ -31,17 +32,144 @@
             </div>
             <!-- Types-->
             <!-- Content Row -->
-            <div class="container-fluid p-4">
-               <div class="row">
-                  <div class="col-md-8 order-md-2 col-lg-9">
+               <div class="row col-md-12">
+                  <div class="col-md-3  col-lg-3 sidebar-filter px-3 shadow">
+                     <div class="col-md-12 p-0" style="position: sticky;top:140px">
+                        <div class="card1 mb-3">
+                           <article class="filter-group">
+                              <header class="card-header1">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Categories </h6>
+                                 </a>
+                              </header>
+                              <div class="filter-content collapse" id="collapse_aside1" >
+                                 <div class="card-body1 cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <ng-container *ngFor="let category of subCategoriesList;let k=index">
+                                          <li class="nav-item1"  >
+                                             <label for="{{category.id}}">
+                                                <input type="radio"  [name]="category.id" [id]="category.id"  [value]="category.id" (change)="onCheckboxChange($event,'level2',category);getSubCategories($event,'level3',category.id)" 
+                                                [checked]="selectedLevel2.id==category.id"  />
+                                                {{category.name}} {{category.id}}
+                                             </label>
+                                          </li>
+                                       </ng-container>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+
+                                 </div>
+                              </div>
+                           </article>
+                           
+                        </div>
+
+
+                        <div class="card1 mb-3" *ngIf="selectedLevel2 && selectedLevel2.id">
+                           <article class="filter-group">
+                              <header class="card-header1">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Sub Categories </h6>
+                                 </a>
+                              </header>
+                              <div class="filter-content collapse" id="collapse_aside2" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <li class="collapse-item" (click)="getAvailabilitySizes(cat.id)" *ngFor="let cat of subSubCategoriesList" >
+                                          <label for="sub{{cat.id}}">
+                                          <input type="radio" [name]="'sub'+cat.id" [id]="'sub'+cat.id"  [value]="cat.id" (change)="onCheckboxChange($event,'level3',cat)" [checked]="selectedLevel3.id==cat.id"  /> 
+                                          {{cat.name}} 
+                                       </label>
+                                       </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+                                 </div>
+                              </div>
+                             
+                           </article>
+                           
+                        </div>
+
+                        <div class="card mb-3" *ngIf="selectedLevel3 && selectedLevel3.id && availabilitySizes.length>0">
+                           <article class="filter-group">
+                              <header class="card-header1">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Sizes</h6>
+                                 </a>
+                              </header>
+                              <div class="filter-content collapse" id="collapse_aside2" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <li class="collapse-item"  *ngFor="let size of availabilitySizes" >
+                                          <input type="radio" [name]="'size'+size.id" [id]="size.id"  [value]="size.id" (change)="onCheckboxChange($event,'size',size)" [checked]="selectedSize.id==size.id" />
+                                          {{size.name}}
+
+                                       </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+                                 </div>
+                              </div>
+                             
+                           </article>
+                           
+                        </div>
+
+                        <div class="card mb-3 d-none">
+                           <article class="filter-group">
+                              <header class="card-header1">
+                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Area </h6>
+                                 </a>
+                              </header>
+                      
+                              <div class="filter-content collapse" id="collapse_aside3" >
+                                 <div class="card-body cb">
+                                   
+                                    <!-- catSidebar -->
+                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                       <li *ngFor="let area of productAreas; let i=index" >
+                                          <input type="radio" [name]="'area'+selectedArea.id" [id]="area.id"  [value]="area.id" (change)="onCheckboxChange($event,'area',area);" [checked]="selectedArea.id==area.id" />
+                                            {{area.name}}
+                                          </li>
+                                    </ul>
+                                    <!-- End of Sidebar -->
+                                 </div>
+                              </div>
+                           </article>
+                           
+                        </div>
+                     </div>
+                     <div class="divider mt-5 mb-5  border-secondary"></div>
+                  </div>
+                  <div class="col-md-9  col-lg-9">
+                    
                      <div class="container-fluid">
-                        <div class="row   mb-5">
-                           <div class="col-12">
+                        <div class="row   mb-4">
+                           <div class="col-12 d-flex justify-content-between">
                               <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
                                  <label class="mr-2">Sort by:</label>
                                  <select (change)="filterChanged($event.target.value)">
                                     <option *ngFor="let opt of sortOptions" [value]="opt.id" >{{opt.name}}</option>
                                  </select>
+                              </div>
+                              <div *ngIf="!showCheckboxes">
+                                 <a (click)="editProducts()">Edit</a>
+                              </div>
+                              <div *ngIf="showCheckboxes ">
+                                 <a *ngIf="!selectAll" class="px-1" (click)="checkUncheckAll(true)">Select All</a>
+                                 <a *ngIf="selectAll" class="px-1" (click)="checkUncheckAll(false)">Un Select All</a>
+                                 <a class="px-1" (click)="delete">Delete</a>
+                                 <a class="px-1" (click)="showCheckboxes=false">Cancel</a>
+                                 
                               </div>
                               <!-- <div class="btn-group float-md-right ml-3">
                                  <button type="button" class="btn btn-lg btn-light"> <span class="fa fa-arrow-left"></span> </button>
@@ -62,13 +190,15 @@
                         <!-----------Grid View-------------------->
                         <div class="row" *ngIf="isGrid">
                            <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
-                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer" [routerLink]="['/admin/product-details/',product.id]" *ngFor="let product of productList">
-                              <!-- <div class="form-check position-absolute" style="z-index: 999;">
-                                 <label class="form-check-label">
-                                   <input type="checkbox" class="form-check-input" value="" />
+                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer"  *ngFor="let product of productList;let i=index">
+                              <div class="form-check position-absolute" *ngIf="showCheckboxes" style="z-index: 8;    right: 12px;">
+                                 <label class="form-check-label" for="customCheck{{ i }}">
+                                   <input  id="customCheck{{ i }}"
+                                    type="checkbox"   [(ngModel)]="product.isSelected" class="form-check-input"  />
                                  </label>
-                               </div> -->
-                              <div class="card h-100 border-0">
+                               </div>
+                               
+                              <div class="card h-100 border-0" [routerLink]="['/admin/product-details/',product.id]">
                                  <div class="card-img-top">
                                     <img src="{{product.variant_media.length >0 ? product.variant_media[0].url : 'assets/logo.png'}}"  onerror="this.src='assets/logo.png'"  class="img-fluid mx-auto imgBlock d-block" alt="{{product.title}}">
                                  </div>
@@ -138,126 +268,9 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-4 order-md-1 col-lg-3 sidebar-filter p-0">
-                     <div class="col-md-12 p-0" style="position: sticky;top:100px">
-                        <div class="card mb-3">
-                           <article class="filter-group">
-                              <header class="card-header">
-                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside1" data-abc="true" aria-expanded="false" class="collapsed">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Categories </h6>
-                                 </a>
-                              </header>
-                              <div class="filter-content collapse" id="collapse_aside1" >
-                                 <div class="card-body cb">
-                                   
-                                    <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
-                                       <ng-container *ngFor="let category of subCategoriesList;let k=index">
-                                          <li class="nav-item1"  >
-                                             <label for="{{category.id}}">
-                                                <input type="radio"  [name]="category.id" [id]="category.id"  [value]="category.id" (change)="onCheckboxChange($event,'level2',category);getSubCategories($event,'level3',category.id)" 
-                                                [checked]="selectedLevel2.id==category.id"  />
-                                                {{category.name}} {{category.id}}
-                                             </label>
-                                          </li>
-                                       </ng-container>
-                                    </ul>
-                                    <!-- End of Sidebar -->
-
-                                 </div>
-                              </div>
-                           </article>
-                           
-                        </div>
-
-
-                        <div class="card mb-3" *ngIf="selectedLevel2 && selectedLevel2.id">
-                           <article class="filter-group">
-                              <header class="card-header">
-                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Sub Categories </h6>
-                                 </a>
-                              </header>
-                              <div class="filter-content collapse" id="collapse_aside2" >
-                                 <div class="card-body cb">
-                                   
-                                    <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
-                                       <li class="collapse-item" (click)="getAvailabilitySizes(cat.id)" *ngFor="let cat of subSubCategoriesList" >
-                                          <label for="sub{{cat.id}}">
-                                          <input type="radio" [name]="'sub'+cat.id" [id]="'sub'+cat.id"  [value]="cat.id" (change)="onCheckboxChange($event,'level3',cat)" [checked]="selectedLevel3.id==cat.id" />
-                                          {{cat.name}}
-                                       </label>
-                                       </li>
-                                    </ul>
-                                    <!-- End of Sidebar -->
-                                 </div>
-                              </div>
-                             
-                           </article>
-                           
-                        </div>
-
-                        <div class="card mb-3" *ngIf="selectedLevel3 && selectedLevel3.id && availabilitySizes.length>0">
-                           <article class="filter-group">
-                              <header class="card-header">
-                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside2" data-abc="true" aria-expanded="false" class="collapsed">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Sizes</h6>
-                                 </a>
-                              </header>
-                              <div class="filter-content collapse" id="collapse_aside2" >
-                                 <div class="card-body cb">
-                                   
-                                    <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
-                                       <li class="collapse-item"  *ngFor="let size of availabilitySizes" >
-                                          <input type="radio" [name]="'size'+size.id" [id]="size.id"  [value]="size.id" (change)="onCheckboxChange($event,'size',size)" [checked]="selectedSize.id==size.id" />
-                                          {{size.name}}
-
-                                       </li>
-                                    </ul>
-                                    <!-- End of Sidebar -->
-                                 </div>
-                              </div>
-                             
-                           </article>
-                           
-                        </div>
-
-                        <div class="card mb-3 d-none">
-                           <article class="filter-group">
-                              <header class="card-header">
-                                 <a href="#" data-toggle="collapse" data-target="#collapse_aside3" data-abc="true" aria-expanded="false" class="collapsed">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Area </h6>
-                                 </a>
-                              </header>
-                      
-                              <div class="filter-content collapse" id="collapse_aside3" >
-                                 <div class="card-body cb">
-                                   
-                                    <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
-                                       <li *ngFor="let area of productAreas; let i=index" >
-                                          <input type="radio" [name]="'area'+selectedArea.id" [id]="area.id"  [value]="area.id" (change)="onCheckboxChange($event,'area',area);" [checked]="selectedArea.id==area.id" />
-                                            {{area.name}}
-                                          </li>
-                                    </ul>
-                                    <!-- End of Sidebar -->
-                                 </div>
-                              </div>
-                           </article>
-                           
-                        </div>
-                     </div>
-                     <div class="divider mt-5 mb-5 border-bottom border-secondary"></div>
-                  </div>
+                
                </div>
                <!-- Content Row -->
-            </div>
             <!-- /.container-fluid -->
          </div>
       </div>
