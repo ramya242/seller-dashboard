@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { AuthenticationService } from '../authentication.service';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -10,7 +11,7 @@ export class TokenInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(public authService: AuthenticationService) {
+  constructor(public authService: AuthenticationService,private toastr: ToastrService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -19,20 +20,23 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(catchError(error => {
-    console.log(error.error.message)
       if (error instanceof HttpErrorResponse && error.status == 400 && (error.error.message == 'token_expired' || error.error.message =='token_invalid')) {
-        console.log(error.error.message == 'token_expired')
 
         return this.handle401Error(request, next);
       } 
       else if(error.statusText == "Bad Request")
       {
         console.log(error.statusText == "Bad Request")
+        // 
+        this.toastr.info(error.error.message)
         return throwError(error);
 
       }
       else {
+        // return throwError(error);
+        this.toastr.info(error.error.message)
         return throwError(error);
+
       }
     }));
   }
@@ -54,10 +58,10 @@ export class TokenInterceptor implements HttpInterceptor {
 
       return this.authService.refreshToken().pipe(
         switchMap((token: any) => {
-        console.log(token)
+        console.log(token,'jwt tokent')
           this.isRefreshing = false;
-          this.refreshTokenSubject.next(token.jwt);
-          return next.handle(this.addToken(request, token.jwt));
+          this.refreshTokenSubject.next(token);
+          return next.handle(this.addToken(request, token));
         }));
 
     } else {

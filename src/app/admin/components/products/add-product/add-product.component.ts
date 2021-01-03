@@ -63,22 +63,21 @@ export class AddProductComponent implements OnInit {
         where_to_buy: ['',Validators.required],
         title: ['',[Validators.required, Validators.maxLength(150)]],
         brand_name: ['',[Validators.required, Validators.maxLength(50)]],
-        product_code:[''],
+        product_code: ['',Validators.required],
         search_keywords: [[],Validators.required],
         description:['',[Validators.required, Validators.maxLength(3000)]],
         product_boost:[''],
         union_territories:[''],
-        subject_line:['',[Validators.required,  Validators.maxLength(350)]],
+        subject_line:['',[Validators.required, Validators.maxLength(350)]],
         links:[''],
         delivery_available:[0],
-        variants: this.formBuilder.array([]) ,
-
-       
+        variants: this.formBuilder.array([],Validators.required),
       })
+
       this.productDetailForm = this.formBuilder.group({
-        sizesLeftPieces: this.formBuilder.array([]) ,
-
+        sizesLeftPieces: this.formBuilder.array([],Validators.required),
       })
+
       this.activatedRoute.params.subscribe((params: Params) => {
         if (params.id) {
           this.productId=params.id;
@@ -195,30 +194,29 @@ export class AddProductComponent implements OnInit {
     // return;
     // stop here if form is invalid
 
-  for (let el in this.productForm.controls) {
-    if (this.productForm.controls[el].errors) {
-      // console.log([el])
-      // console.log(this.productForm.controls[el].errors)
-    }
-  } 
-  for (let el in this.productDetailForm.controls) {
-    if (this.productDetailForm.controls[el].errors) {
-      console.log([el])
-      console.log(this.productDetailForm.controls[el].errors)
-    }
-  } 
- 
- 
-
- 
-
-     if (this.productForm.invalid) {
+    for (let el in this.productForm.controls) {
+      if (this.productForm.controls[el].errors) {
+        console.log([el])
+        console.log(this.productForm.controls[el].errors)
+      }
+    } 
+    for (let el in this.productDetailForm.controls) {
+      if (this.productDetailForm.controls[el].errors) {
+        console.log([el])
+        console.log(this.productDetailForm.controls[el].errors)
+      }
+    } 
+    if (this.productForm.invalid) {
       this.toastr.info('Please enter all required fields.');
-            return;
-        }
+      return;
+    }
 
-        // alert()
-        // return
+    var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    if(this.f.where_to_buy.value==1 && !regex .test(this.f.links.value)) 
+    {
+      this.toastr.error("Please enter valid webiste address.[Ex: http://www.abc.com].");
+      return ;
+    } 
     this.loading =true
    const product :any= {
     "title":this.f.title.value,
@@ -274,7 +272,9 @@ export class AddProductComponent implements OnInit {
     this.loading = true;
     this.productService.createProduct(product).subscribe((data: any)=>{
       this.loading = false
+      this.toastr.info('Product updated successfully.');
       this.productFileUpload(data.data.productIds)
+      this.router.navigate(['/admin/product-list'])
     })
   }
     
@@ -386,10 +386,10 @@ export class AddProductComponent implements OnInit {
             this.submitnewbutton = 0;
             this.urls = [];
             this.f.title.reset();
-            this.toastr.info('Product saved successfully.');
+            // this.toastr.info('Product saved successfully.');
           }
           else{
-            this.toastr.info('Product saved successfully.');
+            // this.toastr.info('Product saved successfully.');
             this.router.navigate(['/admin/product-list'])
           }
         
@@ -458,7 +458,7 @@ export class AddProductComponent implements OnInit {
           this.productSizeQuantiesArray.push(item.sizes_with_quantity)
           this.variantImages.push(item.variant_media)
        
-        
+          this.sizesWithLeftPieces[k] = this.productSizeQuantiesArray[k]
             // const control = <FormArray>this.variants().at(k).get('product_colors');
             
             //   control.push(this.formBuilder.group(item.product_colors)    )
@@ -507,12 +507,11 @@ export class AddProductComponent implements OnInit {
    
   newVariant(): FormGroup {
     return this.formBuilder.group({
-      product_colors:  [],
-      // sizes_with_left_pieces: [],
-      actual_price:'',
-      offer_price:'',
-      offer_percentage:'',
-      is_stock_available:'',
+      product_colors:  [[], [Validators.required]],
+      actual_price:['', [Validators.required]],
+      offer_price:[0],
+      offer_percentage:[0],
+      is_stock_available:[''],
       variant_id:''
     })
   }

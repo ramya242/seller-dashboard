@@ -18,7 +18,16 @@ export class CreateOfferComponent implements OnInit {
   submitted:boolean= false
   loading:boolean = false
   model: NgbDateStruct;
-
+  arrayInfo:any =[
+    {
+      id:"mobile",
+      name:"Mobile",
+    },
+    {
+      id:"web",
+      name:"Web",
+    },
+  ]
   urls = [
     {
       id:1,
@@ -32,23 +41,20 @@ export class CreateOfferComponent implements OnInit {
   constructor(private offerService: OfferService,private productService: ProductsService,
     private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private toastr: ToastrService,private router: Router
     ) { 
-      console.log(moment().format("YY-MM-DD HH:mm"))
+      // console.log(moment().format("YY-MM-DD HH:mm"))
       this.offerForm = this.formBuilder.group({
         validOn: ['', [Validators.required]],
         validUpto: ['', [Validators.required]],
         start_date: ['', [Validators.required]],
         where_to_buy: ['',Validators.required],
-        title: ['',Validators.required],
-        description:['',[Validators.required, Validators.maxLength(1000)]],
-        product_boost:[''],
+        title: ['',[Validators.required, Validators.maxLength(150)]],
+        description:['',[Validators.required, Validators.maxLength(3000)]],
         links:[''],
         offer_category: ['', Validators.required],
-        promo_code: ['', Validators.required]
+        promo_code: ['']
       })
-     
 
-
-     }
+    }
 
   ngOnInit(): void {
     this.whereToBuy()
@@ -110,28 +116,68 @@ export class CreateOfferComponent implements OnInit {
       console.log(data)
       if(data.status == 'success')
       {
-        let {promo_code, title, description,offer_category,validOn,validUpto,start_date,where_to_buy,links  } = data.data
+        let {promo_code, title, description,offer_category,validOn,validUpto,start_date,where_to_buy,links,offer_media  } = data.data
         // where_to_buy = where_to_buy.map(type => area.id)
+        let startDate = moment(start_date)
+        let endDate = moment(validUpto)
         this.offerForm.patchValue({
           title:title,
           description: description,
-          offer_category:offer_category.id,
+          offer_category:offer_category ? offer_category.id :1 ,
           promo_code:promo_code,
           validOn:validOn,
-          validUpto:validUpto,
+          // validUpto:validUpto,
           where_to_buy:where_to_buy != null?where_to_buy.id:0,
           links:links,
-          start_date:start_date,
+          start_date:{
+            year: parseInt(startDate.format('YYYY')),
+            month: parseInt(startDate.format('M')),
+            day: parseInt(startDate.format('D'))
+          },
+          validUpto:{
+            year: parseInt(endDate.format('YYYY')),
+            month: parseInt(endDate.format('M')),
+            day: parseInt(endDate.format('D'))
+          },
           // participants: selectedContacts,
           // speakers:selectedSpeakers,
         })
+        this.urls = offer_media
+        if(offer_media.length==0){
+          this.urls = [
+            {
+              id:1,
+              url:'',
+              file:''
+            }
+          ]
+        }
         
       }
   })
   }
   createOffer(){
-  
-    console.log(this.f.validUpto.value)
+    this.submitted = true
+    for (let el in this.offerForm.controls) {
+      if (this.offerForm.controls[el].errors) {
+        console.log([el])
+        console.log(this.offerForm.controls[el].errors)
+      }
+    } 
+   
+    if (this.offerForm.invalid) {
+      this.toastr.info('Please enter all required fields.');
+            return;
+      }
+      // return;
+    // console.log(this.f.validUpto.value)
+    var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    if(this.f.where_to_buy.value==1 && !regex .test(this.f.links.value)) 
+    {
+      this.toastr.error("Please enter valid webiste address.[Ex: http://www.abc.com].");
+      return ;
+    }
+
     let startDate:any = this.f.start_date.value
     startDate = `${startDate.year}-${startDate.month}-${startDate.day}`
     startDate  = moment(startDate,'YYYY-MM-DD').format('YYYY-MM-DD HH:mm')
@@ -139,7 +185,12 @@ export class CreateOfferComponent implements OnInit {
     let endDate:any = this.f.validUpto.value
     endDate = `${endDate.year}-${endDate.month}-${endDate.day}`
     endDate  = moment(endDate,'YYYY-MM-DD').format('YYYY-MM-DD HH:mm')
-    
+     var mStart = moment(startDate);
+    var mEnd = moment(endDate);
+     if(!mStart.isBefore(mEnd)){
+      this.toastr.error("Offer from must be less than the Offer validity.");
+      return ;
+     }
     const offer :any= {
       "title":this.f.title.value,
       "description":this.f.description.value,
@@ -162,9 +213,7 @@ export class CreateOfferComponent implements OnInit {
           if(data.status == 'success')
           {
             this.toastr.info('Offer updated successfully.');
-            
-          this.offerFileUpload(data.data.offerId)
-     
+            this.offerFileUpload(data.data.offerId)
             this.router.navigate(['/admin/offers'])
           }
           else{
@@ -181,11 +230,14 @@ export class CreateOfferComponent implements OnInit {
       if(data.status == 'success')
       {
         this.offerFileUpload(data.data.offerId)
+        this.toastr.info('Offer created successfully.');
         this.router.navigate(['/admin/offers'])
       }
       else{
         this.toastr.error('Unable to add offer.');
       } 
+    },err=>{
+      console.log(err)
     })
   }
   }
@@ -207,6 +259,10 @@ export class CreateOfferComponent implements OnInit {
     // console.log(this.variantImages)
     // return
    
+    if(!this.urls[0].file)
+    {
+      return false
+    }
     const formData   = new FormData();  
     formData.append('filesArray[]',this.urls[0].file)
     if(!formData.has("filesArray[]"))

@@ -1,4 +1,6 @@
 <!-- <app-loading *ngIf="loading"></app-loading> -->
+<app-admin-loading *ngIf="loading"></app-admin-loading>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
    <div class="row">
@@ -67,7 +69,7 @@
                 </nav>
               </div>
              
-              <div class="d-flex w-100" [ngClass]="f.product_level3_category.value > 0?'':'disableCls1'" (click)="showAlert()">
+              <div class="d-flex w-100" [ngClass]="f.product_level3_category.value > 0?'':'disableCls'" (click)="showAlert()">
                 <!-- First Block -->
                 <div class="col-md-6 px-0">
                   <div class="divBlk  ">
@@ -114,7 +116,7 @@
                   <div class="divBlk ">
                     <label for="title"> Title<span class="man-star">*</span></label>
                     <input type="text" maxlength="150" id="title" formControlName="title" name="title" class="form-control custominp"/>
-                    <span class="text-gray pt-1 d-block text-right">{{f.title.value.length}}/150</span>
+                    <span class="text-gray pt-1 d-inline-block pull-right">{{f.title.value.length}}/150</span>
                     <div *ngIf="submitted && !f.title.value"  class="text-danger">
                       <div *ngIf="!f.title.value">
                         Title is required
@@ -124,8 +126,8 @@
                   <div class="divBlk ">
                     <label for="brand_name"> Brand Name<span class="man-star">*</span></label>
                     <input type="text" maxlength="50" id="brand_name" formControlName="brand_name" name="brand_name" class="form-control custominp"/>
-                    <span class="text-gray pt-1 d-block text-right">{{f.brand_name.value.length}}/50</span>
-                    <div *ngIf="submitted && !f.brand_name.value"  class="text-danger">
+                    <span class="text-gray pt-1 d-inline-block pull-right">{{f.brand_name.value.length}}/50</span>
+                    <div *ngIf="submitted && !f.brand_name.value"  class="d-inline-block text-danger">
                       <div *ngIf="!f.brand_name.value">
                         Brand name is required
                       </div>
@@ -134,8 +136,8 @@
                   <div class="divBlk ">
                     <label for="subject"> Add Subject Line<span class="man-star">*</span></label>
                     <input type="text" maxlength="350" id="subject" formControlName="subject_line" name="subject" class="form-control custominp" />
-                    <span class="text-gray pt-1 d-block text-right">{{f.subject_line.value.length}}/350</span>
-                    <div *ngIf="submitted && !f.subject_line.value"  class="text-danger">
+                    <span class="text-gray pt-1 d-inline-block pull-right">{{f.subject_line.value.length}}/350</span>
+                    <div *ngIf="submitted && !f.subject_line.value"  class="text-danger d-inline-block">
                       <div *ngIf="!f.subject_line.value">
                         Subject line is required
                       </div>
@@ -144,14 +146,19 @@
                   <div class="divBlk ">
                     <label for="description"> Product Description<span class="man-star">*</span></label>
                     <textarea  id="description" rows="5" maxlength="" name="description" formControlName="description" class="form-control custominp" ></textarea>
-                    <span class="text-gray pt-1 d-block text-right">{{f.description.value.length}}/3000</span>
-                    <div *ngIf="submitted && !f.description.value"  class="text-danger">
+                    <span class="text-gray pt-1 d-inline-block pull-right">{{f.description.value.length}}/3000</span>
+                    <div *ngIf="submitted && !f.description.value"  class="text-danger d-inline-block">
                       Description is required
                     </div>
                   </div>
                   <div class="divBlk ">
                     <label for="product_code"> Product Code<span class="man-star">*</span></label>
                     <input type="text" id="product_code" formControlName="product_code" name="product_code" class="form-control custominp" />
+                    <div *ngIf="submitted && !f.product_code.value"  class="text-danger">
+                      <div *ngIf="!f.product_code.value">
+                        Product code is required
+                      </div>
+                    </div>
                   </div>
                   <div class="divBlk ">
                     <label for="whereToPurchase"> Where to Purchase <span class="man-star">*</span></label>
@@ -162,9 +169,9 @@
                       </option>
                     </select>
                   </div>
-                  <div *ngIf="submitted && !f.where_to_buy.value"  class="text-danger">
+                  <div *ngIf="submitted && !f.where_to_buy.value"  class="text-danger pl-2">
                     <div *ngIf="!f.where_to_buy.value">
-                      Required Field
+                      Where to purchase is required.
                     </div>
                   </div>
                   <div class="divBlk " *ngIf="f.where_to_buy.value==1">
@@ -197,13 +204,13 @@
             </ng-select>
                     <div *ngIf="submitted && f.search_keywords.value.length==0"  class="text-danger">
                       <div *ngIf="f.search_keywords.value==0">
-                        Search keyword is required
+                        Search keyword is required.
                       </div>
                     </div>
                   </div>
                   <div class="divBlk  ">
                     <label for="returnDays"> Return & Exchange Days</label>
-                    <input type="text" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
+                    <input type="number" id="returnDays" name="returnDays" formControlName="exchange_days" class="form-control custominp" />
                     <div *ngIf="submitted && !f.exchange_days.value"  class="text-danger">
                       <div *ngIf="!f.exchange_days.value">
                         Exchange days is required
@@ -240,10 +247,10 @@
                           <button (click)="removeVariant(i)" *ngIf="i>0" class="btn btn-danger ml-2">Remove </button>
 
                           <div class="form-group col-4"> 
-                            <input type="text" class="form-control " formControlName="actual_price" placeholder="Price" [readonly]="variants().at(i).value.is_stock_available" /> 
+                            <input type="number" class="form-control " formControlName="actual_price" placeholder="Price" [readonly]="variants().at(i).value.is_stock_available" /> 
                           </div>
                           <div class="form-group col-4"> 
-                            <input type="text" class="form-control " formControlName="offer_percentage" placeholder=" Offer price in %" [readonly]="variants().at(i).value.is_stock_available" /> 
+                            <input type="number" class="form-control " formControlName="offer_percentage" placeholder=" Offer price in %" [readonly]="variants().at(i).value.is_stock_available" /> 
                           </div>
                           <div class="d-flex align-items-center  justify-item-center switchBlk">
                             <span class="px-2">Out of Stock</span>
@@ -254,13 +261,13 @@
                               <span class="slider round"></span>
                             </label>
                           </div>
-                              <span class="px-3" *ngIf="variants().at(i).value.offer_percentage && variants().at(i).value.offer_percentage > 0" >Offer price Rs.{{getPrice(i)}} /-</span>
+                              <span class="px-3 pb-2" *ngIf="variants().at(i).value.offer_percentage && variants().at(i).value.offer_percentage > 0" >Offer Price: <span class="default-color">Rs.{{getPrice(i)}} /-</span></span>
                         </div>
                         <div>
-                          <label *ngIf="sizesWithLeftPieces[i] > 0">Sizes and Left pieces</label>
+                          <label class="mb-0" *ngIf="sizesWithLeftPieces[i] && sizesWithLeftPieces[i].length > 0">Sizes and Left pieces</label>
                           <div class="d-flex flex-wrap">
                             <ng-container *ngFor="let size_left_piece of sizesWithLeftPieces[i];let k=index">
-                              <div class="col-md-2" *ngIf="k<8">{{getSizeName(size_left_piece.size_id)}} -  {{size_left_piece.left_pieces}}</div>
+                              <div class="col-md-2" style="opacity: 0.8;" *ngIf="k<8">{{getSizeName(size_left_piece.size_id)}} -  {{size_left_piece.left_pieces}}</div>
 
                              </ng-container>
                              <a style="text-decoration: underline;" class="default-color" (click)="selectedVarientIndexForSizes=i;open(content);" *ngIf="sizesWithLeftPieces[i] && sizesWithLeftPieces[i].length >=8 ">See more</a>
@@ -276,10 +283,11 @@
                   <!-- form-row Variant 1 end.// -->
                 </div>
                 <!-- Second Block -->
+                
               </div>
               
-              <div class="divBlk pt-3 col-md-12 text-center">
-                <input type="submit" class="btn btn-primary mr-2" [disabled]="productForm.invalid" value="Submit" *ngIf="!productId" />
+              <div class="divBlk pt-3 col-md-12 text-center" [ngClass]="f.product_level3_category.value > 0?'':'disableCls'">
+                <input type="submit" class="btn btn-primary mr-2"  value="Submit" *ngIf="!productId" />
                 <input type="submit" class="btn btn-primary" value="Update Product" *ngIf="productId" /> 
               </div>
            </div>
@@ -332,7 +340,7 @@
             <td class="col-md-41" [ngClass]="availabilitySizes.length > 0?'col-md-4':'col-md-12'"
             >
                 Left Pieces:
-                <input type="text" formControlName="left_pieces" class="form-control">
+                <input type="number" formControlName="left_pieces" class="form-control">
             </td>
             <td *ngIf="availabilitySizes.length>0">
               <i (click)="removeSizesLeftPieces(i)" style="font-size: 22px;color: #F44336;padding-bottom: 17px;" class="fa fa-trash"></i>

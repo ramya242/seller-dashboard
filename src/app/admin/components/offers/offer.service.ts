@@ -37,4 +37,11 @@ export class OfferService {
   {
     return this.httpClient.delete(`${environment.API_URL}business_profile/offers/delete/${id}`);
   }
+  public multiOffersDelete(ids)
+  {
+    return this.httpClient.post(`${environment.API_URL}business_profile/offers/deleteMulti`,ids);
+  }
+  public getTotalOffers(userId){
+    return this.httpClient.get(`${environment.API_URL}business_profile/offers/count/${userId}`);
+  }
 }

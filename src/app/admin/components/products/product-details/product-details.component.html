@@ -44,6 +44,7 @@
                 <span class="currency">₹</span><span class="num">{{productData.offer_price}}</span>
             </span> 
             <span class="pl-2" style="text-decoration: line-through;"> ₹{{productData.actual_price}}</span> 
+            <label class="px-1">({{productData.offer_percentage}}%)</label>
         </p> <!-- price-detail-wrap .// -->
         <dl class="item-property">
           <dt>Description</dt>
@@ -78,6 +79,19 @@
             <a href="{{productInfo.links}}" target="_blank">{{productInfo.links}}</a>
           </dd>
         </dl>
+        <div class="row">
+          <div class="col-sm-12">
+              <dl class="param param-inline">
+                <dt>Product Colors: </dt>
+                <dd >
+                  <span *ngFor="let color of productData.product_colors">
+                    {{color.name}} 
+                  </span>
+                </dd>
+              </dl>  <!-- item-property .// -->
+          </div> <!-- col.// -->
+         
+      </div> <!-- row.// -->
         <hr>
             <div class="row">
                 <div class="col-sm-5">

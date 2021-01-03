@@ -1,40 +1,15 @@
 <app-admin-loading *ngIf="loading"></app-admin-loading>
 
 <!-- Begin Page Content -->
-<div class="container-fluid ">
-   <div class="row">
-      <div class="col-md-12 px-0">
-         <div class="card1 shadow1">
           
-            <div class="card-body1">
              
                <!-- Page Heading -->
-               <!-- Types-->
-               <div class="d-flex py-3 justify-content-between align-items-center pt-3 px-5" style="position: sticky;
-               top: 50px;z-index:3;background:#fff">
-                  <div></div>
-                  <ul class="list-group list-group-horizontal">
-                     <ng-container  *ngFor="let category of categoriesList">                     
-                        <li class="list-group-item" [ngClass]="{
-                        'selectedCategory':category.id == selectedType }" (click)="getSubCategories($event,'level2',category.id)">
-                        <a class=""   href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
-                           <!-- <img src= "assets/images/ic_men_normal.png" style="vertical-align: sub;" /> -->
-                        <span> {{category.name}}  </span>
-                        </a>
-                     </li>
-                  </ng-container>
-
-                  </ul>
-                  <div>
-                     <a class="d-inline-block px-1" (click)="isGrid=true"><img src="{{isGrid ? 'assets/images/grid_hover.png' : 'assets/images/grid_normal.png'}}" /></a>
-                     <a class="d-inline-block px-1" (click)="isGrid=false"><img src="{{!isGrid ? 'assets/images/list_hover.png' : 'assets/images/list_normal.png'}}" /></a>
-                  </div>
-            </div>
+               
             <!-- Types-->
             <!-- Content Row -->
-               <div class="row col-md-12">
-                  <div class="col-md-3  col-lg-3 sidebar-filter px-3 shadow">
-                     <div class="col-md-12 p-0" style="position: sticky;top:140px">
+               <div class="row col-md-12 px-0 mx-0 h-100">
+                  <div class=" sidebar-filter px-3 shadow col-md-3 col-lg-2" style="width: 250px;">
+                     <div class="col-md-12 p-0" style="position: sticky;top:90px">
                         <div class="card1 mb-3">
                            <article class="filter-group">
                               <header class="card-header1">
@@ -47,13 +22,13 @@
                                  <div class="card-body1 cb">
                                    
                                     <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                    <ul class="navbar-nav1 pl-1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
                                        <ng-container *ngFor="let category of subCategoriesList;let k=index">
                                           <li class="nav-item1"  >
                                              <label for="{{category.id}}">
                                                 <input type="radio"  [name]="category.id" [id]="category.id"  [value]="category.id" (change)="onCheckboxChange($event,'level2',category);getSubCategories($event,'level3',category.id)" 
                                                 [checked]="selectedLevel2.id==category.id"  />
-                                                {{category.name}} {{category.id}}
+                                                {{category.name}} 
                                              </label>
                                           </li>
                                        </ng-container>
@@ -79,7 +54,7 @@
                                  <div class="card-body cb">
                                    
                                     <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                    <ul class="navbar-nav1 pl-1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
                                        <li class="collapse-item" (click)="getAvailabilitySizes(cat.id)" *ngFor="let cat of subSubCategoriesList" >
                                           <label for="sub{{cat.id}}">
                                           <input type="radio" [name]="'sub'+cat.id" [id]="'sub'+cat.id"  [value]="cat.id" (change)="onCheckboxChange($event,'level3',cat)" [checked]="selectedLevel3.id==cat.id"  /> 
@@ -107,7 +82,7 @@
                                  <div class="card-body cb">
                                    
                                     <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                    <ul class="navbar-nav1 pl-1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
                                        <li class="collapse-item"  *ngFor="let size of availabilitySizes" >
                                           <input type="radio" [name]="'size'+size.id" [id]="size.id"  [value]="size.id" (change)="onCheckboxChange($event,'size',size)" [checked]="selectedSize.id==size.id" />
                                           {{size.name}}
@@ -135,7 +110,7 @@
                                  <div class="card-body cb">
                                    
                                     <!-- catSidebar -->
-                                    <ul class="navbar-nav1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
+                                    <ul class="navbar-nav1 pl-1 bg-gradient-dark  sidebar sidebar-dark accordion" id="accordionpiltcat">
                                        <li *ngFor="let area of productAreas; let i=index" >
                                           <input type="radio" [name]="'area'+selectedArea.id" [id]="area.id"  [value]="area.id" (change)="onCheckboxChange($event,'area',area);" [checked]="selectedArea.id==area.id" />
                                             {{area.name}}
@@ -150,10 +125,31 @@
                      </div>
                      <div class="divider mt-5 mb-5  border-secondary"></div>
                   </div>
-                  <div class="col-md-9  col-lg-9">
+                  <div class="col-md-9  col-lg-10">
                     
                      <div class="container-fluid">
                         <div class="row   mb-4">
+                           <!-- Types-->
+               <div class="d-flex py-3 justify-content-between align-items-center pt-3 px-3 w-100" style="position: sticky;
+               top: 50px;z-index:3;background:#fff">
+                  <div></div>
+                  <ul class="list-group list-group-horizontal">
+                     <ng-container  *ngFor="let category of categoriesList">                     
+                        <li class="list-group-item" [ngClass]="{
+                        'selectedCategory':category.id == selectedType }" (click)="getSubCategories($event,'level2',category.id)">
+                        <a class=""   href="#" data-toggle="collapse" data-target="#collapseLap" aria-expanded="true" aria-controls="collapseLap">
+                           <!-- <img src= "assets/images/ic_men_normal.png" style="vertical-align: sub;" /> -->
+                        <span> {{category.name}}  </span>
+                        </a>
+                     </li>
+                  </ng-container>
+
+                  </ul>
+                  <div>
+                     <a class="d-inline-block px-1" (click)="isGrid=true"><img src="{{isGrid ? 'assets/images/grid_hover.png' : 'assets/images/grid_normal.png'}}" /></a>
+                     <a class="d-inline-block px-1" (click)="isGrid=false"><img src="{{!isGrid ? 'assets/images/list_hover.png' : 'assets/images/list_normal.png'}}" /></a>
+                  </div>
+            </div>
                            <div class="col-12 d-flex justify-content-between">
                               <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
                                  <label class="mr-2">Sort by:</label>
@@ -165,10 +161,23 @@
                                  <a (click)="editProducts()">Edit</a>
                               </div>
                               <div *ngIf="showCheckboxes ">
-                                 <a *ngIf="!selectAll" class="px-1" (click)="checkUncheckAll(true)">Select All</a>
-                                 <a *ngIf="selectAll" class="px-1" (click)="checkUncheckAll(false)">Un Select All</a>
-                                 <a class="px-1" (click)="delete">Delete</a>
-                                 <a class="px-1" (click)="showCheckboxes=false">Cancel</a>
+                                 <!-- <a *ngIf="!selectAll" class="px-1" (click)="checkUncheckAll(true)">Select All</a>
+                                 <a *ngIf="selectAll" class="px-1" (click)="checkUncheckAll(false)">Un Select All</a> -->
+                                 <!-- <a class="px-1" (click)="deleteProducts()" >Delete</a> -->
+                                 <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
+                                    <label class="mr-2">Select Action:</label>
+                                    <select (change)="selectAction($event)">
+                                       <option value="0">Select</option>
+                                       <option value="1" *ngIf="!selectAll">Check All</option>
+                                       <option value="2" *ngIf="selectAll" >Un Check All</option>
+                                       <option value="3">Active</option>
+                                       <option value="4">Inactive</option>
+                                       <option value="5">Delete</option>
+                                       <option value="6">Cancel</option>
+                                    </select>
+                                 </div>
+                                 
+                                 <!-- <a class="px-1" (click)="showCheckboxes=false">Cancel</a> -->
                                  
                               </div>
                               <!-- <div class="btn-group float-md-right ml-3">
@@ -190,11 +199,17 @@
                         <!-----------Grid View-------------------->
                         <div class="row" *ngIf="isGrid">
                            <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
-                           <div class="col-6 col-md-6 col-lg-4 mb-3 cursor-pointer"  *ngFor="let product of productList;let i=index">
-                              <div class="form-check position-absolute" *ngIf="showCheckboxes" style="z-index: 8;    right: 12px;">
-                                 <label class="form-check-label" for="customCheck{{ i }}">
+                           <div 
+                           class="col-6 col-md-6 col-lg-3 mb-3 cursor-pointer"  
+                           *ngFor="let product of productList | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: page, totalItems: total };let i=index;">
+                              <div class="form-check position-absolute" *ngIf="showCheckboxes" style="    z-index: 8;
+                              right: -2px;
+                              width: 48px;
+                              top: 4px;
+                          ">
+                                 <label class="form-check-label pb-2" for="customCheck{{ i }}">
                                    <input  id="customCheck{{ i }}"
-                                    type="checkbox"   [(ngModel)]="product.isSelected" class="form-check-input"  />
+                                    type="checkbox"  (change)="selectCheckbox($event,product.id,i)" [(ngModel)]="product.isSelected" class="form-check-input"  />
                                  </label>
                                </div>
                                
@@ -210,7 +225,7 @@
                                       {{product.product_info.description}}
                                     </p>
                                     <h6 class="card-price  text-warning1">
-                                       RS.{{product.actual_price}} <small class="text-gray"><s>Rs.{{product.offer_price}}</s></small> 
+                                       Rs.{{product.offer_price}} <small class="text-gray"><s>Rs.{{product.actual_price}}</s></small> 
                                         <span class="text-warning"> ({{product.offer_percentage}}% OFF)</span>
                                     </h6>
                                  </div>
@@ -220,7 +235,7 @@
                          <!-----------Grid View-------------------->
                           <!-----------List View-------------------->
                         <div class="row" *ngIf="!isGrid">
-                           <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
+                          
                            <div class="col-md-12">
                           <table class="table table-bordered table-hover">
                              <thead>
@@ -231,19 +246,32 @@
                                    <th>Description</th>
                                    <th>Price</th>
                                    <th>Offer price</th>
+                                   <th>Exchange days</th>
+                                   <th>Stock Available</th>
                                 </tr>
                              </thead>
                              <tbody>
-                                <tr *ngFor="let product of productList;let i=index" class="cursor-pointer" [routerLink]="['/admin/product-details/',product.id]" >
-                                   <td>{{i+1}}</td>
+                                <tr *ngFor="let product of productList| paginate: { id: 'server', itemsPerPage: pageSize, currentPage: page, totalItems: total };let i=index" class="cursor-pointer" [routerLink]="['/admin/product-details/',product.id]" >
+                                   <td> 
+                                    <div class="form-check position-absolute" *ngIf="showCheckboxes" style="z-index: 8;    right: 12px;">
+                                       <label class="form-check-label" for="customCheck{{ i }}">
+                                         <input  id="customCheck{{ i }}"
+                                          type="checkbox"  (change)="selectCheckbox($event,product.id,i)" [(ngModel)]="product.isSelected" class="form-check-input"  />
+                                       </label>
+                                     </div>
+                                     {{(page*pageSize)-pageSize + i+1}}
+                                 </td>
                                     <td style="width: 120px;">  <img src="{{product.variant_media.length >0 ? product.variant_media[0].url : 'assets/logo.png'}}" width="100px" height="100px"  onerror="this.src='assets/logo.png'"  class="img-fluid mx-auto  d-block" alt="{{product.title}}"></td>
                                     <td> {{product.product_info.title}}</td>
-                                    <td> {{product.product_info.description}}</td>
+                                    <td > <div class="text-ecllipse" style="width: 200px;" >{{product.product_info.description}}</div></td>
                                     <td> ₹{{product.actual_price}}</td>
                                     <td> ₹{{product.offer_price}}</td>
+                                    <td> {{product.product_info.exchange_days}}</td>
+                                    <td> {{product.is_stock_available ==1 ? 'yes' :'no' }}</td>
                                 </tr>
                              </tbody>
                           </table>
+                          <h5 class="text-center col-md-12" *ngIf="!loading && productList.length ==0">No products.</h5>
                         </div>
                      </div>
                         <!-----------List View-------------------->
@@ -267,13 +295,18 @@
                            </div>
                         </div>
                      </div>
+                     <div class="has-text-centered text-center pt-4" *ngIf="productList.length >0">
+                        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                        <!-- <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls> -->
+
+                        <pagination-controls
+                        responsive="true"
+                        id="server"
+                        (pageChange)="handlePageChange($event)"
+                      ></pagination-controls>
+                    </div>
                   </div>
                 
                </div>
                <!-- Content Row -->
             <!-- /.container-fluid -->
-         </div>
-      </div>
-   </div>
-</div>
-</div>

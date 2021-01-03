@@ -49,13 +49,18 @@ export class LoginComponent implements OnInit {
           // console.log('co',user)
           this.loading = true
           if(user.user_role == 'USER')
-              {
-                this.router.navigate(['/seller-signup']);
-              }
-              else{
-                this.router.navigate(['/']);
-              }
-            
+          {
+            this.router.navigate(['/seller-signup']);
+          }
+          else if(user.account_type != 'SELLER' && user.user_role != 'USER')
+          {
+            localStorage.clear()
+            this.loading = false
+            alert("Account not belongs to the seller account.")
+          }
+          else {
+            this.router.navigate(['/']);
+          }
         },
         error: error => {
           console.log(error)

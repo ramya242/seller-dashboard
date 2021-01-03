@@ -1,6 +1,8 @@
 <div class="menu-area menu-sticky">
   <nav class="navbar navbar-expand-xl navbar-light fixed-top">
-     <a href="#" class="navbar-brand"><i class="fa fa-cube"></i><b>{{user.business_name ? user.business_name : 'My Mall' }}</b></a>
+     <a href="#" class="navbar-brand d-flex align-items-center">
+      <img src="assets/images/odcet_logo.png"  width="35px" height="auto"/>
+      <b class="pl-1">Odcet Mall</b></a>
      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
      <span class="navbar-toggler-icon"></span>
      </button>
@@ -16,14 +18,19 @@
             </div>
          </div>
          <div class="nav-item dropdown">
-            <a [routerLink]="['/admin/product-list']" routerLinkActive="active"   class="nav-item nav-link" >
+            <a  routerLinkActive="active"  data-toggle="dropdown"  class="nav-item nav-link" >
             Inventory</a>
+            <div class="dropdown-menu">
+               <a [routerLink]="['/admin/product-list']" class="dropdown-item">Products </a>
+               <a [routerLink]="['/admin/offers']" class="dropdown-item">Offers </a>
+            
+            </div>
            
          </div>
-         <div class="nav-item dropdown">
+         <!-- <div class="nav-item dropdown">
             <a [routerLink]="['/admin/offers']"   routerLinkActive="active" class="nav-item nav-link" >
             Offers</a>
-         </div>
+         </div> -->
          <!-- <div class="nav-item dropdown">
             <a href="#" class="nav-item nav-link " data-toggle="dropdown">Reach</a>
             <div class="dropdown-menu">
@@ -58,12 +65,12 @@
             </div>
          </div>
       </div>
-      <div class="navbar-nav ml-auto pt-1">
+      <div class="navbar-nav ml-auto pt-1 d-flex align-items-center">
          <a href="#" class="nav-item nav-link messages pt-1"><i class="fa fa-comment-o"></i><span class="badge">10</span></a>
          <a href="#" class="nav-item nav-link notifications pt-1"><i class="fa fa-bell-o"></i></a>
          <div class="nav-item dropdown">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action">
-              <img src="{{profilePic}}"  onerror="this.src='assets/default.jpg';" class="avatar" alt="Avatar">  <b class="caret"></b>
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action d-flex align-items-center">
+              <img src="{{profilePic}}"  onerror="this.src='assets/default.jpg';" class="avatar" alt="Avatar">  {{user.business_name ? user.business_name : 'ODCET Mall' }} <b class="caret"></b>
             </a>
             <div class="dropdown-menu">
                <a [routerLink]="['/admin/profile']"  class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>

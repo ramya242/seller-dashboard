@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductsService} from '../../products.service'
 import {AdminService} from '../../../shared/services/admin.service'
+import {Observable, of} from 'rxjs';
+import { delay, map, tap } from 'rxjs/operators';
 // import { HttpClient } from '@angular/common/http';
 // import { Observable } from 'rxjs'
 // import { HttpHeaders } from '@angular/common/http';
@@ -29,6 +31,10 @@ export class ProductListComponent implements OnInit {
   showCheckboxes:boolean = false
   selectedProducts:any =[]
   selectAll:boolean= false
+  asyncMeals: Observable<string[]>;
+  page: number = 1;
+  total: number;
+  pageSize:number =4
   constructor(private productService: ProductsService,private adminService: AdminService) { }
   sortOptions=[
     {
@@ -63,11 +69,13 @@ export class ProductListComponent implements OnInit {
   }
   public getAllProductList()
   {
+    console.log((this.page*this.pageSize)-this.pageSize,'offset')
+    console.log(this.pageSize)
     this.loading = true
       const inputData :any= {
         "business_userId":this.profileInfo.id,
-        "offset":"0",
-        "limit":"100",
+        "offset":(this.page*this.pageSize)-this.pageSize,
+        "limit":this.pageSize,
         "filters":{
           "cat_1":this.selectedType ? [this.selectedType] : [],
           "cat_2":this.selectedLevel2.id?[this.selectedLevel2.id]:[],
@@ -83,7 +91,8 @@ export class ProductListComponent implements OnInit {
         this.loading = false
         if(data.status == 'success')
         {
-          this.productList =  data.data
+          this.productList =  data.data.products
+          this.total = data.data.total
         }
     })
   }
@@ -219,7 +228,7 @@ export class ProductListComponent implements OnInit {
         x.isSelected = ev
         if (ev) {
           x.isSelected = ev
-          this.selectedProducts.push(x.userIdOfContact)
+          this.selectedProducts.push(x.id)
         }
         
       })
@@ -229,5 +238,97 @@ export class ProductListComponent implements OnInit {
   isAllChecked () {
     return this.productList.every(item => item.isSelected)
   }
+  selectCheckbox(ev,id,index){
+    if (ev) {
+      this.selectedProducts.push(id)
+    }
+    else{
+      this.selectedProducts.splice(index,1)
+    }
+  }
+  deleteProducts(){
+    // console.log(this.selectedProducts)
+    
+    if(this.selectedProducts.length > 0)
+    {
+      this.loading = true
+      let ids = this.selectedProducts.join(',')
+      this.productService.deleteMultiProducts(ids).subscribe((data: any)=>{
+        // console.log(data,'data')
+        this.loading = false
+        alert("Products deleted successfully.")
+        this.getAllProductList()
+      })
+    }
+    else{
+     alert("Please select atleast one product.");
+    }
+    
+  }
+  selectAction(event){
+    let selectVal = event.target.value
+    // alert(event.target.value)
+    if(selectVal==1)
+    {
+      this.checkUncheckAll(true)
+    }
+    else if(selectVal==2)
+    {
+      this.checkUncheckAll(false)
+    }
+    else if(selectVal==3)
+    {
+      this.updateProducts(true)
+    }
+    else if(selectVal==4)
+    {
+      this.updateProducts(false)
+    }
+    else if(selectVal==5)
+    {
+      this.deleteProducts()
+    }
+    else if(selectVal==6)
+    {
+      this.showCheckboxes=false
+    }
+
+  }
+  updateProducts(status){
+    if(this.selectedProducts.length > 0)
+    {
+      let ids = this.selectedProducts.join(',')
+      const inputData :any= {
+        "is_stock_available":status?1:0,
+        "ids":ids,
+      };
+      this.loading = true
+      this.productService.stockUpdate(inputData).subscribe((data: any)=>{
+        // console.log(data,'data')
+        this.loading = false
+       alert("Status updated successfully.")
+      })
+    }
+    else{
+      alert("Please select atleast one product.");
+     }
+  }
+  handlePageChange(event) {
+    this.page = event;
+    this.getAllProductList()
+  }
+  /**
+ * Simulate an async HTTP call with a delayed observable.
+ */
+  //  serverCall(meals: string[], page: number): Observable<any> {
+  //   const perPage = 10;
+  //   const start = (page - 1) * perPage;
+  //   const end = start + perPage;
+
+  //   // return of({
+  //   //         items: meals.slice(start, end),
+  //   //         total: 100
+  //   //     }).pipe(delay(1000));
+  // }
 }
                                                                                                                                                                                                                                       

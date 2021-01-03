@@ -24,10 +24,12 @@ export class AuthenticationService {
       user.expires = headers.get('token_expires')
       localStorage.setItem('user', JSON.stringify(user));
       user.jtoken = headers.get('token')
+      
+      console.log(user,'user info')
+
       this.userSubject.next(user);
       this.startRefreshTokenTimer();
-
-        return user;
+      return user;
     }));
   }
   getJwtToken() {
