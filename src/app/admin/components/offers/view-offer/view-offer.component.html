@@ -1,0 +1,76 @@
+<app-admin-loading *ngIf="loading"></app-admin-loading>
+
+  <main role="main" class="main">
+
+  <div class="row mx-5">
+
+    <div class="container">
+    
+        <div class="card">
+            <div class="row">
+                <aside class="col-sm-5 border-right">
+        
+        <div *ngIf="urls" class="d-flex ml-3 py-3">
+			<img src="{{urls[0] ? urls[0].url : 'assets/logo.png'}}" width="100%" height="auto" />
+        </div>  
+
+                </aside>
+      <aside class="col-sm-7" *ngIf="offerInfo">
+        <article class="card-body p-5">
+          <div class="text-right productIcons">
+            <a [routerLink]="['/admin/create-offer/',offerInfo.id]" class="cursor-pointer btn default-color " title="Edit">
+              Edit
+            </a>
+            <a (click)="deleteOffer()" class="cursor-pointer btn default-color " title="Delete">
+              Delete
+            </a>
+          </div>
+          <h3>{{offerInfo.offer_category.name}}</h3>
+            <h4 class="title text-capitalize">{{offerInfo.title}}</h4>
+            <h5>{{offerInfo.subject_line}}</h5>
+			<p class=""><b>Promo Code</b>: <span class="default-color font-weight-bold">{{offerInfo.promo_code}}</span></p>
+
+        <dl class="item-property">
+          <dt>Description</dt>
+          <dd><p>{{offerInfo.description}} </p></dd>
+        </dl>
+       
+        <dl class="param param-feature">
+          <dt>Offer from</dt>
+          <dd >{{offerInfo.start_date}}</dd>
+          
+        </dl>  <!-- item-property-hor .// -->
+        <dl class="param param-feature">
+          <dt>Offer validity</dt>
+          <dd >{{offerInfo.validUpto}}</dd>
+        </dl>
+        <dl class="param param-feature">
+          <dt>Valid on</dt>
+          <dd >{{offerInfo.validOn.toString()}}</dd>
+        </dl>
+
+       
+        <dl class="param param-feature">
+          <dt>Where to buy</dt>
+          <dd *ngIf="offerInfo.where_to_buy.id!=1">{{offerInfo.where_to_buy.name}}</dd>
+          <dd *ngIf="offerInfo.where_to_buy.id==1">
+            <a href="{{offerInfo.links}}" target="_blank">{{offerInfo.links}}</a>
+          </dd>
+        </dl>
+
+        <hr>
+
+           
+        </article> <!-- card-body.// -->
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+    
+    </div>
+    <!--container.//-->
+   
+    
+  </div>
+
+  <!-- Content Row -->
+</main>

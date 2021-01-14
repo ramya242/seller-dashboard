@@ -10,6 +10,8 @@ import { ProductDetailsComponent} from './components/products/product-details/pr
 import { ProfileComponent } from './components/profile/profile.component'; // <-- import the module
 import { OffersComponent } from './components/offers/offers.component'; // <-- import the module
 import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component'; // <-- import the module
+import { ViewOfferComponent } from './components/offers/view-offer/view-offer.component';
+
 const routes: Routes = [
   {
       path: '', 
@@ -21,6 +23,7 @@ const routes: Routes = [
         { path: 'add-product/:id', component: AddProductComponent,canActivate: [AuthGuard] },
         { path: 'product-list', component: ProductListComponent,canActivate: [AuthGuard] },
         { path: 'product-details/:id',component: ProductDetailsComponent,canActivate:[AuthGuard]},
+        { path: 'offer-details/:id',component: ViewOfferComponent,canActivate:[AuthGuard]},
         { path: 'profile',component: ProfileComponent,canActivate:[AuthGuard]},
         { path: 'offers',component: OffersComponent,canActivate:[AuthGuard]},
         { path: 'create-offer',component: CreateOfferComponent,canActivate:[AuthGuard]},

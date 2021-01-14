@@ -679,7 +679,7 @@ export class AddProductComponent implements OnInit {
     let percentage  = this.variants().at(i).value.offer_percentage
     let price  = this.variants().at(i).value.actual_price
     let offerVal = Number(percentage) / 100;
-    var totalValue = price - (price * offerVal)
+    let totalValue = (price - (price * offerVal)).toFixed(1)
     this.variants().at(i).patchValue({
       offer_price:totalValue
     })

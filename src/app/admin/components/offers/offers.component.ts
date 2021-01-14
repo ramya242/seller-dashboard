@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router'
   styleUrls: ['./offers.component.scss']
 })
 export class OffersComponent implements OnInit {
-  loading:boolean = false
+  loading:boolean = true
   profileInfo:any = {}
   offersList:any =[]
   page: number = 1;
@@ -103,7 +103,7 @@ export class OffersComponent implements OnInit {
 
   }
   selectAction(event){
-    let selectVal = event.target.value
+    let selectVal = event.target ?event.target.value : event
     // alert(event.target.value)
     if(selectVal==1)
     {
@@ -138,7 +138,10 @@ export class OffersComponent implements OnInit {
             this.loading=false
             if(data.status == 'success')
             {
+             this.selectAction(2)
+				this.selectAction(6)
               alert("Offers deleted successfully. ")
+              
               // this.router.navigate(['/offer/offer'])
               this.selectedOffers.forEach((element,j) => {
                 this.offersList.splice(j,1)
@@ -155,7 +158,7 @@ export class OffersComponent implements OnInit {
     this.showCheckboxes = true
   }
   selectCheckbox(ev,id,index){
-    if (ev) {
+    if (ev.target.checked) {
       this.selectedOffers.push(id)
     }
     else{

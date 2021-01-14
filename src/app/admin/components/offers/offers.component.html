@@ -33,10 +33,10 @@
         </div>
           <!-- <ng-container [routerLink]="['/admin/create-offer',offer.id]"> -->
             <img src="{{offer.offer_media[0] ? offer.offer_media[0].url : 'assets/logo.png'}}" alt="John Doe" class="mr-3  object-fit-contain" style="width:110px;height:110px">
-            <div class="media-body">
-            <h4 class="mb-0 text-capitalize">{{offer.title}} <small><i></i></small></h4>
+            <div class="media-body ecllipseCls">
+            <h4 class="mb-0 text-capitalize ecllipseCls">{{offer.title}} <small><i></i></small></h4>
 
-            <p class="mb-0">{{offer.description}}</p>  
+            <p class="mb-0 ecllipseCls">{{offer.description}}</p>  
             <div class="font-weight-100">Deal ends on: {{formatDate(offer.validUpto)}}.</div>    
             <div class="d-flex justify-content-between">
               <label>
@@ -44,7 +44,7 @@
                 <span *ngIf="offer.promo_code" class="default-color">{{offer.promo_code}}</span>
                 <span *ngIf="!offer.promo_code" class="default-color">No Coupon Code Required!</span>
               </label>
-              <a [routerLink]="['/admin/create-offer',offer.id]">View Offer</a>
+              <a [routerLink]="['/admin/offer-details',offer.id]">View Offer</a>
             </div>
             </div>
           <!-- </ng-container> -->
@@ -60,7 +60,7 @@
         
       </div>
 </div>
-      <h5 *ngIf="offersList.length == 0" class="text-center">No offers.</h5>
+      <h5 *ngIf="!loading && offersList.length == 0" class="text-center">No offers.</h5>
       <div class="has-text-centered text-center pt-4" *ngIf="offersList.length>0">
         <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
         <!-- <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls> -->

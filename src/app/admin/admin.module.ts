@@ -19,6 +19,7 @@ import { AdminLoadingComponent } from './components/admin-loading/admin-loading.
 import { OffersComponent } from './components/offers/offers.component';
 import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ViewOfferComponent } from './components/offers/view-offer/view-offer.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -33,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AdminLoadingComponent,
     OffersComponent,
     CreateOfferComponent,
+    ViewOfferComponent,
   ],
   imports: [
     CommonModule,

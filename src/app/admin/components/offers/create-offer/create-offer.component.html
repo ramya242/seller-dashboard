@@ -18,7 +18,7 @@
                         </nav>
                     </div>
                   
-                    <div class="col-md-6">
+                    <div class="col-md-6 pt-3">
                         <div class="col-sm-12 ">
                             <div class="block1 img-container cursor-pointer " *ngFor="let url of urls;let i=index">
                                 <div class="parent2 position-relative text-center">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="divBlk col-sm-12">
                             <label for="description"> Offer Description<span class="man-star">*</span></label>
-                            <textarea  id="description" name="description" rows="5" formControlName="description" class="form-control custominp" maxlength="3000"></textarea>
+                            <textarea  id="description" name="description" [rows]="f.where_to_buy.value==1 ? 7 : 3" formControlName="description" class="form-control custominp" maxlength="3000"></textarea>
                             <div *ngIf="submitted && !f.description.value"  class="d-inline-block text-danger pl-2">
                                 Description is required.
                             </div>

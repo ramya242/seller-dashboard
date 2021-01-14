@@ -34,7 +34,7 @@ export class ProductListComponent implements OnInit {
   asyncMeals: Observable<string[]>;
   page: number = 1;
   total: number;
-  pageSize:number =4
+  pageSize:number =40
   constructor(private productService: ProductsService,private adminService: AdminService) { }
   sortOptions=[
     {
@@ -63,14 +63,12 @@ export class ProductListComponent implements OnInit {
   }
   filterChanged(eve)
   {
-    console.log(eve)
     this.selectedSortType = eve
     this.getAllProductList()
   }
   public getAllProductList()
   {
-    console.log((this.page*this.pageSize)-this.pageSize,'offset')
-    console.log(this.pageSize)
+
     this.loading = true
       const inputData :any= {
         "business_userId":this.profileInfo.id,
@@ -201,7 +199,6 @@ export class ProductListComponent implements OnInit {
     }
     if(type=='level3')
     {
-      console.log(selectedValue)
       this.selectedLevel3 = selectedValue
       this.getAllProductList()
 
@@ -239,7 +236,7 @@ export class ProductListComponent implements OnInit {
     return this.productList.every(item => item.isSelected)
   }
   selectCheckbox(ev,id,index){
-    if (ev) {
+    if (ev.target.checked) {
       this.selectedProducts.push(id)
     }
     else{
@@ -247,8 +244,7 @@ export class ProductListComponent implements OnInit {
     }
   }
   deleteProducts(){
-    // console.log(this.selectedProducts)
-    
+ 
     if(this.selectedProducts.length > 0)
     {
       this.loading = true
@@ -256,8 +252,11 @@ export class ProductListComponent implements OnInit {
       this.productService.deleteMultiProducts(ids).subscribe((data: any)=>{
         // console.log(data,'data')
         this.loading = false
-        alert("Products deleted successfully.")
+		alert("Products deleted successfully.")
+		this.selectAction(2)
+		this.selectAction(6)
         this.getAllProductList()
+        
       })
     }
     else{
@@ -266,7 +265,8 @@ export class ProductListComponent implements OnInit {
     
   }
   selectAction(event){
-    let selectVal = event.target.value
+  
+    let selectVal = event.target ? event.target.value : event
     // alert(event.target.value)
     if(selectVal==1)
     {
@@ -306,6 +306,8 @@ export class ProductListComponent implements OnInit {
       this.productService.stockUpdate(inputData).subscribe((data: any)=>{
         // console.log(data,'data')
         this.loading = false
+         this.selectAction(2)
+			this.selectAction(6)
        alert("Status updated successfully.")
       })
     }

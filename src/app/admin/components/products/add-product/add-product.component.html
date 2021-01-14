@@ -145,7 +145,7 @@
                   </div>
                   <div class="divBlk ">
                     <label for="description"> Product Description<span class="man-star">*</span></label>
-                    <textarea  id="description" rows="5" maxlength="" name="description" formControlName="description" class="form-control custominp" ></textarea>
+                    <textarea  id="description" rows="5" maxlength="3000" name="description" formControlName="description" class="form-control custominp" ></textarea>
                     <span class="text-gray pt-1 d-inline-block pull-right">{{f.description.value.length}}/3000</span>
                     <div *ngIf="submitted && !f.description.value"  class="text-danger d-inline-block">
                       Description is required
